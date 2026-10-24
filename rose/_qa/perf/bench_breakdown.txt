@@ -1,0 +1,12 @@
+preview dpi: 75.2 | figure inches: [12.  8.]
+TkAgg draw          : 35.1 ms
+纯 Agg draw         : 30.6 ms
+纯 Agg 无棋盘格     : 8.4 ms
+棋盘格成本(Agg)     : 22.2 ms
+Tk 图像上传/后端差  : 4.5 ms
+
+_render_current total: 82.4 ms | draw calls: 1 (33.7 ms total) | fit: 0.0 ms | category rows: 10.1 ms
+
+drag-lite（低dpi42+无棋盘+无描边+仅拖拽标签）frame: 6.6 ms | draw: 4.7 ms
+Tk Canvas overlay 移动标签: 0.33 ms/帧
+PIL Image → Tk PhotoImage 上传 900x600: 2.6 ms

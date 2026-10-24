@@ -1,0 +1,42 @@
+[2026-10-23 11:29:29] ================ RoseChart packaging verification ================
+[2026-10-23 11:29:29] workspace : C:\Users\admin\Desktop\rose-new\rose
+[2026-10-23 11:29:29] launcher  : C:\Users\admin\Desktop\rose-new\rose\RoseChart.exe
+[2026-10-23 11:29:29] exe size  : 69,120 bytes, sha256 4F251620DCC4E5AD9EAEBBAD2DC8BA825FE5D05593A114B832731A436BD0C6A9
+[2026-10-23 11:29:29] asset     : assets\icon_1024.png  229,521 bytes
+[2026-10-23 11:29:29] asset     : assets\icon_256.png  36,694 bytes
+[2026-10-23 11:29:29] asset     : assets\icon.ico  62,520 bytes
+[2026-10-23 11:29:29] PE magic  : 0x010B, subsystem = 2 (WINDOWS_GUI)
+[2026-10-23 11:29:29] CHECK subsystem (target:winexe, no console): PASS
+[2026-10-23 11:29:29] embedded icon: 32x32 -> C:\Users\admin\Desktop\rose-new\rose\_qa\packaging\exe_embedded_icon.png
+[2026-10-23 11:29:29] CHECK embedded application icon (/win32icon assets/icon.ico): PASS
+[2026-10-23 11:29:29] pythonw processes before launch: []
+[2026-10-23 11:29:41] launcher exited with code 0 (expected 0)
+[2026-10-23 11:29:41] new pythonw process: PID 2164 (started by the launcher)
+[2026-10-23 11:29:41] pythonw executable: C:\Users\admin\Desktop\rose-new\rose\.venv\pythonw.exe
+[2026-10-23 11:29:41] CHECK pythonw child process: PASS
+[2026-10-23 11:29:42] pythonw MainWindowTitle: '玫瑰图工坊 · RoseChart Studio'
+[2026-10-23 11:29:42] title contains app keywords: yes
+[2026-10-23 11:29:42] CHECK application window visible: PASS
+[2026-10-23 11:29:43] window screenshot -> C:\Users\admin\Desktop\rose-new\rose\_qa\packaging\window_pythonw.png
+[2026-10-23 11:29:43] screen screenshot -> C:\Users\admin\Desktop\rose-new\rose\_qa\packaging\screen_pythonw.png
+[2026-10-23 11:29:43] stopped pythonw PID 2164; still running: False
+[2026-10-23 11:29:43] pre-existing pythonw processes untouched: []
+[2026-10-23 11:29:58] missing-runtime dialog found: PID 15556, title 'RoseChart 启动失败'
+[2026-10-23 11:29:58] missing-runtime dialog screenshot -> C:\Users\admin\Desktop\rose-new\rose\_qa\packaging\window_missing_runtime.png
+[2026-10-23 11:29:59] CHECK missing-runtime Chinese MessageBox: PASS
+[2026-10-23 11:29:59] ------------------------------ summary ------------------------------
+[2026-10-23 11:29:59] exe             : C:\Users\admin\Desktop\rose-new\rose\RoseChart.exe
+[2026-10-23 11:29:59] subsystem_gui   : True
+[2026-10-23 11:29:59] icon_embedded   : True
+[2026-10-23 11:29:59] launcher_exit   : 0
+[2026-10-23 11:29:59] pythonw_found   : True
+[2026-10-23 11:29:59] pythonw_pid     : 2164
+[2026-10-23 11:29:59] pythonw_cmdline : path=C:\Users\admin\Desktop\rose-new\rose\.venv\pythonw.exe args=-B app.py (per launcher design; WMI cmdline unavailable)
+[2026-10-23 11:29:59] window_title    : 玫瑰图工坊 · RoseChart Studio
+[2026-10-23 11:29:59] window_found    : True
+[2026-10-23 11:29:59] window_shot     : C:\Users\admin\Desktop\rose-new\rose\_qa\packaging\window_pythonw.png
+[2026-10-23 11:29:59] screen_shot     : C:\Users\admin\Desktop\rose-new\rose\_qa\packaging\screen_pythonw.png
+[2026-10-23 11:29:59] missing_dialog  : True
+[2026-10-23 11:29:59] missing_shot    : C:\Users\admin\Desktop\rose-new\rose\_qa\packaging\window_missing_runtime.png
+[2026-10-23 11:29:59] cleanup_ok      : True
+[2026-10-23 11:29:59] RESULT: ALL CHECKS PASSED

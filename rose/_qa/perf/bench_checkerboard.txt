@@ -1,0 +1,5 @@
+1) 当前 imshow 32x22：28.9 ms / 帧
+2) figimage 全分辨率预生成：37.4 ms / 帧
+3) imshow resample=False：30.0 ms / 帧
+4) 向量矩形 24x16：26.3 ms / 帧
+5) TkAgg 透明背景测试截图：tkagg_alpha_test.png（看红色/绿色是否透出）

@@ -1,0 +1,26 @@
+# .NET build output
+**/bin/
+**/obj/
+**/publish/
+# Runtime temp / generated output
+**/.tmp/
+**/output/
+**/rosechart_settings.json
+**/rosechart_error.log
+**/debug.log
+# Python
+rose/.venv/
+**/__pycache__/
+*.py[cod]
+# Old Python launcher executable
+rose/RoseChart.exe
+# OS / editors
+.vs/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+**/RoseChart.exe
+**/outputs/
+

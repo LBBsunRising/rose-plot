@@ -1,0 +1,360 @@
+[
+  {
+    "id": "legacy_project",
+    "name": "原版 · 项目类别",
+    "group": "原版",
+    "colors": [
+      "#6AFFFF",
+      "#E0A6E5",
+      "#EBE082",
+      "#CCCCCC"
+    ],
+    "tags": [
+      "原版",
+      "项目类别",
+      "兼容",
+      "浅色"
+    ],
+    "description": "旧版项目类别统计配色，保留原始标签到颜色的精确映射。",
+    "namedColors": {
+      "软件开发": "#6AFFFF",
+      "MES改造": "#E0A6E5",
+      "视觉改造": "#EBE082",
+      "方案review": "#CCCCCC",
+      "方案Review": "#CCCCCC",
+      "iPhone扫码": "#CCCCCC",
+      "运控改造": "#CCCCCC"
+    }
+  },
+  {
+    "id": "legacy_status",
+    "name": "原版 · 项目状态",
+    "group": "原版",
+    "colors": [
+      "#FFF45C",
+      "#C2B9B7",
+      "#D54660",
+      "#DA435C"
+    ],
+    "tags": [
+      "原版",
+      "项目状态",
+      "兼容"
+    ],
+    "description": "旧版项目状态统计配色，保留 On-going / Done / Pause / Delay 映射。",
+    "namedColors": {
+      "On-going": "#FFF45C",
+      "Done": "#C2B9B7",
+      "Pause": "#D54660",
+      "Delay": "#DA435C"
+    }
+  },
+  {
+    "id": "business_steel",
+    "name": "商务 · 钢青",
+    "group": "商务",
+    "colors": [
+      "#17324D",
+      "#24547E",
+      "#3B7DB3",
+      "#6FA8D3",
+      "#A9CBE5",
+      "#D5E6F2",
+      "#7C8B99"
+    ],
+    "tags": [
+      "商务",
+      "蓝",
+      "稳重",
+      "汇报"
+    ],
+    "description": "深蓝到浅蓝的秩序感渐变，配中性灰收尾，适合年度/季度汇报。",
+    "namedColors": null
+  },
+  {
+    "id": "business_forest",
+    "name": "商务 · 墨绿",
+    "group": "商务",
+    "colors": [
+      "#173B35",
+      "#245C50",
+      "#3C8576",
+      "#69AB9B",
+      "#A3CCC2",
+      "#D2E6DF",
+      "#8C7A5B"
+    ],
+    "tags": [
+      "商务",
+      "绿",
+      "稳重",
+      "汇报"
+    ],
+    "description": "克制的墨绿系，带一点暖棕点缀，适合经营分析与方案评审。",
+    "namedColors": null
+  },
+  {
+    "id": "tech_neon",
+    "name": "科技 · 霓虹",
+    "group": "科技",
+    "colors": [
+      "#0B1F3A",
+      "#1B6CFF",
+      "#00C2FF",
+      "#00E5C0",
+      "#8B5CF6",
+      "#FF4D8D",
+      "#FFC53D"
+    ],
+    "tags": [
+      "科技",
+      "高饱和",
+      "发布会",
+      "大屏"
+    ],
+    "description": "深空蓝打底，电光青/紫/粉提亮，适合产品发布与技术大屏。",
+    "namedColors": null
+  },
+  {
+    "id": "tech_deep",
+    "name": "科技 · 深空",
+    "group": "科技",
+    "colors": [
+      "#101A33",
+      "#1E3A5F",
+      "#2E5F8A",
+      "#3F8FC4",
+      "#69C4E8",
+      "#A7E0F2",
+      "#4B4E6D"
+    ],
+    "tags": [
+      "科技",
+      "蓝",
+      "数据",
+      "中性"
+    ],
+    "description": "冷色深空梯度，层次清晰，适合数据密集型仪表盘与架构图。",
+    "namedColors": null
+  },
+  {
+    "id": "morandi_dusk",
+    "name": "莫兰迪 · 暮色",
+    "group": "莫兰迪",
+    "colors": [
+      "#6F6A66",
+      "#8E8A85",
+      "#A8A29A",
+      "#B7A8A0",
+      "#9FAEB2",
+      "#B4BCC4",
+      "#D3CBC4"
+    ],
+    "tags": [
+      "莫兰迪",
+      "灰调",
+      "高级感",
+      "留白"
+    ],
+    "description": "灰调米褐与雾蓝，低对比但分层柔和，适合品牌感较强的页面。",
+    "namedColors": null
+  },
+  {
+    "id": "macaron_pastel",
+    "name": "马卡龙 · 粉彩",
+    "group": "马卡龙",
+    "colors": [
+      "#F49AB0",
+      "#F7B267",
+      "#F7D774",
+      "#8FD9A8",
+      "#7FD1D6",
+      "#9BB8E8",
+      "#C3A6E8"
+    ],
+    "tags": [
+      "马卡龙",
+      "粉彩",
+      "轻快",
+      "友好"
+    ],
+    "description": "低饱和粉彩七色，柔和但彼此可辨，适合培训、运营与活动复盘。",
+    "namedColors": null
+  },
+  {
+    "id": "macaron_berry",
+    "name": "马卡龙 · 莓果",
+    "group": "马卡龙",
+    "colors": [
+      "#E36A8C",
+      "#F291A9",
+      "#F7C0B0",
+      "#E8B04B",
+      "#8FCBBF",
+      "#9AA6D9",
+      "#C9B8DD"
+    ],
+    "tags": [
+      "马卡龙",
+      "莓果",
+      "温柔",
+      "内容"
+    ],
+    "description": "莓果粉与奶油色为主，比粉彩略深一档，投影仪上也更稳。",
+    "namedColors": null
+  },
+  {
+    "id": "nature_forest",
+    "name": "自然 · 森野",
+    "group": "自然",
+    "colors": [
+      "#2F5D3A",
+      "#4E7C49",
+      "#7BA05B",
+      "#A8C686",
+      "#D4E0A8",
+      "#C2A878",
+      "#6B5B4B"
+    ],
+    "tags": [
+      "自然",
+      "森林",
+      "有机",
+      "可持续"
+    ],
+    "description": "苔绿、草绿到暖褐，如林间光影，适合环保/农业/供应链主题。",
+    "namedColors": null
+  },
+  {
+    "id": "nature_ocean",
+    "name": "自然 · 海岸",
+    "group": "自然",
+    "colors": [
+      "#1F6F78",
+      "#2E9CA6",
+      "#58C4C8",
+      "#9BD9D8",
+      "#D6E8E3",
+      "#E1C699",
+      "#5C8374"
+    ],
+    "tags": [
+      "自然",
+      "海岸",
+      "清透",
+      "旅行"
+    ],
+    "description": "海水青与沙滩米色，清透松弛，适合文旅、健康与生活方式内容。",
+    "namedColors": null
+  },
+  {
+    "id": "high_contrast",
+    "name": "高对比 · 信号",
+    "group": "高对比",
+    "colors": [
+      "#D7263D",
+      "#F46036",
+      "#F2A541",
+      "#2E86AB",
+      "#1B998B",
+      "#3D348B",
+      "#111111"
+    ],
+    "tags": [
+      "高对比",
+      "强区分",
+      "打印",
+      "答辩"
+    ],
+    "description": "高饱和强区分配色，适合需要一眼分辨类别或投影/打印场景。",
+    "namedColors": null
+  },
+  {
+    "id": "minimal_graphite",
+    "name": "极简 · 石墨",
+    "group": "极简",
+    "colors": [
+      "#111827",
+      "#374151",
+      "#6B7280",
+      "#9CA3AF",
+      "#D1D5DB",
+      "#F3F4F6",
+      "#0F766E"
+    ],
+    "tags": [
+      "极简",
+      "灰阶",
+      "克制",
+      "报告"
+    ],
+    "description": "石墨灰阶为主，只留一枚深青强调色，适合分析师风格的单页报告。",
+    "namedColors": null
+  },
+  {
+    "id": "vibrant_candy",
+    "name": "活力 · 糖果",
+    "group": "活力",
+    "colors": [
+      "#EF476F",
+      "#FF9F1C",
+      "#FFD166",
+      "#06D6A0",
+      "#118AB2",
+      "#7B2CBF",
+      "#3A86FF"
+    ],
+    "tags": [
+      "活力",
+      "高饱和",
+      "年轻",
+      "活动"
+    ],
+    "description": "糖果色高饱和组合，视觉冲击强但不扎眼，适合活动与增长数据。",
+    "namedColors": null
+  },
+  {
+    "id": "chinese_vermilion",
+    "name": "中国风 · 朱青",
+    "group": "中国风",
+    "colors": [
+      "#9D2933",
+      "#C3272B",
+      "#E8A33D",
+      "#2A8E7F",
+      "#177CB0",
+      "#425066",
+      "#D6ECF0"
+    ],
+    "tags": [
+      "中国风",
+      "朱红",
+      "靛青",
+      "国潮"
+    ],
+    "description": "胭脂、藤黄、石绿与靛青，取自传统器物的朱青对比，端庄而不沉闷。",
+    "namedColors": null
+  },
+  {
+    "id": "chinese_ink",
+    "name": "中国风 · 水墨",
+    "group": "中国风",
+    "colors": [
+      "#1C1C1C",
+      "#3D3D3D",
+      "#5F6F65",
+      "#7A8B8F",
+      "#A8B5A2",
+      "#C9B8A8",
+      "#8B2F2F"
+    ],
+    "tags": [
+      "中国风",
+      "水墨",
+      "素雅",
+      "文化"
+    ],
+    "description": "墨分五色配一点朱砂，素雅留白，适合文化、政务与品牌叙事内容。",
+    "namedColors": null
+  }
+]

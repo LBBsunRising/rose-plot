@@ -1,0 +1,167 @@
+PASS  ColorMathTests.DefaultsMatchPythonConstants
+PASS  ColorMathTests.HexToRgbAndBack
+PASS  ColorMathTests.IsHexColorMatchesPython(#abc, True)
+PASS  ColorMathTests.IsHexColorMatchesPython(aabbcc, True)
+PASS  ColorMathTests.IsHexColorMatchesPython(#AABBCC, True)
+PASS  ColorMathTests.IsHexColorMatchesPython(, False)
+PASS  ColorMathTests.IsHexColorMatchesPython(red, False)
+PASS  ColorMathTests.IsHexColorMatchesPython(#abcd, False)
+PASS  ColorMathTests.IsHexColorRejectsNull
+PASS  ColorMathTests.PaletteLibraryDelegatesToColorMath
+PASS  ColumnCounterTests.Count_ExampleDatasetMatchesExpectedDistribution
+PASS  ColumnCounterTests.Count_GroupsNumericValuesAsInvariantStrings
+PASS  ColumnCounterTests.Count_MatchesHeaderCaseInsensitively
+PASS  ColumnCounterTests.Count_ReturnsEmptyListWhenColumnHasNoValues
+PASS  ColumnCounterTests.Count_SharesAreCountsOverTotal
+PASS  ColumnCounterTests.Count_SortsByCountDescendingThenValueAscending
+PASS  ColumnCounterTests.Count_ThrowsForUnknownColumn
+PASS  ColumnCounterTests.Count_TrimsValuesAndSkipsEmptyCells
+PASS  ColumnCounterTests.Count_UsesCodePointOrderForSupplementaryPlaneCharacters
+PASS  ColumnCounterTests.Count_UsesUnicodeCodePointOrderForTies
+PASS  ColumnDetectorTests.CategoryKeywordsAndStatusKeywordsMatchPythonOrder
+PASS  ColumnDetectorTests.Detect_DoesNotUseSameColumnForBothRoles
+PASS  ColumnDetectorTests.Detect_FallsBackToFirstNonIdColumns
+PASS  ColumnDetectorTests.Detect_FallsBackToSubstringMatching
+PASS  ColumnDetectorTests.Detect_FindsCategoryAndStatusColumns
+PASS  ColumnDetectorTests.Detect_HandlesEmptyHeaders
+PASS  ColumnDetectorTests.Detect_KeywordPriorityBeatsColumnOrder
+PASS  ColumnDetectorTests.Detect_LeavesCategoryNullWhenOnlyStatusKeywordExists
+PASS  ColumnDetectorTests.Detect_ReturnsNullsWhenOnlyIdColumnsExist
+PASS  PaletteLibraryTests.AllPalettesLoadedInCanonicalOrder
+PASS  PaletteLibraryTests.AssignColorsCyclesThroughPaletteColors
+PASS  PaletteLibraryTests.AssignColorsHandlesEmptyAndDuplicateLabels
+PASS  PaletteLibraryTests.AssignColorsOverridesTakePriorityAndDoNotConsumeCycle
+PASS  PaletteLibraryTests.AssignColorsUsesLegacyNamedColorsWithoutConsumingCycle
+PASS  PaletteLibraryTests.ByGroupReturnsPalettesInCanonicalOrder
+PASS  PaletteLibraryTests.ByIdIgnoresCaseAndWhitespace
+PASS  PaletteLibraryTests.ByIdThrowsForUnknownId
+PASS  PaletteLibraryTests.ContrastRatioMatchesPython(#000000, #FFFFFF, 21)
+PASS  PaletteLibraryTests.ContrastRatioMatchesPython(#FFFFFF, #FFFFFF, 1)
+PASS  PaletteLibraryTests.ContrastRatioMatchesPython(#777777, #FFFFFF, 4.478089453577214)
+PASS  PaletteLibraryTests.ContrastRatioMatchesPython(#767676, #FFFFFF, 4.542224959605253)
+PASS  PaletteLibraryTests.ContrastRatioMatchesPython(#17324D, #FFFFFF, 13.126337902439268)
+PASS  PaletteLibraryTests.ContrastRatioMatchesPython(#F7D774, #FFFFFF, 1.4068280204465298)
+PASS  PaletteLibraryTests.ContrastRatioMatchesPython(#6AFFFF, #FFFFFF, 1.2096192894771771)
+PASS  PaletteLibraryTests.ContrastRatioMatchesPython(#111827, #111111, 1.0644510822950752)
+PASS  PaletteLibraryTests.ContrastRatioMatchesPython(#334155, #FFFFFF, 10.35474573184942)
+PASS  PaletteLibraryTests.ContrastRatioMatchesPython(#D54660, #FFFFFF, 4.308402866047346)
+PASS  PaletteLibraryTests.ContrastRatioRangeAndSymmetryHoldForAllPaletteColors
+PASS  PaletteLibraryTests.DarkenLightenDefaultAmountIsFifteenPercent
+PASS  PaletteLibraryTests.DarkenMatchesPython(#6AFFFF, 0.15, #34FFFF)
+PASS  PaletteLibraryTests.DarkenMatchesPython(#F7D774, 0.3, #F0B90E)
+PASS  PaletteLibraryTests.DarkenMatchesPython(#334155, 0.5, #1A202A)
+PASS  PaletteLibraryTests.DarkenMatchesPython(#FF0000, 1, #000000)
+PASS  PaletteLibraryTests.DarkenMatchesPython(#00FF00, 0, #00FF00)
+PASS  PaletteLibraryTests.DeltaEMatchesPython(#000000, #FFFFFF, 100.00000386666815)
+PASS  PaletteLibraryTests.DeltaEMatchesPython(#FF0000, #00FF00, 170.56524200601007)
+PASS  PaletteLibraryTests.DeltaEMatchesPython(#6AFFFF, #E0A6E5, 73.99705740749481)
+PASS  PaletteLibraryTests.DeltaEMatchesPython(#17324D, #D5E6F2, 71.41509543303343)
+PASS  PaletteLibraryTests.DeltaEMatchesPython(#D7263D, #3D348B, 90.5195276992617)
+PASS  PaletteLibraryTests.DeltaEMatchesPython(#111827, #F3F4F6, 88.48402506563242)
+PASS  PaletteLibraryTests.DeltaEOfSameColorIsZero
+PASS  PaletteLibraryTests.EveryPaletteHasValidData
+PASS  PaletteLibraryTests.HslRoundTripReproducesEveryPaletteColor
+PASS  PaletteLibraryTests.HslToHexMatchesPython(0, 1, 0.5, #FF0000)
+PASS  PaletteLibraryTests.HslToHexMatchesPython(120, 1, 0.5, #00FF00)
+PASS  PaletteLibraryTests.HslToHexMatchesPython(240, 1, 0.5, #0000FF)
+PASS  PaletteLibraryTests.HslToHexMatchesPython(360, 1, 0.5, #FF0000)
+PASS  PaletteLibraryTests.HslToHexMatchesPython(-30, 0.6, 0.4, #A32966)
+PASS  PaletteLibraryTests.HslToHexMatchesPython(37.5, 0.25, 0.75, #CFC3AF)
+PASS  PaletteLibraryTests.HslToHexMatchesPython(0, 0, 0.5, #808080)
+PASS  PaletteLibraryTests.HslToHexMatchesPython(720, 1, 0.5, #FF0000)
+PASS  PaletteLibraryTests.LabelColorAutoMatchesPythonForEveryPaletteColor
+PASS  PaletteLibraryTests.LabelColorAutoMatchesPythonOnDarkBackground(#111827, #4663A1)
+PASS  PaletteLibraryTests.LabelColorAutoMatchesPythonOnDarkBackground(#17324D, #2F679F)
+PASS  PaletteLibraryTests.LabelColorAutoMatchesPythonOnDarkBackground(#000000, #656565)
+PASS  PaletteLibraryTests.LabelColorAutoMatchesPythonOnDarkBackground(#334155, #506685)
+PASS  PaletteLibraryTests.LabelColorAutoMatchesPythonOnDarkBackground(#6AFFFF, #6AFFFF)
+PASS  PaletteLibraryTests.LabelColorAutoMatchesPythonOnDarkBackground(#FFFFFF, #FFFFFF)
+PASS  PaletteLibraryTests.LabelColorAutoMatchesPythonOnSlateBackground(#D54660, #DE6C81)
+PASS  PaletteLibraryTests.LabelColorAutoMatchesPythonOnSlateBackground(#DA435C, #E26A7E)
+PASS  PaletteLibraryTests.LabelColorAutoMatchesPythonOnSlateBackground(#111827, #7790C4)
+PASS  PaletteLibraryTests.LabelColorAutoMatchesPythonOnSlateBackground(#17324D, #5A94CE)
+PASS  PaletteLibraryTests.LabelColorAutoMatchesPythonOnSlateBackground(#000000, #8F8F8F)
+PASS  PaletteLibraryTests.LabelColorAutoMatchesPythonOnSlateBackground(#808080, #8F8F8F)
+PASS  PaletteLibraryTests.LabelColorAutoMatchesPythonOnSlateBackground(#334155, #7B91B0)
+PASS  PaletteLibraryTests.LabelColorAutoMatchesPythonOnWhite(#6AFFFF, #009F9F)
+PASS  PaletteLibraryTests.LabelColorAutoMatchesPythonOnWhite(#E0A6E5, #CB6AD3)
+PASS  PaletteLibraryTests.LabelColorAutoMatchesPythonOnWhite(#EBE082, #9E9019)
+PASS  PaletteLibraryTests.LabelColorAutoMatchesPythonOnWhite(#CCCCCC, #8F8F8F)
+PASS  PaletteLibraryTests.LabelColorAutoMatchesPythonOnWhite(#FFF45C, #9B9100)
+PASS  PaletteLibraryTests.LabelColorAutoMatchesPythonOnWhite(#C2B9B7, #9B8C89)
+PASS  PaletteLibraryTests.LabelColorAutoMatchesPythonOnWhite(#D54660, #D54660)
+PASS  PaletteLibraryTests.LabelColorAutoMatchesPythonOnWhite(#DA435C, #DA435C)
+PASS  PaletteLibraryTests.LabelColorAutoMatchesPythonOnWhite(#F7D774, #B38A0A)
+PASS  PaletteLibraryTests.LabelColorAutoMatchesPythonOnWhite(#D6ECF0, #3F9AAB)
+PASS  PaletteLibraryTests.LabelColorAutoMatchesPythonOnWhite(#F3F4F6, #8590A4)
+PASS  PaletteLibraryTests.LabelColorAutoMatchesPythonOnWhite(#D1D5DB, #8590A0)
+PASS  PaletteLibraryTests.LabelColorAutoMatchesPythonOnWhite(#F49AB0, #ED5D81)
+PASS  PaletteLibraryTests.LabelColorAutoMatchesPythonOnWhite(#A8C686, #759B49)
+PASS  PaletteLibraryTests.LabelColorAutoMatchesPythonOnWhite(#111827, #111827)
+PASS  PaletteLibraryTests.LabelColorAutoMatchesPythonOnWhite(#17324D, #17324D)
+PASS  PaletteLibraryTests.LabelColorAutoMatchesPythonOnWhite(#FFFFFF, #8F8F8F)
+PASS  PaletteLibraryTests.LabelColorAutoMatchesPythonOnWhite(#000000, #000000)
+PASS  PaletteLibraryTests.LabelColorAutoMatchesPythonOnWhite(#808080, #808080)
+PASS  PaletteLibraryTests.LabelColorAutoMatchesPythonOnWhite(#334155, #334155)
+PASS  PaletteLibraryTests.LabelColorMatchModeReturnsFillColor
+PASS  PaletteLibraryTests.LabelColorRejectsInvalidModeAndColors
+PASS  PaletteLibraryTests.LabelColorSingleModeReturnsSingleColor
+PASS  PaletteLibraryTests.LegacyPaletteMappingsAreExact
+PASS  PaletteLibraryTests.LightenMatchesPython(#6AFFFF, 0.15, #80FFFF)
+PASS  PaletteLibraryTests.LightenMatchesPython(#17324D, 0.3, #336FAC)
+PASS  PaletteLibraryTests.LightenMatchesPython(#334155, 0.5, #8A9DB9)
+PASS  PaletteLibraryTests.LightenMatchesPython(#000000, 1, #FFFFFF)
+PASS  PaletteLibraryTests.LightenMatchesPython(#FF0000, 0, #FF0000)
+PASS  PaletteLibraryTests.LuminanceMatchesPython(#FFFFFF, 1)
+PASS  PaletteLibraryTests.LuminanceMatchesPython(#000000, 0)
+PASS  PaletteLibraryTests.LuminanceMatchesPython(#777777, 0.184474994500441)
+PASS  PaletteLibraryTests.LuminanceMatchesPython(#17324D, 0.029991845997266182)
+PASS  PaletteLibraryTests.LuminanceMatchesPython(#F7D774, 0.696359885316137)
+PASS  PaletteLibraryTests.LuminanceMatchesPython(#6AFFFF, 0.8180417129044231)
+PASS  PaletteLibraryTests.MixColorsEndpointsAndValidation
+PASS  PaletteLibraryTests.MixColorsMatchesPython(#000000, #FFFFFF, 0.5, #BCBCBC)
+PASS  PaletteLibraryTests.MixColorsMatchesPython(#FF0000, #0000FF, 0.5, #BC00BC)
+PASS  PaletteLibraryTests.MixColorsMatchesPython(#6AFFFF, #CCCCCC, 0.25, #8BF4F4)
+PASS  PaletteLibraryTests.MixColorsMatchesPython(#17324D, #FFFFFF, 0.75, #E1E2E3)
+PASS  PaletteLibraryTests.NormalizeHexAcceptsPythonForms(#abc, #AABBCC)
+PASS  PaletteLibraryTests.NormalizeHexAcceptsPythonForms(abc, #AABBCC)
+PASS  PaletteLibraryTests.NormalizeHexAcceptsPythonForms( #AbC , #AABBCC)
+PASS  PaletteLibraryTests.NormalizeHexAcceptsPythonForms(#aabbcc, #AABBCC)
+PASS  PaletteLibraryTests.NormalizeHexAcceptsPythonForms(AABBCC, #AABBCC)
+PASS  PaletteLibraryTests.NormalizeHexAcceptsPythonForms(#000000, #000000)
+PASS  PaletteLibraryTests.NormalizeHexAcceptsPythonForms( #FFFFFF , #FFFFFF)
+PASS  PaletteLibraryTests.NormalizeHexRejectsInvalidColors()
+PASS  PaletteLibraryTests.NormalizeHexRejectsInvalidColors(   )
+PASS  PaletteLibraryTests.NormalizeHexRejectsInvalidColors(#abcd)
+PASS  PaletteLibraryTests.NormalizeHexRejectsInvalidColors(#GGGGGG)
+PASS  PaletteLibraryTests.NormalizeHexRejectsInvalidColors(red)
+PASS  PaletteLibraryTests.NormalizeHexRejectsInvalidColors(##abc)
+PASS  PaletteLibraryTests.NormalizeHexRejectsInvalidColors(#12345)
+PASS  PaletteLibraryTests.NormalizeHexRejectsNull
+PASS  PaletteLibraryTests.RecommendIsDeterministic
+PASS  PaletteLibraryTests.RecommendLimitsAndValidation
+PASS  PaletteLibraryTests.RecommendMatchesPythonOrdering
+PASS  PaletteLibraryTests.RecommendRespectsDarkBackgrounds(2)
+PASS  PaletteLibraryTests.RecommendRespectsDarkBackgrounds(3)
+PASS  PaletteLibraryTests.RecommendRespectsDarkBackgrounds(4)
+PASS  PaletteLibraryTests.RecommendRespectsDarkBackgrounds(6)
+PASS  PaletteLibraryTests.RecommendScoresOrderMatchesPython
+PASS  PaletteLibraryTests.RecommendSingleLabelPrefersHighestVisibilityPalettes
+PASS  PaletteLibraryTests.RgbToHslMatchesPython(#FF0000, 0, 1, 0.5)
+PASS  PaletteLibraryTests.RgbToHslMatchesPython(#00FF00, 120, 1, 0.5)
+PASS  PaletteLibraryTests.RgbToHslMatchesPython(#0000FF, 240, 1, 0.5)
+PASS  PaletteLibraryTests.RgbToHslMatchesPython(#6AFFFF, 180, 1, 0.707843137254902)
+PASS  PaletteLibraryTests.RgbToHslMatchesPython(#17324D, 210, 0.5399999999999999, 0.19607843137254902)
+PASS  PaletteLibraryTests.RgbToHslMatchesPython(#808080, 0, 0, 0.5019607843137255)
+PASS  PaletteLibraryTests.RgbToHslMatchesPython(#FFFFFF, 0, 0, 1)
+PASS  PaletteLibraryTests.RgbToHslMatchesPython(#000000, 0, 0, 0)
+PASS  SceneTests.AutoLayoutStaysInsideChartBounds
+PASS  SceneTests.EmptyDataBuildsEmptyScene
+PASS  SceneTests.LabelMovementIsClamped
+PASS  SceneTests.SceneMapperPlacesChartCenterAndRoundTrips
+PASS  SceneTests.SectorPolygonHitTestingMatchesHoleAndRing
+PASS  SceneTests.StoredOffsetsAreApplied
+PASS  SceneTests.TextFormattingHonoursSwitchesAndSuffix
+PASS  SceneTests.ThreeLabelsProduceSectorsAndLabels
+
+passed=165 failed=0 skipped=0

@@ -1,0 +1,77 @@
+[
+  {
+    "file": "stitch.png",
+    "width": 1344,
+    "height": 1364,
+    "columns": 2,
+    "items": [
+      {
+        "naturalWidth": 1900,
+        "naturalHeight": 1175,
+        "width": 640,
+        "height": 396,
+        "labelHeight": 32,
+        "x": 24,
+        "y": 24,
+        "label": "配色页 1520×940",
+        "labelY": 428
+      },
+      {
+        "naturalWidth": 1900,
+        "naturalHeight": 1175,
+        "width": 640,
+        "height": 396,
+        "labelHeight": 32,
+        "x": 680,
+        "y": 24,
+        "label": "样式页",
+        "labelY": 428
+      },
+      {
+        "naturalWidth": 1900,
+        "naturalHeight": 1175,
+        "width": 640,
+        "height": 396,
+        "labelHeight": 32,
+        "x": 24,
+        "y": 468,
+        "label": "导出页（单一主操作 + 尺寸主从）",
+        "labelY": 872
+      },
+      {
+        "naturalWidth": 1900,
+        "naturalHeight": 1175,
+        "width": 640,
+        "height": 396,
+        "labelHeight": 32,
+        "x": 680,
+        "y": 468,
+        "label": "空状态",
+        "labelY": 872
+      },
+      {
+        "naturalWidth": 1800,
+        "naturalHeight": 1087,
+        "width": 640,
+        "height": 386,
+        "labelHeight": 32,
+        "x": 24,
+        "y": 912,
+        "label": "最小窗口 1440×870",
+        "labelY": 1306
+      },
+      {
+        "naturalWidth": 1900,
+        "naturalHeight": 1175,
+        "width": 640,
+        "height": 396,
+        "labelHeight": 32,
+        "x": 680,
+        "y": 912,
+        "label": "拖拽中（标签落在深色扇区）",
+        "labelY": 1316
+      }
+    ],
+    "issues": []
+  }
+]

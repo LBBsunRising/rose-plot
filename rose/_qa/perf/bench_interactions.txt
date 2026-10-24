@@ -1,0 +1,5 @@
+resize step (normal):        95 ms
+resize step (render frozen): 66 ms
+slider step (normal):        0 ms
+slider step (render skipped):0 ms
+label drag (drawing skipped):1.61 ms/event

@@ -1,0 +1,791 @@
+<Window x:Class="RoseChartStudio.App.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:rendering="clr-namespace:RoseChartStudio.Rendering;assembly=RoseChartStudio.Rendering"
+        Title="玫瑰图工坊 · RoseChart Studio"
+        Width="1520" Height="940" MinWidth="1440" MinHeight="870"
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource AppBg}"
+        Icon="Assets/icon.ico"
+        UseLayoutRounding="True"
+        SnapsToDevicePixels="True">
+
+    <Window.Resources>
+        <DataTemplate x:Key="CountRowTemplate">
+            <Button Style="{StaticResource GhostButton}" Height="32" MinWidth="0" Padding="4,0"
+                    HorizontalContentAlignment="Stretch" Click="CountRow_Click" Tag="{Binding Value}"
+                    AutomationProperties.Name="{Binding Value}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="58" />
+                        <ColumnDefinition Width="68" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="{Binding Value}" FontSize="13" Foreground="{StaticResource Text}"
+                               TextTrimming="CharacterEllipsis" VerticalAlignment="Center" />
+                    <TextBlock Grid.Column="1" Text="{Binding Count}" FontSize="13"
+                               Foreground="{StaticResource Muted}" HorizontalAlignment="Right"
+                               VerticalAlignment="Center" />
+                    <TextBlock Grid.Column="2" Text="{Binding ShareText}" FontSize="13"
+                               Foreground="{StaticResource Muted}" HorizontalAlignment="Right"
+                               VerticalAlignment="Center" />
+                </Grid>
+            </Button>
+        </DataTemplate>
+
+        <DataTemplate x:Key="PreviewColumnHeaderTemplate">
+            <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}"
+                      Checked="ColumnOption_Toggled" Unchecked="ColumnOption_Toggled"
+                      Margin="4,0" Padding="0" VerticalAlignment="Center"
+                      HorizontalContentAlignment="Stretch"
+                      AutomationProperties.Name="{Binding Name}"
+                      ToolTip="{Binding Name}">
+                <TextBlock Text="{Binding Name}" FontSize="11.5" Foreground="{StaticResource Text}"
+                           TextTrimming="CharacterEllipsis" VerticalAlignment="Center" />
+            </CheckBox>
+        </DataTemplate>
+
+        <DataTemplate x:Key="ChartTabTemplate">
+            <RadioButton Style="{StaticResource UnderlineTab}" GroupName="ChartTabs"
+                         Content="{Binding TabLabel}" IsChecked="{Binding IsActive, Mode=TwoWay}"
+                         Checked="ChartTab_Checked" MouseDoubleClick="ChartTab_DoubleClick"
+                         ToolTip="双击重命名标签页" Margin="0,0,2,0" />
+        </DataTemplate>
+
+        <Style x:Key="PaletteButton" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="VerticalContentAlignment" Value="Stretch" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <ContentPresenter />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <DataTemplate x:Key="PaletteCardTemplate">
+            <Button Style="{StaticResource PaletteButton}" Click="PaletteCard_Click"
+                    Tag="{Binding Id}" Margin="0,0,8,8" AutomationProperties.Name="{Binding Name}">
+                <Border x:Name="CardBorder" Background="{StaticResource Panel}"
+                        BorderBrush="{StaticResource Hairline}" BorderThickness="1"
+                        CornerRadius="10" Padding="10">
+                    <Border.Style>
+                        <Style TargetType="{x:Type Border}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                    <Setter Property="BorderBrush" Value="{StaticResource Primary}" />
+                                    <Setter Property="Background" Value="{StaticResource SelectedSoft}" />
+                                </DataTrigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="BorderBrush" Value="{StaticResource Outline}" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <StackPanel>
+                        <ItemsControl ItemsSource="{Binding Swatches}" Height="22">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate><StackPanel Orientation="Horizontal" /></ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Width="14" Height="22" CornerRadius="3" Margin="0,0,2,0"
+                                            Background="{Binding}" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <DockPanel Margin="0,8,0,0" LastChildFill="True">
+                            <Border DockPanel.Dock="Right" CornerRadius="6" Padding="5,1"
+                                    Background="{StaticResource PrimarySoft}"
+                                    Visibility="{Binding TagVisibility}">
+                                <TextBlock Text="{Binding Tag}" FontSize="10.5"
+                                           Foreground="{StaticResource PrimaryDark}" />
+                            </Border>
+                            <TextBlock Text="{Binding Name}" FontSize="12" FontWeight="Medium"
+                                       Foreground="{StaticResource Text}" TextTrimming="CharacterEllipsis" />
+                        </DockPanel>
+                        <DockPanel Margin="0,2,0,0">
+                            <Border DockPanel.Dock="Right" Width="17" Height="17" CornerRadius="8.5"
+                                    Background="{StaticResource Primary}"
+                                    Visibility="{Binding SelectedMarkVisibility}">
+                                <TextBlock Text="✓" FontSize="10" FontWeight="Bold" Foreground="White"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                            <TextBlock Text="{Binding Meta}" FontSize="11.5"
+                                       Foreground="{StaticResource Muted}" VerticalAlignment="Center" />
+                        </DockPanel>
+                    </StackPanel>
+                </Border>
+            </Button>
+        </DataTemplate>
+
+        <DataTemplate x:Key="CategoryColorTemplate">
+            <Button Style="{StaticResource PaletteButton}" Click="CategoryColor_Click"
+                    Tag="{Binding Label}" Height="32" Margin="0,1"
+                    AutomationProperties.Name="{Binding Label}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="22" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Border Width="13" Height="13" CornerRadius="3" Background="{Binding Brush}"
+                            VerticalAlignment="Center" HorizontalAlignment="Left" />
+                    <TextBlock Grid.Column="1" Text="{Binding Label}" FontSize="13"
+                               Foreground="{StaticResource Text}" VerticalAlignment="Center" />
+                    <TextBlock Grid.Column="2" Text="{Binding Meta}" FontSize="11.5"
+                               Foreground="{StaticResource Muted}" VerticalAlignment="Center" />
+                </Grid>
+            </Button>
+        </DataTemplate>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="68" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="32" />
+        </Grid.RowDefinitions>
+
+        <!-- Material top app bar -->
+        <Border Grid.Row="0" Background="{StaticResource Panel}"
+                materialDesign:ElevationAssist.Elevation="Dp1">
+            <Grid Margin="20,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <Image Source="Assets/icon_256.png" Width="38" Height="38"
+                           RenderOptions.BitmapScalingMode="HighQuality" />
+                    <StackPanel Margin="12,0,0,0" VerticalAlignment="Center">
+                        <TextBlock Text="玫瑰图工坊" FontSize="20" FontWeight="Medium" />
+                        <TextBlock x:Name="FileNameText" Text="未打开文件" FontSize="12"
+                                   Foreground="{StaticResource Muted}" Margin="0,2,0,0" />
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Button x:Name="OpenButton" Style="{StaticResource PrimaryButton}"
+                            Click="OpenFile_Click" Margin="0,0,10,0" ToolTip="打开 Excel 工作簿">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="FileExcel" Width="18" Height="18"
+                                                     VerticalAlignment="Center" Margin="0,0,8,0" />
+                            <TextBlock Text="打开 Excel" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="ExportNavButton" Style="{StaticResource SecondaryButton}"
+                            Click="ExportNav_Click" ToolTip="导出设置">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Tune" Width="18" Height="18"
+                                                     VerticalAlignment="Center" Margin="0,0,8,0" />
+                            <TextBlock Text="导出设置" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- body -->
+        <Grid Grid.Row="1" Margin="16,12,16,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="336" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="404" />
+            </Grid.ColumnDefinitions>
+
+            <!-- left inspector: data source / analysis columns / active chart -->
+            <Border Grid.Column="0" Style="{StaticResource PanelCard}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
+                              Padding="20,18,14,18">
+                    <StackPanel>
+                        <TextBlock Text="数据源" Style="{StaticResource SectionTitle}" />
+                        <TextBlock Text="Excel 文件" Style="{StaticResource FieldLabel}" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBox x:Name="FileTextBox" IsReadOnly="True" Text="未选择文件" />
+                            <Button x:Name="BrowseFileButton" Grid.Column="1" Style="{StaticResource IconButton}"
+                                    Click="BrowseFile_Click" Margin="6,0,0,0" ToolTip="浏览 Excel 文件" AutomationProperties.Name="浏览 Excel 文件">
+                                <materialDesign:PackIcon Kind="FolderOpen" Width="20" Height="20" />
+                            </Button>
+                        </Grid>
+                        <TextBlock Text="工作表" Style="{StaticResource FieldLabel}" Margin="0,10,0,4" />
+                        <ComboBox x:Name="SheetCombo" SelectionChanged="SheetCombo_SelectionChanged" AutomationProperties.Name="工作表" />
+
+                        <Border Height="1" Background="{StaticResource Hairline}" Margin="0,20,0,16" />
+                        <Grid>
+                            <TextBlock Text="数据预览" Style="{StaticResource SectionTitle}" Margin="0" />
+                            <TextBlock x:Name="ColumnOptionsSummary" Text="未打开文件" FontSize="12"
+                                       Foreground="{StaticResource Muted}" HorizontalAlignment="Right"
+                                       VerticalAlignment="Center" />
+                        </Grid>
+                        <TextBlock Text="勾选表头列生成图 · 预览前 6 行，左右滚动看全部列" Style="{StaticResource CaptionText}" TextWrapping="Wrap"
+                                   Margin="0,4,0,8" />
+                        <Border BorderBrush="{StaticResource Hairline}" BorderThickness="1" CornerRadius="10"
+                                ClipToBounds="True" Background="{StaticResource Panel}">
+                            <Grid>
+                                <DataGrid x:Name="SheetPreviewGrid" Visibility="Collapsed" ToolTip="行号为 Excel 真实行号；左右滚动查看全部列"
+                                          AutoGenerateColumns="False" IsReadOnly="True"
+                                          HeadersVisibility="All" RowHeaderWidth="32"
+                                          RowHeight="26" ColumnHeaderHeight="42"
+                                          CanUserAddRows="False" CanUserDeleteRows="False"
+                                          CanUserResizeRows="False" CanUserSortColumns="False"
+                                          CanUserReorderColumns="False" CanUserResizeColumns="False"
+                                          SelectionMode="Single" SelectionUnit="Cell"
+                                          GridLinesVisibility="Horizontal"
+                                          HorizontalGridLinesBrush="{StaticResource Hairline}"
+                                          Background="{StaticResource Panel}" BorderThickness="0"
+                                          FontSize="12" MaxHeight="236"
+                                          VerticalScrollBarVisibility="Disabled"
+                                          HorizontalScrollBarVisibility="Auto">
+                                    <DataGrid.ColumnHeaderStyle>
+                                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                                            <Setter Property="Background" Value="{StaticResource SurfaceContainer}" />
+                                            <Setter Property="Foreground" Value="{StaticResource Text}" />
+                                            <Setter Property="FontSize" Value="11.5" />
+                                            <Setter Property="FontWeight" Value="Medium" />
+                                            <Setter Property="Padding" Value="0" />
+                                            <Setter Property="BorderBrush" Value="{StaticResource Hairline}" />
+                                            <Setter Property="BorderThickness" Value="0,0,0,1" />
+                                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                        </Style>
+                                    </DataGrid.ColumnHeaderStyle>
+                                    <DataGrid.RowHeaderStyle>
+                                        <Style TargetType="{x:Type DataGridRowHeader}">
+                                            <Setter Property="Background" Value="{StaticResource PanelSoft}" />
+                                            <Setter Property="Foreground" Value="{StaticResource Muted}" />
+                                            <Setter Property="FontSize" Value="10.5" />
+                                            <Setter Property="BorderBrush" Value="{StaticResource Hairline}" />
+                                            <Setter Property="BorderThickness" Value="0,0,1,0" />
+                                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                        </Style>
+                                    </DataGrid.RowHeaderStyle>
+                                    <DataGrid.CellStyle>
+                                        <Style TargetType="{x:Type DataGridCell}">
+                                            <Setter Property="Padding" Value="0" />
+                                            <Setter Property="BorderThickness" Value="0" />
+                                            <Setter Property="Background" Value="Transparent" />
+                                            <Setter Property="Foreground" Value="{StaticResource Text}" />
+                                        </Style>
+                                    </DataGrid.CellStyle>
+                                    <DataGrid.RowStyle>
+                                        <Style TargetType="{x:Type DataGridRow}">
+                                            <Setter Property="Background" Value="{StaticResource Panel}" />
+                                        </Style>
+                                    </DataGrid.RowStyle>
+                                </DataGrid>
+                                <TextBlock x:Name="PreviewEmpty" Text="打开 Excel 后，在这里预览真实表格"
+                                           Style="{StaticResource CaptionText}" Margin="12,14"
+                                           TextWrapping="Wrap" />
+                            </Grid>
+                        </Border>
+
+                        <Border Height="1" Background="{StaticResource Hairline}" Margin="0,18,0,14" />
+                        <Grid>
+                            <TextBlock Text="当前图表" Style="{StaticResource SectionTitle}" Margin="0" />
+                            <Button x:Name="DeleteChartButton" Style="{StaticResource GhostButton}"
+                                    HorizontalAlignment="Right" Padding="10,0" Height="32"
+                                    Click="DeleteChart_Click" ToolTip="从工作区移除当前图表" AutomationProperties.Name="移除当前图表">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Delete" Width="16" Height="16"
+                                                             VerticalAlignment="Center" Margin="0,0,5,0" />
+                                    <TextBlock Text="移除" FontSize="12" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </Button>
+                        </Grid>
+                        <Border x:Name="ActiveColumnChip" Background="{StaticResource PrimarySoft}"
+                                CornerRadius="8" Padding="10,6" Margin="0,0,0,10"
+                                HorizontalAlignment="Left">
+                            <TextBlock x:Name="ActiveColumnText" Text="—" FontSize="13"
+                                       FontWeight="Medium" Foreground="{StaticResource PrimaryDark}" />
+                        </Border>
+                        <TextBlock Text="标签页名称" Style="{StaticResource FieldLabel}" Margin="0,0,0,4" />
+                        <TextBox x:Name="ChartNameBox" TextChanged="ChartNameBox_TextChanged"
+                                 AutomationProperties.Name="标签页名称"
+                                 ToolTip="显示在图表标签页上的名称；留空则使用列名" />
+                        <TextBlock Text="图表内标题" Style="{StaticResource FieldLabel}" Margin="0,8,0,4" />
+                        <TextBox x:Name="ChartTitleBox" TextChanged="ChartTitleBox_TextChanged"
+                                 AutomationProperties.Name="图表内标题"
+                                 ToolTip="显示在图表画面上的大标题" />
+                        <TextBlock Text="排序" Style="{StaticResource FieldLabel}" />
+                        <ComboBox x:Name="SortCombo" SelectionChanged="SortCombo_SelectionChanged" AutomationProperties.Name="排序">
+                            <ComboBoxItem Content="数量从多到少" IsSelected="True" />
+                            <ComboBoxItem Content="数量从少到多" />
+                        </ComboBox>
+                        <TextBlock Text="统计方式：按行数计数" Style="{StaticResource CaptionText}"
+                                   Margin="0,8,0,0" />
+
+                        <Border Height="1" Background="{StaticResource Hairline}" Margin="0,18,0,14" />
+                        <Grid>
+                            <TextBlock Text="数据概览" Style="{StaticResource SectionTitle}" Margin="0" />
+                            <TextBlock x:Name="ActiveChartCaption" Text="未选择列" FontSize="11.5"
+                                       Foreground="{StaticResource Muted}" HorizontalAlignment="Right"
+                                       VerticalAlignment="Center" />
+                        </Grid>
+                        <Grid Height="26" Margin="0,4,0,2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="58" />
+                                <ColumnDefinition Width="68" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="类别" FontSize="12" FontWeight="Medium"
+                                       Foreground="{StaticResource Muted}" VerticalAlignment="Center" />
+                            <TextBlock Grid.Column="1" Text="数量" FontSize="12" FontWeight="Medium"
+                                       Foreground="{StaticResource Muted}" HorizontalAlignment="Right"
+                                       VerticalAlignment="Center" />
+                            <TextBlock Grid.Column="2" Text="占比" FontSize="12" FontWeight="Medium"
+                                       Foreground="{StaticResource Muted}" HorizontalAlignment="Right"
+                                       VerticalAlignment="Center" />
+                        </Grid>
+                        <ItemsControl x:Name="ChartRows" ItemTemplate="{StaticResource CountRowTemplate}" />
+                        <TextBlock x:Name="ChartEmpty" Text="暂无数据" Style="{StaticResource CaptionText}"
+                                   Margin="0,6,0,0" Visibility="Collapsed" />
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+
+            <!-- center: dynamic chart tabs + canvas -->
+            <Grid Grid.Column="1" Margin="14,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="56" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="30" />
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled"
+                                  VerticalAlignment="Bottom">
+                        <ItemsControl x:Name="ChartTabs" ItemTemplate="{StaticResource ChartTabTemplate}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate><StackPanel Orientation="Horizontal" /></ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </ScrollViewer>
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center"
+                                Margin="8,0,0,0">
+                        <Button x:Name="AddChartButton" Style="{StaticResource IconButton}" AutomationProperties.Name="添加图表"
+                                Click="AddChart_Click" ToolTip="添加分析列">
+                            <materialDesign:PackIcon Kind="Plus" Width="20" Height="20" />
+                        </Button>
+                        <Button x:Name="AutoArrangeButton" Style="{StaticResource SecondaryButton}"
+                                Content="自动排列" Click="AutoArrange_Click" Height="36" MinHeight="36"
+                                Margin="6,0,0,0" />
+                        <Button x:Name="UndoButton" Style="{StaticResource IconButton}" AutomationProperties.Name="撤销标签调整"
+                                Click="Undo_Click" ToolTip="撤销标签调整 (Ctrl+Z)" Margin="4,0,0,0">
+                            <materialDesign:PackIcon Kind="Undo" Width="20" Height="20" />
+                        </Button>
+                        <Button x:Name="RedoButton" Style="{StaticResource IconButton}" AutomationProperties.Name="重做标签调整"
+                                Click="Redo_Click" ToolTip="重做标签调整 (Ctrl+Y)">
+                            <materialDesign:PackIcon Kind="Redo" Width="20" Height="20" />
+                        </Button>
+                    </StackPanel>
+                </Grid>
+
+                <Border Grid.Row="1" Style="{StaticResource PanelCard}" Background="{StaticResource PreviewBg}"
+                        Padding="0" ClipToBounds="True">
+                    <Grid>
+                        <Grid x:Name="ChartImageHost" Background="Transparent">
+                            <Viewbox Stretch="Uniform" StretchDirection="Both">
+                                <Grid Width="1200" Height="800" x:Name="ChartVirtualGrid">
+                                    <Grid.Background>
+                                        <StaticResource ResourceKey="CheckerboardBrush" />
+                                    </Grid.Background>
+                                    <rendering:RoseChartView x:Name="ChartView" Width="1200" Height="800"
+                                                             AutomationProperties.Name="玫瑰图预览" />
+                                    <Grid x:Name="InlineTitleEditor" Visibility="Collapsed"
+                                          Width="760" HorizontalAlignment="Center" VerticalAlignment="Top"
+                                          Margin="0,12,0,0">
+                                        <Border Background="{StaticResource Panel}"
+                                                BorderBrush="{StaticResource Primary}"
+                                                BorderThickness="1.5" CornerRadius="12" Padding="12,4">
+                                            <TextBox x:Name="InlineTitleBox" Style="{x:Null}"
+                                                     Background="Transparent" BorderThickness="0"
+                                                     FontSize="47" FontWeight="Bold" TextAlignment="Center"
+                                                     Padding="4,2" VerticalContentAlignment="Center"
+                                                     KeyDown="InlineTitleBox_KeyDown"
+                                                     LostFocus="InlineTitleBox_LostFocus"
+                                                     AutomationProperties.Name="图表标题编辑" />
+                                        </Border>
+                                    </Grid>
+                                </Grid>
+                            </Viewbox>
+                            <Button x:Name="TitleEditButton" Style="{StaticResource IconButton}"
+                                    Width="36" Height="36" HorizontalAlignment="Right" VerticalAlignment="Top"
+                                    Margin="0,12,14,0" Visibility="Collapsed"
+                                    Click="TitleEditButton_Click" ToolTip="点击图表标题或此铅笔即可编辑"
+                                    AutomationProperties.Name="编辑图表标题">
+                                <materialDesign:PackIcon Kind="Pencil" Width="18" Height="18" />
+                            </Button>
+                        </Grid>
+                        <Grid x:Name="EmptyOverlay" Background="{StaticResource PreviewBg}">
+                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <materialDesign:PackIcon Kind="ChartPie" Width="58" Height="58"
+                                                         Foreground="{StaticResource Outline}"
+                                                         HorizontalAlignment="Center" />
+                                <TextBlock x:Name="EmptyTitle" Text="请选择 Excel 文件" FontSize="18"
+                                           FontWeight="Medium" HorizontalAlignment="Center" Margin="0,14,0,0" />
+                                <TextBlock x:Name="EmptyDescription"
+                                           Text="打开一个 Excel 工作簿，然后勾选任意分析列。"
+                                           FontSize="13" Foreground="{StaticResource Muted}"
+                                           HorizontalAlignment="Center" Margin="0,7,0,0" />
+                                <Button x:Name="EmptyOpenButton" Style="{StaticResource PrimaryButton}"
+                                        Click="OpenFile_Click" Margin="0,16,0,0"
+                                        HorizontalAlignment="Center" Content="打开 Excel" />
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                </Border>
+
+                <Grid Grid.Row="2">
+                    <TextBlock x:Name="DragHintText" Text="" Style="{StaticResource CaptionText}"
+                               VerticalAlignment="Center" />
+                    <TextBlock x:Name="LayoutStateText" Text="布局：无数据" Style="{StaticResource CaptionText}"
+                               HorizontalAlignment="Right" VerticalAlignment="Center" />
+                </Grid>
+            </Grid>
+
+            <!-- right inspector: palette / style / export -->
+            <Border Grid.Column="2" Style="{StaticResource PanelCard}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="48" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Bottom"
+                                Margin="18,0,18,0">
+                        <RadioButton x:Name="PaletteTab" GroupName="RightTabs" Style="{StaticResource UnderlineTab}"
+                                     Content="配色" IsChecked="True" Checked="RightTab_Checked" />
+                        <RadioButton x:Name="StyleTab" GroupName="RightTabs" Style="{StaticResource UnderlineTab}"
+                                     Content="样式" Checked="RightTab_Checked" Margin="2,0,0,0" />
+                        <RadioButton x:Name="ExportTab" GroupName="RightTabs" Style="{StaticResource UnderlineTab}"
+                                     Content="导出" Checked="RightTab_Checked" Margin="2,0,0,0" />
+                    </StackPanel>
+
+                    <ScrollViewer x:Name="PalettePage" Grid.Row="1" VerticalScrollBarVisibility="Auto"
+                                  HorizontalScrollBarVisibility="Disabled" Padding="18,10,12,18">
+                        <StackPanel>
+                            <Grid Margin="0,2,0,16">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="当前方案" FontSize="11.5" Foreground="{StaticResource Muted}"
+                                           VerticalAlignment="Center" />
+                                <ItemsControl x:Name="CurrentPaletteSwatches" Grid.Column="1" Margin="10,0,8,0"
+                                              VerticalAlignment="Center">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate><StackPanel Orientation="Horizontal" /></ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border Width="14" Height="16" CornerRadius="3" Margin="0,0,2,0"
+                                                    Background="{Binding}" />
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                                <TextBlock x:Name="CurrentPaletteName" Grid.Column="2" FontSize="13"
+                                           FontWeight="Medium" VerticalAlignment="Center" />
+                                <TextBlock x:Name="CurrentPaletteMeta" Grid.Column="3" FontSize="11.5"
+                                           Foreground="{StaticResource Muted}" VerticalAlignment="Center" />
+                            </Grid>
+
+                            <TextBlock x:Name="RecommendTitle" Text="推荐配色" Style="{StaticResource SectionTitle}" Margin="0,0,0,4" />
+                            <TextBlock x:Name="RecommendHint" Text="根据当前类别数量推荐" FontSize="11.5"
+                                       Foreground="{StaticResource Muted}" Margin="0,0,0,8" />
+                            <ItemsControl x:Name="RecPalettes">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate><WrapPanel /></ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <ContentControl Content="{Binding}"
+                                                        ContentTemplate="{StaticResource PaletteCardTemplate}" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+
+                            <TextBlock Text="标签配色" Style="{StaticResource SectionTitle}" Margin="0,16,0,8" />
+                            <Border Style="{StaticResource SegmentContainer}" HorizontalAlignment="Stretch">
+                                <UniformGrid Columns="3">
+                                    <RadioButton x:Name="LabelModeFollow" GroupName="LabelMode"
+                                                 Style="{StaticResource SegmentRadio}" Content="跟随扇区"
+                                                 Checked="LabelMode_Checked" />
+                                    <RadioButton x:Name="LabelModeAuto" GroupName="LabelMode"
+                                                 Style="{StaticResource SegmentRadio}" Content="自动加深"
+                                                 IsChecked="True" Checked="LabelMode_Checked" />
+                                    <RadioButton x:Name="LabelModeSingle" GroupName="LabelMode"
+                                                 Style="{StaticResource SegmentRadio}" Content="统一深色"
+                                                 Checked="LabelMode_Checked" />
+                                </UniformGrid>
+                            </Border>
+                            <Grid Margin="0,10,0,0">
+                                <TextBlock Text="统一标签色" Style="{StaticResource CaptionText}"
+                                           VerticalAlignment="Center" />
+                                <Button x:Name="SingleLabelColorButton" Width="30" Height="30"
+                                        HorizontalAlignment="Right" Background="#334155"
+                                        BorderBrush="{StaticResource Hairline}" BorderThickness="1"
+                                        ToolTip="选择统一标签色" Click="SingleLabelColor_Click" AutomationProperties.Name="统一标签颜色" />
+                            </Grid>
+
+                            <TextBlock Text="类别颜色" Style="{StaticResource SectionTitle}" Margin="0,18,0,6" />
+                            <TextBlock x:Name="CategoryColorEmpty" Text="暂无数据" Style="{StaticResource CaptionText}"
+                                       Visibility="Collapsed" />
+                            <ItemsControl x:Name="CategoryColors" ItemTemplate="{StaticResource CategoryColorTemplate}" />
+
+                            <TextBlock Text="全部配色方案" Style="{StaticResource SectionTitle}" Margin="0,18,0,8" />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="色系" FontSize="11.5" Foreground="{StaticResource Muted}"
+                                           VerticalAlignment="Center" />
+                                <ComboBox x:Name="GroupFilterCombo" Grid.Column="1" HorizontalAlignment="Right" AutomationProperties.Name="色系"
+                                          MinWidth="150" SelectionChanged="GroupFilter_SelectionChanged" />
+                            </Grid>
+                            <ItemsControl x:Name="GalleryPalettes" Margin="0,8,0,0">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate><WrapPanel /></ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <ContentControl Content="{Binding}"
+                                                        ContentTemplate="{StaticResource PaletteCardTemplate}" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </ScrollViewer>
+
+                    <ScrollViewer x:Name="StylePage" Grid.Row="1" Visibility="Collapsed"
+                                  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
+                                  Padding="18,10,12,18">
+                        <StackPanel>
+                            <TextBlock Text="标题" Style="{StaticResource SectionTitle}" Margin="0,2,0,8" />
+                            <TextBlock Text="图表标题" Style="{StaticResource FieldLabel}" />
+                            <TextBox x:Name="TitleBox" TextChanged="TitleBox_TextChanged" />
+                            <TextBlock Text="副标题" Style="{StaticResource FieldLabel}" Margin="0,10,0,4" />
+                            <TextBox x:Name="SubtitleBox" TextChanged="SubtitleBox_TextChanged" />
+                            <TextBlock Text="标题字号" Style="{StaticResource FieldLabel}" Margin="0,12,0,0" />
+                            <Grid>
+                                <Slider x:Name="TitleFontSlider" Minimum="18" Maximum="56" ValueChanged="StyleSlider_Changed" />
+                                <TextBlock x:Name="TitleFontValue" Text="34" HorizontalAlignment="Right"
+                                           Style="{StaticResource CaptionText}" Margin="0,0,4,0" />
+                            </Grid>
+                            <TextBlock Text="字体" Style="{StaticResource FieldLabel}" Margin="0,12,0,4" />
+                            <ComboBox x:Name="FontFamilyCombo" SelectionChanged="FontFamily_Changed" AutomationProperties.Name="字体">
+                                <ComboBoxItem Content="Microsoft YaHei UI" />
+                                <ComboBoxItem Content="Microsoft YaHei" />
+                                <ComboBoxItem Content="SimHei" />
+                                <ComboBoxItem Content="DengXian" />
+                                <ComboBoxItem Content="SimSun" />
+                            </ComboBox>
+
+                            <TextBlock Text="扇区" Style="{StaticResource SectionTitle}" Margin="0,20,0,8" />
+                            <TextBlock Text="内半径" Style="{StaticResource FieldLabel}" />
+                            <Grid>
+                                <Slider x:Name="InnerRadiusSlider" Minimum="0.05" Maximum="0.8" ValueChanged="StyleSlider_Changed" />
+                                <TextBlock x:Name="InnerRadiusValue" Text="0.30" HorizontalAlignment="Right"
+                                           Style="{StaticResource CaptionText}" />
+                            </Grid>
+                            <TextBlock Text="外半径" Style="{StaticResource FieldLabel}" Margin="0,8,0,0" />
+                            <Grid>
+                                <Slider x:Name="OuterRadiusSlider" Minimum="0.4" Maximum="1.3" ValueChanged="StyleSlider_Changed" />
+                                <TextBlock x:Name="OuterRadiusValue" Text="0.98" HorizontalAlignment="Right"
+                                           Style="{StaticResource CaptionText}" />
+                            </Grid>
+                            <TextBlock Text="起始角度" Style="{StaticResource FieldLabel}" Margin="0,8,0,0" />
+                            <Grid>
+                                <Slider x:Name="StartAngleSlider" Minimum="0" Maximum="360" ValueChanged="StyleSlider_Changed" />
+                                <TextBlock x:Name="StartAngleValue" Text="90" HorizontalAlignment="Right"
+                                           Style="{StaticResource CaptionText}" />
+                            </Grid>
+                            <TextBlock Text="扇区间隙" Style="{StaticResource FieldLabel}" Margin="0,8,0,0" />
+                            <Grid>
+                                <Slider x:Name="GapRatioSlider" Minimum="0" Maximum="0.6" ValueChanged="StyleSlider_Changed" />
+                                <TextBlock x:Name="GapRatioValue" Text="0.18" HorizontalAlignment="Right"
+                                           Style="{StaticResource CaptionText}" />
+                            </Grid>
+                            <TextBlock Text="圆角" Style="{StaticResource FieldLabel}" Margin="0,8,0,0" />
+                            <Grid>
+                                <Slider x:Name="CornerRadiusSlider" Minimum="0" Maximum="0.14" ValueChanged="StyleSlider_Changed" />
+                                <TextBlock x:Name="CornerRadiusValue" Text="0.055" HorizontalAlignment="Right"
+                                           Style="{StaticResource CaptionText}" />
+                            </Grid>
+                            <TextBlock Text="描边宽度" Style="{StaticResource FieldLabel}" Margin="0,8,0,0" />
+                            <Grid>
+                                <Slider x:Name="EdgeWidthSlider" Minimum="0" Maximum="10" ValueChanged="StyleSlider_Changed" />
+                                <TextBlock x:Name="EdgeWidthValue" Text="3.2" HorizontalAlignment="Right"
+                                           Style="{StaticResource CaptionText}" />
+                            </Grid>
+                            <Grid Margin="0,8,0,0">
+                                <TextBlock Text="描边颜色" Style="{StaticResource CaptionText}" VerticalAlignment="Center" />
+                                <Button x:Name="EdgeColorButton" Width="30" Height="30" HorizontalAlignment="Right" AutomationProperties.Name="描边颜色"
+                                        BorderBrush="{StaticResource Hairline}" BorderThickness="1"
+                                        Click="EdgeColor_Click" />
+                            </Grid>
+
+                            <TextBlock Text="标签" Style="{StaticResource SectionTitle}" Margin="0,20,0,8" />
+                            <TextBlock Text="字号" Style="{StaticResource FieldLabel}" />
+                            <Grid>
+                                <Slider x:Name="LabelFontSlider" Minimum="8" Maximum="40" ValueChanged="StyleSlider_Changed" />
+                                <TextBlock x:Name="LabelFontValue" Text="21" HorizontalAlignment="Right"
+                                           Style="{StaticResource CaptionText}" />
+                            </Grid>
+                            <TextBlock Text="引线粗细" Style="{StaticResource FieldLabel}" Margin="0,8,0,0" />
+                            <Grid>
+                                <Slider x:Name="LabelLineSlider" Minimum="0" Maximum="5" ValueChanged="StyleSlider_Changed" />
+                                <TextBlock x:Name="LabelLineValue" Text="0.9" HorizontalAlignment="Right"
+                                           Style="{StaticResource CaptionText}" />
+                            </Grid>
+                            <TextBlock Text="引线长度比例" Style="{StaticResource FieldLabel}" Margin="0,8,0,0" />
+                            <Grid>
+                                <Slider x:Name="LabelWireSlider" Minimum="0.3" Maximum="2.0" ValueChanged="StyleSlider_Changed" />
+                                <TextBlock x:Name="LabelWireValue" Text="1.0" HorizontalAlignment="Right"
+                                           Style="{StaticResource CaptionText}" />
+                            </Grid>
+                            <CheckBox x:Name="ShowNameCheck" Content="显示类别名" IsChecked="True"
+                                      Margin="0,10,0,0" Checked="LabelSwitch_Changed" Unchecked="LabelSwitch_Changed" />
+                            <CheckBox x:Name="ShowValueCheck" Content="显示数量" IsChecked="True"
+                                      Margin="0,4,0,0" Checked="LabelSwitch_Changed" Unchecked="LabelSwitch_Changed" />
+                            <CheckBox x:Name="ShowPercentCheck" Content="显示占比" IsChecked="True"
+                                      Margin="0,4,0,0" Checked="LabelSwitch_Changed" Unchecked="LabelSwitch_Changed" />
+                            <TextBlock Text="占比小数位" Style="{StaticResource FieldLabel}" Margin="0,10,0,4" />
+                            <TextBox x:Name="DecimalsBox" Text="2" LostFocus="DecimalsBox_LostFocus" />
+                            <TextBlock Text="数量后缀" Style="{StaticResource FieldLabel}" Margin="0,10,0,4" />
+                            <TextBox x:Name="SuffixBox" TextChanged="SuffixBox_TextChanged" />
+
+                            <TextBlock Text="中心文字" Style="{StaticResource SectionTitle}" Margin="0,20,0,8" />
+                            <TextBlock Text="模板（{total} / {n} / {max}）" Style="{StaticResource FieldLabel}" />
+                            <TextBox x:Name="CenterTextBox" TextChanged="CenterTextBox_TextChanged" />
+                            <TextBlock Text="字号" Style="{StaticResource FieldLabel}" Margin="0,8,0,0" />
+                            <Grid>
+                                <Slider x:Name="CenterFontSlider" Minimum="10" Maximum="40" ValueChanged="StyleSlider_Changed" />
+                                <TextBlock x:Name="CenterFontValue" Text="18" HorizontalAlignment="Right"
+                                           Style="{StaticResource CaptionText}" />
+                            </Grid>
+                            <Grid Margin="0,8,0,0">
+                                <TextBlock Text="中心文字颜色" Style="{StaticResource CaptionText}" VerticalAlignment="Center" />
+                                <Button x:Name="CenterColorButton" Width="30" Height="30" HorizontalAlignment="Right" AutomationProperties.Name="中心文字颜色"
+                                        BorderBrush="{StaticResource Hairline}" BorderThickness="1"
+                                        Click="CenterColor_Click" />
+                            </Grid>
+                        </StackPanel>
+                    </ScrollViewer>
+
+                    <ScrollViewer x:Name="ExportPage" Grid.Row="1" Visibility="Collapsed"
+                                  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
+                                  Padding="18,10,12,18">
+                        <StackPanel>
+                            <TextBlock Text="导出设置" Style="{StaticResource SectionTitle}" Margin="0,2,0,10" />
+                            <TextBlock Text="图片格式" Style="{StaticResource FieldLabel}" />
+                            <Border Style="{StaticResource SegmentContainer}">
+                                <UniformGrid Columns="3">
+                                    <RadioButton x:Name="FormatPng" GroupName="ExportFormat"
+                                                 Style="{StaticResource SegmentRadio}" Content="PNG" IsChecked="True"
+                                                 Checked="ExportFormat_Checked" />
+                                    <RadioButton x:Name="FormatSvg" GroupName="ExportFormat"
+                                                 Style="{StaticResource SegmentRadio}" Content="SVG"
+                                                 Checked="ExportFormat_Checked" />
+                                    <RadioButton x:Name="FormatPdf" GroupName="ExportFormat"
+                                                 Style="{StaticResource SegmentRadio}" Content="PDF"
+                                                 Checked="ExportFormat_Checked" />
+                                </UniformGrid>
+                            </Border>
+
+                            <TextBlock Text="尺寸" Style="{StaticResource FieldLabel}" Margin="0,14,0,4" />
+                            <ComboBox x:Name="SizePresetCombo" SelectionChanged="SizePreset_Changed">
+                                <ComboBoxItem Content="1200 × 800" Tag="1200x800" IsSelected="True" />
+                                <ComboBoxItem Content="1600 × 1067" Tag="1600x1067" />
+                                <ComboBoxItem Content="1920 × 1280" Tag="1920x1280" />
+                                <ComboBoxItem Content="2400 × 1600" Tag="2400x1600" />
+                                <ComboBoxItem Content="自定义" Tag="custom" />
+                            </ComboBox>
+                            <Grid Margin="0,10,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="80" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="80" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="宽" Style="{StaticResource CaptionText}" VerticalAlignment="Center" />
+                                <TextBox x:Name="WidthBox" Grid.Column="1" Text="1200" Width="72"
+                                         HorizontalAlignment="Left" Margin="6,0,8,0" />
+                                <TextBlock Grid.Column="2" Text="×" Style="{StaticResource CaptionText}" VerticalAlignment="Center" />
+                                <TextBlock Grid.Column="3" Text="高" Style="{StaticResource CaptionText}"
+                                           VerticalAlignment="Center" Margin="8,0,0,0" />
+                                <TextBox x:Name="HeightBox" Grid.Column="4" Text="800" Width="72"
+                                         HorizontalAlignment="Left" Margin="6,0,8,0" />
+                                <TextBlock Grid.Column="5" Text="px" Style="{StaticResource CaptionText}" VerticalAlignment="Center" />
+                            </Grid>
+                            <TextBlock x:Name="DimensionHint" Text="尺寸由上方预设决定，选择“自定义”后可修改"
+                                       Style="{StaticResource CaptionText}" Margin="0,4,0,0" />
+                            <TextBlock Text="DPI" Style="{StaticResource FieldLabel}" Margin="0,10,0,4" />
+                            <TextBox x:Name="DpiBox" Text="100" HorizontalAlignment="Right" Width="110" />
+                            <CheckBox x:Name="TransparentCheck" Content="透明背景（适合 PPT）" IsChecked="True"
+                                      Margin="0,10,0,0" Checked="ExportOption_Changed" Unchecked="ExportOption_Changed" />
+
+                            <TextBlock Text="文件名模板" Style="{StaticResource FieldLabel}" Margin="0,14,0,4" />
+                            <TextBox x:Name="FilenameBox" Text="{}{title}" TextChanged="ExportOption_Changed" />
+                            <TextBlock Text="可用占位符：{title} {column} {date} {index}" Style="{StaticResource CaptionText}"
+                                       Margin="0,4,0,0" />
+                            <TextBlock Text="输出目录" Style="{StaticResource FieldLabel}" Margin="0,12,0,4" />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBox x:Name="OutputDirBox" IsReadOnly="True" />
+                                <Button Grid.Column="1" Style="{StaticResource SecondaryButton}" Content="选择"
+                                        Margin="8,0,0,0" Click="ChooseOutputDir_Click" />
+                            </Grid>
+
+                            <TextBlock Text="生成文件" Style="{StaticResource SectionTitle}" Margin="0,20,0,8" />
+                            <Button x:Name="ExportCurrentButton" Style="{StaticResource PrimaryButton}"
+                                    Content="导出当前图" Height="40" Click="ExportCurrent_Click" />
+                            <Button x:Name="ExportAllButton" Style="{StaticResource SecondaryButton}"
+                                    Content="导出全部图表" Height="40" Margin="0,8,0,0" Click="ExportAll_Click" />
+                            <Button x:Name="CopyImageButton" Style="{StaticResource SecondaryButton}"
+                                    Content="复制当前图为图片" Height="40" Margin="0,8,0,0" Click="CopyImage_Click" />
+                            <Button x:Name="OpenOutputButton" Style="{StaticResource GhostButton}"
+                                    Content="打开输出目录" Margin="0,8,0,0" Click="OpenOutputDir_Click" />
+                            <TextBlock Text="导出会保留当前样式与标签位置。" Style="{StaticResource CaptionText}"
+                                       Margin="0,10,0,0" />
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <!-- status bar -->
+        <Border Grid.Row="2" Background="{StaticResource SurfaceContainer}"
+                BorderBrush="{StaticResource Hairline}" BorderThickness="0,1,0,0">
+            <Grid Margin="18,0">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <Ellipse x:Name="StatusDot" Width="7" Height="7" Fill="{StaticResource Success}"
+                             VerticalAlignment="Center" />
+                    <TextBlock x:Name="StatusText" Text="就绪" FontSize="11.5"
+                               Foreground="{StaticResource Muted}" Margin="8,0,0,0" />
+                </StackPanel>
+                <TextBlock x:Name="StatsText" Text="" FontSize="11.5" Foreground="{StaticResource Muted}"
+                           HorizontalAlignment="Right" VerticalAlignment="Center" />
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

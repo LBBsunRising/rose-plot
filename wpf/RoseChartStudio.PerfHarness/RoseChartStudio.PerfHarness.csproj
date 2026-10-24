@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <AssemblyName>RoseChartStudio.PerfHarness</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RoseChartStudio.Core\RoseChartStudio.Core.csproj" />
+    <ProjectReference Include="..\RoseChartStudio.Rendering\RoseChartStudio.Rendering.csproj" />
+  </ItemGroup>
+
+</Project>

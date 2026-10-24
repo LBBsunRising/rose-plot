@@ -1,0 +1,4 @@
+labels=12 | dpi=75.2
+baseline draw: 59.2 ms
+without checkerboard: 32.3 ms
+without checkerboard + only active label visible: 9.9 ms

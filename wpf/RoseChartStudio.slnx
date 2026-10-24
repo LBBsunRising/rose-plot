@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="RoseChartStudio.App/RoseChartStudio.App.csproj" />
+  <Project Path="RoseChartStudio.Core/RoseChartStudio.Core.csproj" />
+  <Project Path="RoseChartStudio.PerfHarness/RoseChartStudio.PerfHarness.csproj" />
+  <Project Path="RoseChartStudio.Rendering/RoseChartStudio.Rendering.csproj" />
+  <Project Path="RoseChartStudio.TestRunner/RoseChartStudio.TestRunner.csproj" />
+  <Project Path="RoseChartStudio.Tests/RoseChartStudio.Tests.csproj" />
+</Solution>

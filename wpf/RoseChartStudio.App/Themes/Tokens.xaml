@@ -1,0 +1,110 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=System.Runtime">
+
+    <!-- Material 3 color roles (teal seed, light scheme) -->
+    <Color x:Key="PrimaryColor">#006A60</Color>
+    <Color x:Key="OnPrimaryColor">#FFFFFF</Color>
+    <Color x:Key="PrimaryContainerColor">#A6F2E4</Color>
+    <Color x:Key="OnPrimaryContainerColor">#00201C</Color>
+    <Color x:Key="SecondaryColor">#4A635F</Color>
+    <Color x:Key="SecondaryContainerColor">#CCE8E3</Color>
+    <Color x:Key="AppBgColor">#F7FAF9</Color>
+    <Color x:Key="SurfaceColor">#FBFDFB</Color>
+    <Color x:Key="SurfaceContainerLowColor">#F3F7F5</Color>
+    <Color x:Key="SurfaceContainerColor">#EDF3F0</Color>
+    <Color x:Key="SurfaceContainerHighColor">#E7EEEA</Color>
+    <Color x:Key="TextColor">#191C1B</Color>
+    <Color x:Key="MutedColor">#5C6B67</Color>
+    <Color x:Key="OutlineColor">#6F7977</Color>
+    <Color x:Key="OutlineVariantColor">#D7E0DD</Color>
+    <Color x:Key="PrimaryDarkColor">#004F46</Color>
+    <Color x:Key="PrimarySoftColor">#D9F2EC</Color>
+    <Color x:Key="SuccessColor">#2E7D32</Color>
+    <Color x:Key="WarningColor">#B26A00</Color>
+    <Color x:Key="ErrorColor">#BA1A1A</Color>
+    <Color x:Key="PreviewBgColor">#EEF3F1</Color>
+    <Color x:Key="SelectedSoftColor">#E6F4EF</Color>
+    <Color x:Key="TrackColor">#D5DFDC</Color>
+
+    <SolidColorBrush x:Key="AppBg" Color="{StaticResource AppBgColor}" />
+    <SolidColorBrush x:Key="Panel" Color="{StaticResource SurfaceColor}" />
+    <SolidColorBrush x:Key="PanelSoft" Color="{StaticResource SurfaceContainerLowColor}" />
+    <SolidColorBrush x:Key="SurfaceContainer" Color="{StaticResource SurfaceContainerColor}" />
+    <SolidColorBrush x:Key="SurfaceContainerHigh" Color="{StaticResource SurfaceContainerHighColor}" />
+    <SolidColorBrush x:Key="Hairline" Color="{StaticResource OutlineVariantColor}" />
+    <SolidColorBrush x:Key="Outline" Color="{StaticResource OutlineColor}" />
+    <SolidColorBrush x:Key="Text" Color="{StaticResource TextColor}" />
+    <SolidColorBrush x:Key="Muted" Color="{StaticResource MutedColor}" />
+    <SolidColorBrush x:Key="Primary" Color="{StaticResource PrimaryColor}" />
+    <SolidColorBrush x:Key="OnPrimary" Color="{StaticResource OnPrimaryColor}" />
+    <SolidColorBrush x:Key="PrimaryContainer" Color="{StaticResource PrimaryContainerColor}" />
+    <SolidColorBrush x:Key="PrimaryDark" Color="{StaticResource PrimaryDarkColor}" />
+    <SolidColorBrush x:Key="PrimarySoft" Color="{StaticResource PrimarySoftColor}" />
+    <SolidColorBrush x:Key="Success" Color="{StaticResource SuccessColor}" />
+    <SolidColorBrush x:Key="Warning" Color="{StaticResource WarningColor}" />
+    <SolidColorBrush x:Key="Error" Color="{StaticResource ErrorColor}" />
+    <SolidColorBrush x:Key="PreviewBg" Color="{StaticResource PreviewBgColor}" />
+    <SolidColorBrush x:Key="SelectedSoft" Color="{StaticResource SelectedSoftColor}" />
+    <SolidColorBrush x:Key="Track" Color="{StaticResource TrackColor}" />
+
+    <FontFamily x:Key="UiFont">Microsoft YaHei UI</FontFamily>
+
+    <sys:Double x:Key="FontBody">14</sys:Double>
+    <sys:Double x:Key="FontSmall">13</sys:Double>
+    <sys:Double x:Key="FontCaption">12</sys:Double>
+    <sys:Double x:Key="FontSection">16</sys:Double>
+    <sys:Double x:Key="FontHeader">22</sys:Double>
+
+    <!-- Transparent checkerboard used only behind the chart image. -->
+    <DrawingBrush x:Key="CheckerboardBrush" TileMode="Tile"
+                  Viewport="0,0,75,72.72" ViewportUnits="Absolute"
+                  Viewbox="0,0,75,72.72" ViewboxUnits="Absolute"
+                  Stretch="Fill">
+        <DrawingBrush.Drawing>
+            <DrawingGroup>
+                <GeometryDrawing Brush="#FFFFFF">
+                    <GeometryDrawing.Geometry>
+                        <RectangleGeometry Rect="0,0,75,72.72" />
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="#F4F8F6">
+                    <GeometryDrawing.Geometry>
+                        <RectangleGeometry Rect="37.5,0,37.5,36.36" />
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="#F4F8F6">
+                    <GeometryDrawing.Geometry>
+                        <RectangleGeometry Rect="0,36.36,37.5,36.36" />
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+
+    <DrawingBrush x:Key="CheckerboardBrushSmall" TileMode="Tile"
+                  Viewport="0,0,32,30" ViewportUnits="Absolute"
+                  Viewbox="0,0,32,30" ViewboxUnits="Absolute"
+                  Stretch="Fill">
+        <DrawingBrush.Drawing>
+            <DrawingGroup>
+                <GeometryDrawing Brush="#FFFFFF">
+                    <GeometryDrawing.Geometry>
+                        <RectangleGeometry Rect="0,0,32,30" />
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="#F4F8F6">
+                    <GeometryDrawing.Geometry>
+                        <RectangleGeometry Rect="16,0,16,15" />
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="#F4F8F6">
+                    <GeometryDrawing.Geometry>
+                        <RectangleGeometry Rect="0,15,16,15" />
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+
+</ResourceDictionary>

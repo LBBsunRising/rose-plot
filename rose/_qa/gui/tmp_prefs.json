@@ -1,0 +1,88 @@
+{
+  "version": 2,
+  "window": {
+    "geometry": "2000x1225+330+197",
+    "zoomed": false
+  },
+  "recent_files": [
+    "C:\\Users\\admin\\Desktop\\rose-new\\rose\\examples\\project_test_data.xlsx",
+    "C:\\Users\\admin\\Desktop\\rose-new\\rose\\_qa\\edge\\single_category.xlsx",
+    "C:\\Users\\admin\\Desktop\\rose-new\\rose\\_qa\\edge\\other_columns.xlsx",
+    "C:\\Users\\admin\\Desktop\\rose-new\\rose\\_qa\\edge\\many_categories.xlsx"
+  ],
+  "project": {
+    "file": "C:\\Users\\admin\\Desktop\\rose-new\\rose\\examples\\project_test_data.xlsx",
+    "sheet": "项目数据",
+    "column_a": "开发类别",
+    "column_b": "状态",
+    "mode": "both",
+    "active": "chart1",
+    "charts": {
+      "chart1": {
+        "title": "项目类型统计",
+        "subtitle": "",
+        "palette_id": "legacy_project",
+        "label_mode": "auto",
+        "label_single_color": "#334155",
+        "overrides": {},
+        "layout": {},
+        "sort_mode": "count_desc"
+      },
+      "chart2": {
+        "title": "进展统计",
+        "subtitle": "",
+        "palette_id": "legacy_status",
+        "label_mode": "auto",
+        "label_single_color": "#334155",
+        "overrides": {},
+        "layout": {},
+        "sort_mode": "count_desc"
+      }
+    },
+    "style": {
+      "title": "SW项目统计",
+      "subtitle": "",
+      "font_family": "SimHei",
+      "title_font_size": 34.0,
+      "title_color": "#333333",
+      "subtitle_font_size": 14.0,
+      "subtitle_color": "#64748B",
+      "inner_radius": 0.3,
+      "outer_radius": 0.98,
+      "start_angle": 90.0,
+      "gap_ratio": 0.18,
+      "gap_max_degrees": 2.0,
+      "corner_radius": 0.055,
+      "edge_color": "#FFFFFF",
+      "edge_width": 3.2,
+      "label_font_size": 21.0,
+      "label_line_width": 0.9,
+      "label_wire_scale": 1.0,
+      "label_text_gap": 0.03,
+      "label_color_mode": "auto",
+      "label_single_color": "#334155",
+      "show_name": true,
+      "show_value": true,
+      "show_percent": true,
+      "percent_decimals": 2,
+      "value_suffix": "",
+      "center_text": "",
+      "center_font_size": 18.0,
+      "center_color": "#64748B",
+      "background": "transparent",
+      "figure_width": 12.0,
+      "figure_height": 8.0,
+      "dpi": 100
+    },
+    "export": {
+      "format": "png",
+      "preset": "1200 × 800",
+      "width": 1200,
+      "height": 800,
+      "dpi": 100,
+      "transparent": true,
+      "output_dir": "C:\\Users\\admin\\Desktop\\rose-new\\rose\\_qa\\gui\\export_svg",
+      "filename": "vector_{title}"
+    }
+  }
+}

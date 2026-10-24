@@ -1,0 +1,38 @@
+==============================================================================
+A. 基线：静态帧成本
+  canvas.draw()（整幅重绘）: mean 35.3ms | p50 35.0ms | p95 36.9ms | max 37.2ms (~28 fps if each frame)
+  RoseChart 重建 + 后置处理: mean 33.6ms | p50 34.1ms | p95 34.6ms | max 36.6ms (~30 fps if each frame)
+  _render_current()（重建+布局+绘制）: mean 0.0ms | p50 0.0ms | p95 0.0ms | max 0.0ms (~1000000000000 fps if each frame)
+  滑杆一步 = 重建+绘制: mean 168.6ms | p50 170.3ms | p95 173.2ms | max 174.3ms (~6 fps if each frame)
+
+B. 拖动标签：真实事件循环下每步成本
+  从鼠标事件到画面更新（含 Tk）: mean 38.9ms | p50 38.4ms | p95 43.9ms | max 45.9ms (~26 fps if each frame)
+  仅 app._on_canvas_motion 处理: mean 1.1ms | p50 1.1ms | p95 1.2ms | max 2.7ms (~903 fps if each frame)
+  其中 matplotlib canvas.draw(): mean 35.9ms | p50 35.3ms | p95 41.0ms | max 43.5ms (~28 fps if each frame)
+  估算：仅处理+重绘约 26 次/秒；鼠标通常 100–125 次/秒
+  refresh_label_backplates(): mean 0.9ms | p50 0.9ms | p95 0.9ms | max 1.0ms (~1151 fps if each frame)
+
+C. 候选优化的实测收益（运行时临时关闭，不改源码）
+  C1 去掉标签白描边：frame: mean 35.7ms | p50 35.4ms | p95 38.7ms | max 47.2ms (~28 fps if each frame)
+  C1 去掉标签白描边：draw : mean 32.6ms | p50 31.9ms | p95 33.5ms | max 44.7ms (~31 fps if each frame)
+C2 去掉棋盘格（1 个背景轴）：frame: mean 16.6ms | p50 16.6ms | p95 19.5ms | max 21.9ms (~60 fps if each frame)
+C2 去掉棋盘格：draw : mean 13.1ms | p50 12.8ms | p95 14.3ms | max 15.1ms (~77 fps if each frame)
+C3 关闭标签底板检测：frame: mean 38.3ms | p50 38.2ms | p95 40.8ms | max 44.6ms (~26 fps if each frame)
+C3 关闭标签底板检测：draw : mean 36.0ms | p50 35.5ms | p95 38.0ms | max 42.6ms (~28 fps if each frame)
+C4 预览 dpi 75→41：frame: mean 17.6ms | p50 17.1ms | p95 20.0ms | max 22.3ms (~57 fps if each frame)
+C4 低 dpi：draw : mean 15.9ms | p50 15.7ms | p95 17.2ms | max 20.3ms (~63 fps if each frame)
+
+D. matplotlib 脏矩形/位图 blit 可行性
+  has canvas.copy_from_bbox: True
+  has canvas.blit: True
+  尝试 blit 30 帧：平均 6.7ms/帧
+  已保存 blit 后的窗口截图 blit_screen.png 供核对
+  FigureCanvasTkAgg 继承链：FigureCanvasTkAgg -> FigureCanvasAgg -> FigureCanvasTk -> FigureCanvasBase
+
+E. 12 个类别的场景（labels=12）
+  拖动 frame: mean 63.3ms | p50 63.0ms | p95 66.4ms | max 67.5ms (~16 fps if each frame)
+  拖动 draw: mean 56.3ms | p50 56.3ms | p95 58.5ms | max 59.9ms (~18 fps if each frame)
+  静态 draw: mean 54.9ms | p50 55.2ms | p95 56.7ms | max 57.3ms (~18 fps if each frame)
+
+F. 窗口缩放（拖动窗口边缘）
+  每次窗口尺寸变更到重绘完成（含 90ms 防抖）: mean 294.9ms | p50 337.6ms | p95 351.0ms | max 381.0ms (~3 fps if each frame)

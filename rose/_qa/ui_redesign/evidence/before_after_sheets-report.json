@@ -1,0 +1,55 @@
+[
+  {
+    "file": "stitch.png",
+    "width": 1344,
+    "height": 928,
+    "columns": 2,
+    "items": [
+      {
+        "naturalWidth": 1820,
+        "naturalHeight": 1137,
+        "width": 640,
+        "height": 400,
+        "labelHeight": 32,
+        "x": 24,
+        "y": 24,
+        "label": "改造前 · 配色页（1456×910 逻辑）",
+        "labelY": 432
+      },
+      {
+        "naturalWidth": 1900,
+        "naturalHeight": 1175,
+        "width": 640,
+        "height": 396,
+        "labelHeight": 32,
+        "x": 680,
+        "y": 24,
+        "label": "改造后 · 配色页（1520×940 逻辑）",
+        "labelY": 428
+      },
+      {
+        "naturalWidth": 1820,
+        "naturalHeight": 1137,
+        "width": 640,
+        "height": 400,
+        "labelHeight": 32,
+        "x": 24,
+        "y": 472,
+        "label": "改造前 · 样式页",
+        "labelY": 880
+      },
+      {
+        "naturalWidth": 1900,
+        "naturalHeight": 1175,
+        "width": 640,
+        "height": 396,
+        "labelHeight": 32,
+        "x": 680,
+        "y": 472,
+        "label": "改造后 · 样式页",
+        "labelY": 876
+      }
+    ],
+    "issues": []
+  }
+]

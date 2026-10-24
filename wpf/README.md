@@ -4,6 +4,8 @@ Excel → 南丁格尔玫瑰图的桌面工作台，**.NET 10 + WPF**。
 v3.1 起从「固定项目/状态两张图」升级为 **任意 Excel 列 → 任意数量动态图表**，并接入
 **Material Design 3**（`MaterialDesignThemes 5.3.2`，WPF 社区标准实现；不是网页版 React MUI）。
 
+> **生成说明**：本项目由 **DeepSeek v4.1flash 1017** 通过 **DSH vibe coding** 生成。
+
 ## 核心变化
 
 ### 1. 任意列、任意数量图表

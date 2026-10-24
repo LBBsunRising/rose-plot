@@ -2,6 +2,8 @@
 
 一个把 Excel 数据变成**南丁格尔玫瑰图**的桌面应用。当前主线是 **.NET 10 + WPF** 的 RoseChart Studio，旧版 Python/Tkinter 应用保留在 `rose/` 目录。
 
+> **生成说明**：本项目由 **DeepSeek v4.1flash 1017** 通过 **DSH vibe coding** 生成。
+
 ![RoseChart Studio](wpf/_qa/shots/final/01_palette.png)
 
 ## 当前版本：WPF v3.1 · Material 3

@@ -1,5 +1,7 @@
 # 玫瑰图工坊 · Rose Plot
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 一个把 Excel 数据变成**南丁格尔玫瑰图**的桌面应用。当前主线是 **.NET 10 + WPF** 的 RoseChart Studio，旧版 Python/Tkinter 应用保留在 `rose/` 目录。
 
 > **生成说明**：本项目由 **DeepSeek v4.1flash 1017** 通过 **DSH vibe coding** 生成。
@@ -72,3 +74,8 @@ python app.py
 ## 开发验证
 
 WPF 核心测试当前 **165/165 通过**，图表拖拽性能记录于 `wpf/_qa/perf/wpf_perf.json`。
+
+## License
+
+本项目采用 **MIT License**，详见 [LICENSE](LICENSE)。第三方依赖（ClosedXML、MaterialDesignThemes、SkiaSharp 等）保留各自许可证。
+

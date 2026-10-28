@@ -122,3 +122,8 @@ wpf\test.ps1
 - `_qa/perf/wpf_perf.json`：性能报告。
 - `_qa/test_runner.txt`：测试记录。
 - `rose/_qa/wpf_plan/`：迁移规划（旧 Python 版保留）。
+
+## License
+
+MIT License，详见仓库根目录 [LICENSE](../LICENSE)。第三方依赖保留各自许可证。
+

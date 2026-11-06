@@ -16,11 +16,10 @@
 | `shots/final/07_min_window.png` | 最小窗口 1440×870（逻辑） |
 | `shots/final/08_restored_layout.png` | 重启后恢复动态图表与自定义标签位置 |
 | `shots/final/09_inline_title.png` | 在预览画布内联编辑图表标题（点击标题或点铅笔） |
-| `shots/final/11_blank_table.png` | 软件内空白表格：点击表格后按 Ctrl+V 粘贴，可编辑单元格 |
+| `shots/final/11_blank_table.png` | 软件内空白表格（含行号；右键行号/列标题/单元格可插入或删除行列） |
 | `shots/final/12_paste_grid_chart.png` | 编辑完成并点击“生成图表”后的玫瑰图 |
 | `shots/final/15_paste_table_edit.png` | 生成后通过顶部“编辑数据”重新打开表格，编辑单元格 |
-| `shots/final/16_row_col_controls.png` | 表格行列操作：添加/删除行列 |
-| `shots/final/18_paste_grid_min.png` | 最小窗口 1440×870 下的空白表格与行列工具栏 |
+| `shots/final/16_row_col_context_menu.png` | 与 Excel 一致：右键行号/列标题/单元格插入或删除行列 |
 
 截图通过 `PrintWindow` 从应用窗口本身捕获，避免桌面其他置顶窗口/广告浮层进入证据；分辨率 1900×1175（1520×940 @125% DPI），最小窗口 1800×1088（1440×870 @125%）。`contact_sheet.png` 为 6 个关键状态并排总览。
 

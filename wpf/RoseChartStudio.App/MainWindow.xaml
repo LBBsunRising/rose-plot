@@ -466,46 +466,27 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
                                     <RowDefinition Height="*" />
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 <StackPanel>
                                     <TextBlock Text="粘贴表格数据" FontSize="22" FontWeight="Medium" />
-                                    <TextBlock Text="从 Excel、Google Sheets 或网页复制表格，点击下方空白表格，然后按 Ctrl+V 粘贴；粘贴后可继续编辑单元格。"
+                                    <TextBlock Text="从 Excel、Google Sheets 或网页复制表格，点击下方空白表格，然后按 Ctrl+V 粘贴；右键行号、列标题或单元格可插入/删除行列。"
                                                Style="{StaticResource CaptionText}" Margin="0,6,0,0" TextWrapping="Wrap" />
                                 </StackPanel>
-                                <Grid Grid.Row="1" Margin="0,14,0,8">
+                                <Grid Grid.Row="1" Margin="0,14,0,10">
                                     <CheckBox x:Name="PasteGridHeaderCheck" Content="首行作为表头"
                                               IsChecked="True" VerticalAlignment="Center" />
                                     <TextBlock x:Name="PasteGridStatus" Text="支持 Tab、CSV、分号、竖线分隔"
                                                Style="{StaticResource CaptionText}" HorizontalAlignment="Right"
                                                VerticalAlignment="Center" />
                                 </Grid>
-                                <Grid Grid.Row="2" Margin="0,0,0,8">
-                                    <TextBlock Text="行列操作" Style="{StaticResource CaptionText}"
-                                               VerticalAlignment="Center" />
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                        <Button x:Name="AddRowButton" Style="{StaticResource GhostButton}"
-                                                Content="添加行" Click="AddRow_Click" Height="30" MinHeight="30"
-                                                Padding="10,0" Margin="0,0,6,0" />
-                                        <Button x:Name="DeleteRowButton" Style="{StaticResource GhostButton}"
-                                                Content="删除行" Click="DeleteRow_Click" Height="30" MinHeight="30"
-                                                Padding="10,0" Margin="0,0,12,0" IsEnabled="False" />
-                                        <Button x:Name="AddColumnButton" Style="{StaticResource GhostButton}"
-                                                Content="添加列" Click="AddColumn_Click" Height="30" MinHeight="30"
-                                                Padding="10,0" Margin="0,0,6,0" />
-                                        <Button x:Name="DeleteColumnButton" Style="{StaticResource GhostButton}"
-                                                Content="删除列" Click="DeleteColumn_Click" Height="30" MinHeight="30"
-                                                Padding="10,0" IsEnabled="False" />
-                                    </StackPanel>
-                                </Grid>
-                                <Border Grid.Row="3" Background="{StaticResource Panel}"
+                                <Border Grid.Row="2" Background="{StaticResource Panel}"
                                         BorderBrush="{StaticResource Hairline}" BorderThickness="1"
                                         CornerRadius="10" ClipToBounds="True">
                                     <DataGrid x:Name="BlankPasteGrid" AutoGenerateColumns="False"
-                                              IsReadOnly="False" HeadersVisibility="Column"
-                                              RowHeight="30" ColumnHeaderHeight="38"
+                                              IsReadOnly="False" HeadersVisibility="All"
+                                              RowHeaderWidth="34" RowHeight="30" ColumnHeaderHeight="38"
                                               CanUserAddRows="False" CanUserDeleteRows="False"
                                               CanUserResizeRows="False" CanUserSortColumns="False"
                                               CanUserReorderColumns="False" SelectionMode="Single"
@@ -515,7 +496,7 @@
                                               Background="{StaticResource Panel}" BorderThickness="0"
                                               FontSize="12" HorizontalScrollBarVisibility="Auto"
                                               VerticalScrollBarVisibility="Auto"
-                                              SelectedCellsChanged="BlankPasteGrid_SelectedCellsChanged"
+                                              PreviewMouseRightButtonDown="BlankPasteGrid_PreviewMouseRightButtonDown"
                                               AutomationProperties.Name="空白数据表格">
                                         <DataGrid.CellStyle>
                                             <Style TargetType="{x:Type DataGridCell}">
@@ -526,7 +507,7 @@
                                         </DataGrid.CellStyle>
                                     </DataGrid>
                                 </Border>
-                                <Grid Grid.Row="4" Margin="0,14,0,0">
+                                <Grid Grid.Row="3" Margin="0,14,0,0">
                                     <Button Style="{StaticResource SecondaryButton}" Content="从剪贴板读取"
                                             Click="PasteGridClipboard_Click" Height="38" MinHeight="38"
                                             Padding="16,0" HorizontalAlignment="Left" />

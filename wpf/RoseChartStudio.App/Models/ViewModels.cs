@@ -165,3 +165,8 @@ public sealed class ExportSettings
     public string Filename { get; set; } = "{title}";
     public string OutputDirectory { get; set; } = "";
 }
+
+public sealed class BlankPasteRow
+{
+    public required IReadOnlyList<string> Cells { get; init; }
+}

@@ -16,8 +16,8 @@
 | `shots/final/07_min_window.png` | 最小窗口 1440×870（逻辑） |
 | `shots/final/08_restored_layout.png` | 重启后恢复动态图表与自定义标签位置 |
 | `shots/final/09_inline_title.png` | 在预览画布内联编辑图表标题（点击标题或点铅笔） |
-| `shots/final/11_paste_dialog.png` | 粘贴表格对话框：实时预览并选择首行是否为表头 |
-| `shots/final/12_paste_chart.png` | 粘贴表格后直接生成玫瑰图 |
+| `shots/final/11_blank_table.png` | 软件内空白表格：点击表格后按 Ctrl+V 粘贴 |
+| `shots/final/12_paste_grid_chart.png` | 粘贴表格后直接生成玫瑰图 |
 
 截图通过 `PrintWindow` 从应用窗口本身捕获，避免桌面其他置顶窗口/广告浮层进入证据；分辨率 1900×1175（1520×940 @125% DPI），最小窗口 1800×1088（1440×870 @125%）。`contact_sheet.png` 为 6 个关键状态并排总览。
 

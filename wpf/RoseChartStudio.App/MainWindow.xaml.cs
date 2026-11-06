@@ -15,6 +15,7 @@ using RoseChartStudio.App.Services;
 using RoseChartStudio.Core.Geometry;
 using RoseChartStudio.Core.Models;
 using RoseChartStudio.Core.Palettes;
+using RoseChartStudio.Core.Parsing;
 using RoseChartStudio.Core.Services;
 using RoseChartStudio.Rendering;
 using MenuItem = System.Windows.Controls.MenuItem;
@@ -58,6 +59,7 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        InitializeBlankPasteGrid();
         SheetPreviewGrid.LoadingRow += (_, e) =>
             e.Row.Header = (e.Row.GetIndex() + 2).ToString(CultureInfo.InvariantCulture);
         _export.OutputDirectory = Path.Combine(AppContext.BaseDirectory, "output");
@@ -185,6 +187,10 @@ public partial class MainWindow : Window
         if (_activeChart is null)
         {
             RefreshActiveChartUi();
+            if (_sheet is null)
+            {
+                ShowPasteGrid();
+            }
         }
 
         var tabIndex = Array.IndexOf(args, "--tab");
@@ -308,6 +314,7 @@ public partial class MainWindow : Window
     /// <summary>Loads either an Excel sheet or pasted clipboard data into the workbench.</summary>
     private void ApplySheet(SheetTable sheet, string sourceLabel, bool pasted)
     {
+        PasteGridOverlay.Visibility = Visibility.Collapsed;
         _sheet = sheet;
         _pastedData = pasted;
         if (pasted)
@@ -341,14 +348,98 @@ public partial class MainWindow : Window
         ApplySheet(sheet, "粘贴数据", pasted: true);
     }
 
-    private void PasteTable_Click(object sender, RoutedEventArgs e) => ShowPasteDialog();
+    private void PasteTable_Click(object sender, RoutedEventArgs e) => ShowPasteGrid();
 
-    private void ShowPasteDialog()
+    /// <summary>Builds the blank spreadsheet shown before any data is loaded.</summary>
+    private void InitializeBlankPasteGrid()
     {
-        var dialog = new PasteTableDialog { Owner = this };
-        if (dialog.ShowDialog() == true && dialog.ResultTable is { } table)
+        for (var index = 0; index < 8; index++)
         {
-            ApplyPastedSheet(table);
+            BlankPasteGrid.Columns.Add(new DataGridTextColumn
+            {
+                Header = $"列{index + 1}",
+                Binding = new Binding($"Cells[{index}]"),
+                Width = new DataGridLength(110),
+                IsReadOnly = true,
+                ElementStyle = BlankPasteCellStyle(),
+            });
+        }
+        BlankPasteGrid.ItemsSource = Enumerable
+            .Range(0, 12)
+            .Select(_ => new BlankPasteRow { Cells = new string[8] })
+            .ToList();
+    }
+
+    private static Style BlankPasteCellStyle()
+    {
+        var style = new Style(typeof(TextBlock));
+        style.Setters.Add(new Setter(FrameworkElement.VerticalAlignmentProperty, VerticalAlignment.Center));
+        style.Setters.Add(new Setter(FrameworkElement.MarginProperty, new Thickness(6, 0, 6, 0)));
+        return style;
+    }
+
+    private void ShowPasteGrid()
+    {
+        PasteGridStatus.Text = "支持 Tab、CSV、分号、竖线分隔";
+        PasteGridHeaderCheck.IsChecked = true;
+        CancelPasteGridButton.Visibility = _sheet is not null
+            ? Visibility.Visible
+            : Visibility.Collapsed;
+        PasteGridOverlay.Visibility = Visibility.Visible;
+        EmptyOverlay.Visibility = Visibility.Collapsed;
+        TitleEditButton.Visibility = Visibility.Collapsed;
+        BlankPasteGrid.Focus();
+    }
+
+    private void HidePasteGrid()
+    {
+        PasteGridOverlay.Visibility = Visibility.Collapsed;
+        if (_sheet is not null)
+        {
+            RefreshActiveChartUi();
+        }
+        else
+        {
+            UpdateEmptyState();
+        }
+    }
+
+    private void PasteGridCancel_Click(object sender, RoutedEventArgs e) => HidePasteGrid();
+
+    private void PasteGridClipboard_Click(object sender, RoutedEventArgs e) =>
+        PasteClipboardIntoWorkbench();
+
+    private void PasteGridOverlay_PreviewKeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.Key == Key.V && e.KeyboardDevice.Modifiers.HasFlag(ModifierKeys.Control))
+        {
+            PasteClipboardIntoWorkbench();
+            e.Handled = true;
+        }
+    }
+
+    private void PasteClipboardIntoWorkbench()
+    {
+        try
+        {
+            if (!Clipboard.ContainsText())
+            {
+                PasteGridStatus.Text = "剪贴板中没有可用的文本。";
+                return;
+            }
+            var text = Clipboard.GetText();
+            var result = TabularDataParser.Parse(text, PasteGridHeaderCheck.IsChecked == true);
+            if (!result.Success || result.Table is null)
+            {
+                PasteGridStatus.Text = result.Error ?? "无法识别剪贴板中的表格。";
+                return;
+            }
+            PasteGridOverlay.Visibility = Visibility.Collapsed;
+            ApplyPastedSheet(result.Table);
+        }
+        catch (Exception exception)
+        {
+            PasteGridStatus.Text = $"无法读取剪贴板：{exception.Message}";
         }
     }
 
@@ -1590,7 +1681,7 @@ public partial class MainWindow : Window
             }
             else if (e.Key == Key.V && e.KeyboardDevice.Modifiers.HasFlag(ModifierKeys.Shift))
             {
-                ShowPasteDialog();
+                ShowPasteGrid();
                 e.Handled = true;
             }
         }

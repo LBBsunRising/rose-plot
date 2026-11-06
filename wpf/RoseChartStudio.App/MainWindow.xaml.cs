@@ -43,6 +43,7 @@ public partial class MainWindow : Window
     private string? _filePath;
     private bool _pastedData;
     private DataTable? _editorTable;
+    private DataTable? _hookedEditorTable;
     private IReadOnlyList<string> _sheetNames = Array.Empty<string>();
     private bool _uiReady;
     private bool _suppress;
@@ -420,8 +421,12 @@ public partial class MainWindow : Window
         {
             return;
         }
-        _editorTable.ColumnChanged += (_, _) => UpdateEditorGenerateState();
-        _editorTable.RowChanged += (_, _) => UpdateEditorGenerateState();
+        if (!ReferenceEquals(_hookedEditorTable, _editorTable))
+        {
+            _hookedEditorTable = _editorTable;
+            _editorTable.ColumnChanged += (_, _) => UpdateEditorGenerateState();
+            _editorTable.RowChanged += (_, _) => UpdateEditorGenerateState();
+        }
         BlankPasteGrid.Columns.Clear();
         for (var index = 0; index < _editorTable.Columns.Count; index++)
         {
@@ -436,6 +441,7 @@ public partial class MainWindow : Window
         }
         BlankPasteGrid.ItemsSource = _editorTable.DefaultView;
         UpdateEditorGenerateState();
+        UpdateEditorButtons();
     }
 
     private static Style BlankPasteCellStyle()
@@ -508,7 +514,11 @@ public partial class MainWindow : Window
 
     private void UpdateEditorGenerateState()
     {
-        GenerateChartButton.IsEnabled = HasEditorData();
+        var hasData = HasEditorData();
+        GenerateChartButton.IsEnabled = hasData;
+        CancelPasteGridButton.Visibility = hasData || _sheet is not null
+            ? Visibility.Visible
+            : Visibility.Collapsed;
     }
 
     private bool HasEditorData()
@@ -543,7 +553,15 @@ public partial class MainWindow : Window
         PasteGridOverlay.Visibility = Visibility.Visible;
         EmptyOverlay.Visibility = Visibility.Collapsed;
         TitleEditButton.Visibility = Visibility.Collapsed;
-        BlankPasteGrid.Focus();
+        if (_editorTable is { Rows.Count: > 0, Columns.Count: > 0 })
+        {
+            SelectEditorCell(0, 0);
+        }
+        else
+        {
+            BlankPasteGrid.Focus();
+        }
+        UpdateEditorButtons();
     }
 
     private void HidePasteGrid()
@@ -591,6 +609,10 @@ public partial class MainWindow : Window
                 return;
             }
             PopulateEditorFromSheet(result.Table);
+            if (_editorTable is { Rows.Count: > 0, Columns.Count: > 0 })
+            {
+                SelectEditorCell(0, 0);
+            }
             PasteGridStatus.Text =
                 $"已识别 {result.Table.RowCount} 行 × {result.Table.Headers.Count} 列；可直接编辑，完成后点击“生成图表”";
         }
@@ -598,6 +620,164 @@ public partial class MainWindow : Window
         {
             PasteGridStatus.Text = $"无法读取剪贴板：{exception.Message}";
         }
+    }
+
+    private void BlankPasteGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e) =>
+        UpdateEditorButtons();
+
+    private void UpdateEditorButtons()
+    {
+        if (_editorTable is null)
+        {
+            DeleteRowButton.IsEnabled = false;
+            DeleteColumnButton.IsEnabled = false;
+            AddRowButton.IsEnabled = false;
+            AddColumnButton.IsEnabled = false;
+            return;
+        }
+        var hasSelection = BlankPasteGrid.CurrentCell.IsValid || BlankPasteGrid.SelectedCells.Count > 0;
+        AddRowButton.IsEnabled = true;
+        AddColumnButton.IsEnabled = true;
+        DeleteRowButton.IsEnabled = hasSelection && _editorTable.Rows.Count > 0;
+        DeleteColumnButton.IsEnabled = hasSelection && _editorTable.Columns.Count > 1;
+    }
+
+    private void CommitEditorEdits()
+    {
+        BlankPasteGrid.CommitEdit(DataGridEditingUnit.Cell, true);
+        BlankPasteGrid.CommitEdit(DataGridEditingUnit.Row, true);
+    }
+
+    private int GetSelectedEditorRow()
+    {
+        var cell = BlankPasteGrid.CurrentCell;
+        if (!cell.IsValid && BlankPasteGrid.SelectedCells.Count > 0)
+        {
+            cell = BlankPasteGrid.SelectedCells[0];
+        }
+        if (!cell.IsValid || _editorTable is null || cell.Item is not DataRowView rowView)
+        {
+            return -1;
+        }
+        return _editorTable.Rows.IndexOf(rowView.Row);
+    }
+
+    private int GetSelectedEditorColumn()
+    {
+        var cell = BlankPasteGrid.CurrentCell;
+        if (!cell.IsValid && BlankPasteGrid.SelectedCells.Count > 0)
+        {
+            cell = BlankPasteGrid.SelectedCells[0];
+        }
+        return cell.IsValid ? BlankPasteGrid.Columns.IndexOf(cell.Column) : -1;
+    }
+
+    private void SelectEditorCell(int rowIndex, int columnIndex)
+    {
+        if (_editorTable is null || BlankPasteGrid.Items.Count == 0 || BlankPasteGrid.Columns.Count == 0)
+        {
+            return;
+        }
+        rowIndex = Math.Clamp(rowIndex, 0, BlankPasteGrid.Items.Count - 1);
+        columnIndex = Math.Clamp(columnIndex, 0, BlankPasteGrid.Columns.Count - 1);
+        var item = BlankPasteGrid.Items[rowIndex];
+        var column = BlankPasteGrid.Columns[columnIndex];
+        BlankPasteGrid.CurrentCell = new DataGridCellInfo(item, column);
+        BlankPasteGrid.ScrollIntoView(item, column);
+        BlankPasteGrid.Focus();
+        UpdateEditorButtons();
+    }
+
+    private string NextEditorColumnName()
+    {
+        var index = 1;
+        while (_editorTable?.Columns.Contains($"新列{index}") == true)
+        {
+            index++;
+        }
+        return $"新列{index}";
+    }
+
+    private void AddRow_Click(object sender, RoutedEventArgs e)
+    {
+        if (_editorTable is null)
+        {
+            return;
+        }
+        CommitEditorEdits();
+        var selectedRow = GetSelectedEditorRow();
+        var selectedColumn = Math.Max(0, GetSelectedEditorColumn());
+        var insertAt = selectedRow >= 0 ? selectedRow + 1 : _editorTable.Rows.Count;
+        _editorTable.Rows.InsertAt(_editorTable.NewRow(), insertAt);
+        PasteGridStatus.Text = "已添加一行，可继续编辑";
+        UpdateEditorGenerateState();
+        SelectEditorCell(insertAt, selectedColumn);
+    }
+
+    private void DeleteRow_Click(object sender, RoutedEventArgs e)
+    {
+        if (_editorTable is null)
+        {
+            return;
+        }
+        CommitEditorEdits();
+        var rowIndex = GetSelectedEditorRow();
+        if (rowIndex < 0 || _editorTable.Rows.Count == 0)
+        {
+            PasteGridStatus.Text = "请先选中要删除的行中的单元格。";
+            return;
+        }
+        var column = Math.Max(0, GetSelectedEditorColumn());
+        _editorTable.Rows.RemoveAt(rowIndex);
+        PasteGridStatus.Text = "已删除一行";
+        UpdateEditorGenerateState();
+        if (_editorTable.Rows.Count > 0)
+        {
+            SelectEditorCell(Math.Min(rowIndex, _editorTable.Rows.Count - 1), column);
+        }
+        UpdateEditorButtons();
+    }
+
+    private void AddColumn_Click(object sender, RoutedEventArgs e)
+    {
+        if (_editorTable is null)
+        {
+            return;
+        }
+        CommitEditorEdits();
+        var rowIndex = Math.Max(0, GetSelectedEditorRow());
+        var selectedColumn = GetSelectedEditorColumn();
+        var insertAt = selectedColumn >= 0 ? selectedColumn + 1 : _editorTable.Columns.Count;
+        var column = _editorTable.Columns.Add(NextEditorColumnName(), typeof(string));
+        column.SetOrdinal(insertAt);
+        BindEditorTable();
+        PasteGridStatus.Text = "已添加一列，可继续编辑";
+        SelectEditorCell(rowIndex, insertAt);
+    }
+
+    private void DeleteColumn_Click(object sender, RoutedEventArgs e)
+    {
+        if (_editorTable is null)
+        {
+            return;
+        }
+        CommitEditorEdits();
+        if (_editorTable.Columns.Count <= 1)
+        {
+            PasteGridStatus.Text = "至少保留一列。";
+            return;
+        }
+        var columnIndex = GetSelectedEditorColumn();
+        if (columnIndex < 0)
+        {
+            PasteGridStatus.Text = "请先选中要删除的列中的单元格。";
+            return;
+        }
+        var rowIndex = Math.Max(0, GetSelectedEditorRow());
+        _editorTable.Columns.RemoveAt(columnIndex);
+        BindEditorTable();
+        PasteGridStatus.Text = "已删除一列";
+        SelectEditorCell(rowIndex, Math.Min(columnIndex, _editorTable.Columns.Count - 1));
     }
 
     private void GenerateChart_Click(object sender, RoutedEventArgs e)

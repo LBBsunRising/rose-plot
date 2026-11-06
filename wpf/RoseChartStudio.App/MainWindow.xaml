@@ -180,6 +180,16 @@
                             <TextBlock Text="打开 Excel" VerticalAlignment="Center" />
                         </StackPanel>
                     </Button>
+                    <Button x:Name="PasteTableButton" Style="{StaticResource SecondaryButton}"
+                            Click="PasteTable_Click" Margin="0,0,10,0"
+                            ToolTip="从剪贴板粘贴表格，直接生成玫瑰图"
+                            AutomationProperties.Name="粘贴表格">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="ContentPaste" Width="18" Height="18"
+                                                     VerticalAlignment="Center" Margin="0,0,8,0" />
+                            <TextBlock Text="粘贴表格" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
                     <Button x:Name="ExportNavButton" Style="{StaticResource SecondaryButton}"
                             Click="ExportNav_Click" ToolTip="导出设置">
                         <StackPanel Orientation="Horizontal">
@@ -437,12 +447,16 @@
                                 <TextBlock x:Name="EmptyTitle" Text="请选择 Excel 文件" FontSize="18"
                                            FontWeight="Medium" HorizontalAlignment="Center" Margin="0,14,0,0" />
                                 <TextBlock x:Name="EmptyDescription"
-                                           Text="打开一个 Excel 工作簿，然后勾选任意分析列。"
+                                           Text="打开一个 Excel 工作簿，或从剪贴板粘贴表格内容。"
                                            FontSize="13" Foreground="{StaticResource Muted}"
                                            HorizontalAlignment="Center" Margin="0,7,0,0" />
-                                <Button x:Name="EmptyOpenButton" Style="{StaticResource PrimaryButton}"
-                                        Click="OpenFile_Click" Margin="0,16,0,0"
-                                        HorizontalAlignment="Center" Content="打开 Excel" />
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
+                                            Margin="0,16,0,0">
+                                    <Button x:Name="EmptyOpenButton" Style="{StaticResource PrimaryButton}"
+                                            Click="OpenFile_Click" Content="打开 Excel" />
+                                    <Button x:Name="EmptyPasteButton" Style="{StaticResource SecondaryButton}"
+                                            Click="PasteTable_Click" Content="粘贴表格" Margin="8,0,0,0" />
+                                </StackPanel>
                             </StackPanel>
                         </Grid>
                     </Grid>

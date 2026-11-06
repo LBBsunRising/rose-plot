@@ -1,4 +1,4 @@
-# QA 证据（WPF v3.1 / Material 3 通用版）
+# QA 证据（WPF v3.2 / Material 3 通用版）
 
 > 本版把「固定项目/状态两张图」改为任意列 → 任意数量动态图表，并接入 MaterialDesignThemes 5.3.2（Material 3）。统计方式当前为按行数计数。
 
@@ -16,6 +16,8 @@
 | `shots/final/07_min_window.png` | 最小窗口 1440×870（逻辑） |
 | `shots/final/08_restored_layout.png` | 重启后恢复动态图表与自定义标签位置 |
 | `shots/final/09_inline_title.png` | 在预览画布内联编辑图表标题（点击标题或点铅笔） |
+| `shots/final/11_paste_dialog.png` | 粘贴表格对话框：实时预览并选择首行是否为表头 |
+| `shots/final/12_paste_chart.png` | 粘贴表格后直接生成玫瑰图 |
 
 截图通过 `PrintWindow` 从应用窗口本身捕获，避免桌面其他置顶窗口/广告浮层进入证据；分辨率 1900×1175（1520×940 @125% DPI），最小窗口 1800×1088（1440×870 @125%）。`contact_sheet.png` 为 6 个关键状态并排总览。
 
@@ -44,7 +46,7 @@ dotnet build .\RoseChartStudio.PerfHarness\RoseChartStudio.PerfHarness.csproj -c
 
 ## 测试
 
-- `test_runner.txt`：**165/165 通过**（色板 138、Excel/列识别 19、场景/几何 8）。
+- `test_runner.txt`：**172/172 通过**（色板 138、Excel/列识别 19、场景/几何 8）。
 - 本会话沙箱下 VSTest testhost 无法启动（`Win32Exception(5)`），所以用 `RoseChartStudio.TestRunner` 直接反射执行同一测试程序集；普通环境可直接 `dotnet test`。
 
 ## 工具与注意事项

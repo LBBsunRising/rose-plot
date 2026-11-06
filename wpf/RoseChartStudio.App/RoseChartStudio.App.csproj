@@ -13,9 +13,9 @@
     <AssemblyName>RoseChartStudio</AssemblyName>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
-    <Version>3.1.0</Version>
-    <AssemblyVersion>3.1.0.0</AssemblyVersion>
-    <FileVersion>3.1.0.0</FileVersion>
+    <Version>3.2.0</Version>
+    <AssemblyVersion>3.2.0.0</AssemblyVersion>
+    <FileVersion>3.2.0.0</FileVersion>
     <Product>玫瑰图工坊</Product>
     <Description>RoseChart Studio — Excel 南丁格尔玫瑰图工作台</Description>
     <Company>RoseChart Studio</Company>

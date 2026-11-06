@@ -39,6 +39,7 @@ public partial class MainWindow : Window
     private ChartState? _activeChart;
     private SheetTable? _sheet;
     private string? _filePath;
+    private bool _pastedData;
     private IReadOnlyList<string> _sheetNames = Array.Empty<string>();
     private bool _uiReady;
     private bool _suppress;
@@ -260,6 +261,8 @@ public partial class MainWindow : Window
     {
         try
         {
+            _pastedData = false;
+            SheetCombo.IsEnabled = true;
             _filePath = path;
             FileNameText.Text = Path.GetFileName(path);
             FileTextBox.Text = path;
@@ -293,16 +296,59 @@ public partial class MainWindow : Window
         try
         {
             var sheet = _excel.ReadSheet(_filePath, sheetName);
-            _sheet = sheet;
-            BuildColumnOptions();
-            RestoreOrCreateCharts();
-            BuildSheetPreview();
-            SetStatus($"已读取工作表「{sheetName}」 · {sheet.RowCount} 行", error: false);
+            ApplySheet(sheet, sheetName, pasted: false);
         }
         catch (Exception exception)
         {
             SetStatus("读取工作表失败", error: true);
             MessageBox.Show(this, exception.Message, "读取工作表失败", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+    }
+
+    /// <summary>Loads either an Excel sheet or pasted clipboard data into the workbench.</summary>
+    private void ApplySheet(SheetTable sheet, string sourceLabel, bool pasted)
+    {
+        _sheet = sheet;
+        _pastedData = pasted;
+        if (pasted)
+        {
+            // Pasted data is a fresh source; do not restore charts from an Excel file.
+            _pendingChartsConsumed = true;
+            _pendingSavedCharts.Clear();
+            _pendingActiveColumn = null;
+        }
+        BuildColumnOptions();
+        RestoreOrCreateCharts();
+        BuildSheetPreview();
+        SetStatus(
+            pasted
+                ? $"已载入粘贴数据 · {sheet.RowCount} 行"
+                : $"已读取工作表「{sourceLabel}」 · {sheet.RowCount} 行",
+            error: false);
+    }
+
+    private void ApplyPastedSheet(SheetTable sheet)
+    {
+        _filePath = null;
+        _sheetNames = Array.Empty<string>();
+        FileNameText.Text = "剪贴板数据";
+        FileTextBox.Text = "已粘贴表格 · 无文件";
+        _suppress = true;
+        SheetCombo.ItemsSource = new[] { "粘贴数据" };
+        SheetCombo.SelectedIndex = 0;
+        SheetCombo.IsEnabled = false;
+        _suppress = false;
+        ApplySheet(sheet, "粘贴数据", pasted: true);
+    }
+
+    private void PasteTable_Click(object sender, RoutedEventArgs e) => ShowPasteDialog();
+
+    private void ShowPasteDialog()
+    {
+        var dialog = new PasteTableDialog { Owner = this };
+        if (dialog.ShowDialog() == true && dialog.ResultTable is { } table)
+        {
+            ApplyPastedSheet(table);
         }
     }
 
@@ -864,29 +910,33 @@ public partial class MainWindow : Window
 
     private void UpdateEmptyState()
     {
-        if (_filePath is null)
+        if (_sheet is null)
         {
-            EmptyTitle.Text = "请选择 Excel 文件";
-            EmptyDescription.Text = "打开一个 Excel 工作簿，然后勾选任意分析列。";
+            EmptyTitle.Text = "打开 Excel 或粘贴表格数据";
+            EmptyDescription.Text = "打开一个 Excel 工作簿，或从剪贴板粘贴表格内容。";
             EmptyOpenButton.Visibility = Visibility.Visible;
+            EmptyPasteButton.Visibility = Visibility.Visible;
         }
         else if (_columns.Count == 0)
         {
-            EmptyTitle.Text = "这个工作表没有可分析的列";
+            EmptyTitle.Text = "这个数据源没有可分析的列";
             EmptyDescription.Text = "请确认第一行是表头，且至少有一列非空数据。";
             EmptyOpenButton.Visibility = Visibility.Collapsed;
+            EmptyPasteButton.Visibility = Visibility.Collapsed;
         }
         else if (_activeChart is not null)
         {
             EmptyTitle.Text = "该列没有可统计的数据";
-            EmptyDescription.Text = "这一列全是空值。换一个分析列，或在 Excel 中补全数据。";
+            EmptyDescription.Text = "这一列全是空值。换一个分析列，或补全数据。";
             EmptyOpenButton.Visibility = Visibility.Collapsed;
+            EmptyPasteButton.Visibility = Visibility.Collapsed;
         }
         else
         {
             EmptyTitle.Text = "从左侧勾选一个分析列";
             EmptyDescription.Text = "每一列都可以生成一张玫瑰图，可同时打开多张。";
             EmptyOpenButton.Visibility = Visibility.Collapsed;
+            EmptyPasteButton.Visibility = Visibility.Collapsed;
         }
         EmptyOverlay.Visibility = Visibility.Visible;
         ChartView.ClearScene();
@@ -1538,6 +1588,11 @@ public partial class MainWindow : Window
                 ExportTab.IsChecked = true;
                 e.Handled = true;
             }
+            else if (e.Key == Key.V && e.KeyboardDevice.Modifiers.HasFlag(ModifierKeys.Shift))
+            {
+                ShowPasteDialog();
+                e.Handled = true;
+            }
         }
         else if (e.Key == Key.F5)
         {
@@ -1921,6 +1976,14 @@ public partial class MainWindow : Window
             _settings.Sheet = _sheet?.SheetName;
             _settings.ActiveChartColumn = _activeChart?.ColumnName;
             _settings.Charts = _charts.Select(ToDto).ToList();
+            if (_pastedData)
+            {
+                // Clipboard data is session-only; do not restore stale charts on next launch.
+                _settings.File = null;
+                _settings.Sheet = null;
+                _settings.ActiveChartColumn = null;
+                _settings.Charts = new List<ChartStateDto>();
+            }
             _settings.Style = _style.Clone();
             _settings.Export = new ExportSettings
             {

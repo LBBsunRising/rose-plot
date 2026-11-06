@@ -8,9 +8,10 @@
 
 ![RoseChart Studio](wpf/_qa/shots/final/01_palette.png)
 
-## 当前版本：WPF v3.1 · Material 3
+## 当前版本：WPF v3.2 · Material 3
 
 - **任意 Excel 列**都可以生成玫瑰图，不再限制“项目/状态”两类统计；
+- **无需 Excel 文件**：可直接从 Excel、Google Sheets 或网页复制表格（TSV/CSV）粘贴进软件，实时预览后生成图表；
 - 左侧真实表格预览：显示真实表头、Excel 行号和前 6 行数据，勾选表头列即可生成图表；
 - 动态图表标签页：可同时打开多张图，支持添加、删除、切换；
 - 每个图表独立保存配色、标签、排序、标签位置和标题；
@@ -73,7 +74,7 @@ python app.py
 
 ## 开发验证
 
-WPF 核心测试当前 **165/165 通过**，图表拖拽性能记录于 `wpf/_qa/perf/wpf_perf.json`。
+WPF 核心测试当前 **172/172 通过**，图表拖拽性能记录于 `wpf/_qa/perf/wpf_perf.json`。
 
 ## License
 

@@ -163,5 +163,12 @@ PASS  SceneTests.SectorPolygonHitTestingMatchesHoleAndRing
 PASS  SceneTests.StoredOffsetsAreApplied
 PASS  SceneTests.TextFormattingHonoursSwitchesAndSuffix
 PASS  SceneTests.ThreeLabelsProduceSectorsAndLabels
+PASS  TabularDataParserTests.Parse_CanTreatFirstRowAsData
+PASS  TabularDataParserTests.Parse_GeneratesUniqueNamesForDuplicateAndBlankHeaders
+PASS  TabularDataParserTests.Parse_QuotedCsvSupportsCommasAndNewlines
+PASS  TabularDataParserTests.Parse_RejectsHeaderWithoutData
+PASS  TabularDataParserTests.Parse_RejectsUnclosedQuote
+PASS  TabularDataParserTests.Parse_SupportsSingleColumnText
+PASS  TabularDataParserTests.Parse_TabSeparatedClipboardWithHeader
 
-passed=165 failed=0 skipped=0
+passed=172 failed=0 skipped=0

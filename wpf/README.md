@@ -1,7 +1,7 @@
 # RoseChart Studio · Material 3 通用玫瑰图工作台
 
 Excel → 南丁格尔玫瑰图的桌面工作台，**.NET 10 + WPF**。
-v3.1 起从「固定项目/状态两张图」升级为 **任意 Excel 列 → 任意数量动态图表**，并接入
+v3.2 起支持直接粘贴表格数据；v3.1 起从「固定项目/状态两张图」升级为 **任意 Excel 列 → 任意数量动态图表**，并接入
 **Material Design 3**（`MaterialDesignThemes 5.3.2`，WPF 社区标准实现；不是网页版 React MUI）。
 
 > **生成说明**：本项目由 **DeepSeek v4.1flash 1017** 通过 **DSH vibe coding** 生成。
@@ -9,6 +9,7 @@ v3.1 起从「固定项目/状态两张图」升级为 **任意 Excel 列 → �
 ## 核心变化
 
 ### 1. 任意列、任意数量图表
+- **直接粘贴表格**：从 Excel / Google Sheets / 网页复制 TSV、CSV 或分号分隔文本，粘贴后实时预览并生成图表，无需先保存 Excel 文件。
 - 左侧「数据预览」直接显示当前工作表的**真实小表格**：真实表头、Excel 行号、前 6 行数据；每个表头带勾选框，勾选该列即生成一张玫瑰图，可同时打开任意多张；水平滚动查看全部列。
 - 图表标签页动态生成，支持添加、移除、切换；每张图独立保存配色、标题、排序、标签位置。
 - 每个图表的**标签页名称**与**图表内大标题**可分别自定义：标签页名称可在左侧编辑或双击标签页改名；图表大标题可直接在预览画布上**点击标题**，或点标题右上角铅笔**内联编辑**（左侧/样式页字段仍同步），随设置持久化。
@@ -32,7 +33,7 @@ v3.1 起从「固定项目/状态两张图」升级为 **任意 Excel 列 → �
 | M3 交互 | ✅ | `06_drag.png`、`08_restored_layout.png`、perf 报告 |
 | M4 Excel / 设置 | ✅ | ClosedXML；设置自动持久化；动态 schema v4 |
 | M5 导出 | ✅ | `_qa/export/sample.png` / `.svg` / `.pdf`（透明 PNG、约 31KB 矢量 PDF） |
-| M6 测试 / 性能 / 截图 | ✅ | `_qa/test_runner.txt`：**165/165 通过**；截图见 `_qa/shots/final` |
+| M6 测试 / 性能 / 截图 | ✅ | `_qa/test_runner.txt`：**172/172 通过**；截图见 `_qa/shots/final` |
 | v3.1 通用化 + Material 3 | ✅ | 本 README 与 `_qa/shots/final/contact_sheet.png` |
 
 ## 运行
@@ -79,7 +80,7 @@ dotnet build .\RoseChartStudio.slnx -c Release -m:1 -nr:false
 RoseChartStudio.App        WPF shell + Material 3 主题 + 动态图表工作台
 RoseChartStudio.Rendering  RoseChartView 分层 DrawingVisual + PNG/SVG/PDF 导出
 RoseChartStudio.Core       Excel 无关的色板/场景几何/标签布局/计数
-RoseChartStudio.Tests      xUnit（165 个 Fact/InlineData）
+RoseChartStudio.Tests      xUnit（172 个 Fact/InlineData）
 RoseChartStudio.TestRunner 沙箱内 in-process xUnit 运行器
 RoseChartStudio.PerfHarness 12 标签拖拽 / 样式重建 / 缩放帧时间
 ```
@@ -95,7 +96,7 @@ RoseChartStudio.PerfHarness 12 标签拖拽 / 样式重建 / 缩放帧时间
 wpf\test.ps1
 ```
 
-- 当前结果：**passed=165 failed=0 skipped=0**。
+- 当前结果：**passed=172 failed=0 skipped=0**。
 - 性能（12 标签，1600×1000，Viewbox 缩放 1200×800）：拖标签更新 p95 0.38ms，帧间隔 p95 **16.66ms**（60fps 门禁通过）；样式重建 p95 0.78ms；窗口缩放不重建图表。
 - 证据：`_qa/perf/wpf_perf.json`、`_qa/test_runner.txt`。
 

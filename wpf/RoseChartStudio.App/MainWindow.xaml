@@ -187,7 +187,7 @@
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="ContentPaste" Width="18" Height="18"
                                                      VerticalAlignment="Center" Margin="0,0,8,0" />
-                            <TextBlock Text="粘贴表格" VerticalAlignment="Center" />
+                            <TextBlock x:Name="PasteTableButtonText" Text="粘贴表格" VerticalAlignment="Center" />
                         </StackPanel>
                     </Button>
                     <Button x:Name="ExportNavButton" Style="{StaticResource SecondaryButton}"
@@ -471,7 +471,7 @@
                                 </Grid.RowDefinitions>
                                 <StackPanel>
                                     <TextBlock Text="粘贴表格数据" FontSize="22" FontWeight="Medium" />
-                                    <TextBlock Text="从 Excel、Google Sheets 或网页复制表格，点击下方空白表格，然后按 Ctrl+V 粘贴。"
+                                    <TextBlock Text="从 Excel、Google Sheets 或网页复制表格，点击下方空白表格，然后按 Ctrl+V 粘贴；粘贴后可继续编辑单元格。"
                                                Style="{StaticResource CaptionText}" Margin="0,6,0,0" TextWrapping="Wrap" />
                                 </StackPanel>
                                 <Grid Grid.Row="1" Margin="0,14,0,10">
@@ -485,7 +485,7 @@
                                         BorderBrush="{StaticResource Hairline}" BorderThickness="1"
                                         CornerRadius="10" ClipToBounds="True">
                                     <DataGrid x:Name="BlankPasteGrid" AutoGenerateColumns="False"
-                                              IsReadOnly="True" HeadersVisibility="Column"
+                                              IsReadOnly="False" HeadersVisibility="Column"
                                               RowHeight="30" ColumnHeaderHeight="38"
                                               CanUserAddRows="False" CanUserDeleteRows="False"
                                               CanUserResizeRows="False" CanUserSortColumns="False"
@@ -502,10 +502,15 @@
                                     <Button Style="{StaticResource SecondaryButton}" Content="从剪贴板读取"
                                             Click="PasteGridClipboard_Click" Height="38" MinHeight="38"
                                             Padding="16,0" HorizontalAlignment="Left" />
-                                    <Button x:Name="CancelPasteGridButton" Style="{StaticResource GhostButton}"
-                                            Content="返回图表" Click="PasteGridCancel_Click"
-                                            Height="38" MinHeight="38" Padding="16,0" Margin="0,0,10,0"
-                                            HorizontalAlignment="Right" Visibility="Collapsed" />
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <Button x:Name="CancelPasteGridButton" Style="{StaticResource GhostButton}"
+                                                Content="返回图表" Click="PasteGridCancel_Click"
+                                                Height="38" MinHeight="38" Padding="16,0" Margin="0,0,10,0"
+                                                Visibility="Collapsed" />
+                                        <Button x:Name="GenerateChartButton" Style="{StaticResource PrimaryButton}"
+                                                Content="生成图表" Click="GenerateChart_Click"
+                                                IsEnabled="False" Height="38" MinHeight="38" Padding="22,0" />
+                                    </StackPanel>
                                 </Grid>
                             </Grid>
                         </Grid>

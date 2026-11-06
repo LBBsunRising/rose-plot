@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -41,6 +42,7 @@ public partial class MainWindow : Window
     private SheetTable? _sheet;
     private string? _filePath;
     private bool _pastedData;
+    private DataTable? _editorTable;
     private IReadOnlyList<string> _sheetNames = Array.Empty<string>();
     private bool _uiReady;
     private bool _suppress;
@@ -332,9 +334,18 @@ public partial class MainWindow : Window
                 ? $"已载入粘贴数据 · {sheet.RowCount} 行"
                 : $"已读取工作表「{sourceLabel}」 · {sheet.RowCount} 行",
             error: false);
+        UpdatePasteButtonText();
     }
 
-    private void ApplyPastedSheet(SheetTable sheet)
+    private void UpdatePasteButtonText()
+    {
+        if (PasteTableButtonText is not null)
+        {
+            PasteTableButtonText.Text = _sheet is null ? "粘贴表格" : "编辑数据";
+        }
+    }
+
+    private void SetPastedSourceUi()
     {
         _filePath = null;
         _sheetNames = Array.Empty<string>();
@@ -345,29 +356,86 @@ public partial class MainWindow : Window
         SheetCombo.SelectedIndex = 0;
         SheetCombo.IsEnabled = false;
         _suppress = false;
-        ApplySheet(sheet, "粘贴数据", pasted: true);
+        UpdatePasteButtonText();
+    }
+
+    private void ApplyEditedSheet(SheetTable sheet)
+    {
+        var activeColumn = _activeChart?.ColumnName;
+        var keepCharts = _charts.Count > 0 &&
+                         _charts.All(chart => sheet.Headers.Any(header =>
+                             string.Equals(header, chart.ColumnName, StringComparison.Ordinal)));
+        SetPastedSourceUi();
+        _sheet = sheet;
+        _pastedData = true;
+        BuildColumnOptions();
+        if (keepCharts)
+        {
+            RefreshColumnSelection();
+            RebuildAllCharts();
+            var desired = activeColumn is null
+                ? null
+                : _charts.FirstOrDefault(chart =>
+                    string.Equals(chart.ColumnName, activeColumn, StringComparison.Ordinal));
+            _activeChart = desired ?? _charts.FirstOrDefault();
+            foreach (var chart in _charts)
+            {
+                chart.IsActive = ReferenceEquals(chart, _activeChart);
+            }
+        }
+        else
+        {
+            _pendingChartsConsumed = true;
+            _pendingSavedCharts.Clear();
+            _pendingActiveColumn = null;
+            RestoreOrCreateCharts();
+        }
+        BuildSheetPreview();
+        PasteGridOverlay.Visibility = Visibility.Collapsed;
+        RefreshActiveChartUi();
+        UpdatePasteButtonText();
+        SetStatus($"已生成图表 · {sheet.RowCount} 行", error: false);
     }
 
     private void PasteTable_Click(object sender, RoutedEventArgs e) => ShowPasteGrid();
 
-    /// <summary>Builds the blank spreadsheet shown before any data is loaded.</summary>
+    /// <summary>Builds the editable spreadsheet shown before and after generation.</summary>
     private void InitializeBlankPasteGrid()
     {
+        _editorTable = new DataTable();
         for (var index = 0; index < 8; index++)
+        {
+            _editorTable.Columns.Add($"列{index + 1}", typeof(string));
+        }
+        for (var row = 0; row < 12; row++)
+        {
+            _editorTable.Rows.Add(new object[8]);
+        }
+        BindEditorTable();
+    }
+
+    private void BindEditorTable()
+    {
+        if (_editorTable is null)
+        {
+            return;
+        }
+        _editorTable.ColumnChanged += (_, _) => UpdateEditorGenerateState();
+        _editorTable.RowChanged += (_, _) => UpdateEditorGenerateState();
+        BlankPasteGrid.Columns.Clear();
+        for (var index = 0; index < _editorTable.Columns.Count; index++)
         {
             BlankPasteGrid.Columns.Add(new DataGridTextColumn
             {
-                Header = $"列{index + 1}",
-                Binding = new Binding($"Cells[{index}]"),
+                Header = _editorTable.Columns[index].ColumnName,
+                Binding = new Binding($"[{index}]"),
                 Width = new DataGridLength(110),
-                IsReadOnly = true,
+                IsReadOnly = false,
                 ElementStyle = BlankPasteCellStyle(),
             });
         }
-        BlankPasteGrid.ItemsSource = Enumerable
-            .Range(0, 12)
-            .Select(_ => new BlankPasteRow { Cells = new string[8] })
-            .ToList();
+        BlankPasteGrid.ItemsSource = _editorTable.DefaultView;
+        UpdateEditorGenerateState();
     }
 
     private static Style BlankPasteCellStyle()
@@ -378,10 +446,97 @@ public partial class MainWindow : Window
         return style;
     }
 
+    private static string[] MakeEditorHeaders(IReadOnlyList<string> source, int columnCount)
+    {
+        var used = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        var headers = new string[columnCount];
+        for (var index = 0; index < columnCount; index++)
+        {
+            var raw = index < source.Count ? source[index].Trim() : "";
+            var name = raw.Length > 0 ? raw : $"列{index + 1}";
+            if (used.Contains(name))
+            {
+                var suffix = 2;
+                var candidate = $"{name} ({suffix})";
+                while (used.Contains(candidate))
+                {
+                    suffix++;
+                    candidate = $"{name} ({suffix})";
+                }
+                name = candidate;
+            }
+            used.Add(name);
+            headers[index] = name;
+        }
+        return headers;
+    }
+
+    private void PopulateEditorFromSheet(SheetTable? sheet)
+    {
+        var table = new DataTable();
+        if (sheet is null)
+        {
+            for (var index = 0; index < 8; index++)
+            {
+                table.Columns.Add($"列{index + 1}", typeof(string));
+            }
+            for (var row = 0; row < 12; row++)
+            {
+                table.Rows.Add(new object[8]);
+            }
+        }
+        else
+        {
+            var headers = MakeEditorHeaders(sheet.Headers, sheet.Headers.Count);
+            foreach (var header in headers)
+            {
+                table.Columns.Add(header, typeof(string));
+            }
+            foreach (var source in sheet.Rows)
+            {
+                var cells = new object[headers.Length];
+                for (var index = 0; index < headers.Length; index++)
+                {
+                    cells[index] = index < source.Count ? source[index] : "";
+                }
+                table.Rows.Add(cells);
+            }
+        }
+        _editorTable = table;
+        BindEditorTable();
+    }
+
+    private void UpdateEditorGenerateState()
+    {
+        GenerateChartButton.IsEnabled = HasEditorData();
+    }
+
+    private bool HasEditorData()
+    {
+        if (_editorTable is null)
+        {
+            return false;
+        }
+        foreach (DataRow row in _editorTable.Rows)
+        {
+            foreach (DataColumn column in _editorTable.Columns)
+            {
+                if (!string.IsNullOrWhiteSpace(row[column]?.ToString()))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     private void ShowPasteGrid()
     {
-        PasteGridStatus.Text = "支持 Tab、CSV、分号、竖线分隔";
+        PopulateEditorFromSheet(_sheet);
         PasteGridHeaderCheck.IsChecked = true;
+        PasteGridStatus.Text = _sheet is null
+            ? "支持 Tab、CSV、分号、竖线分隔；点击空白表格后按 Ctrl+V"
+            : "可直接编辑单元格，完成后点击“生成图表”";
         CancelPasteGridButton.Visibility = _sheet is not null
             ? Visibility.Visible
             : Visibility.Collapsed;
@@ -402,6 +557,7 @@ public partial class MainWindow : Window
         {
             UpdateEmptyState();
         }
+        UpdatePasteButtonText();
     }
 
     private void PasteGridCancel_Click(object sender, RoutedEventArgs e) => HidePasteGrid();
@@ -434,13 +590,87 @@ public partial class MainWindow : Window
                 PasteGridStatus.Text = result.Error ?? "无法识别剪贴板中的表格。";
                 return;
             }
-            PasteGridOverlay.Visibility = Visibility.Collapsed;
-            ApplyPastedSheet(result.Table);
+            PopulateEditorFromSheet(result.Table);
+            PasteGridStatus.Text =
+                $"已识别 {result.Table.RowCount} 行 × {result.Table.Headers.Count} 列；可直接编辑，完成后点击“生成图表”";
         }
         catch (Exception exception)
         {
             PasteGridStatus.Text = $"无法读取剪贴板：{exception.Message}";
         }
+    }
+
+    private void GenerateChart_Click(object sender, RoutedEventArgs e)
+    {
+        if (_editorTable is null)
+        {
+            return;
+        }
+        BlankPasteGrid.CommitEdit(DataGridEditingUnit.Cell, true);
+        BlankPasteGrid.CommitEdit(DataGridEditingUnit.Row, true);
+        var sheet = ReadSheetFromEditor();
+        if (sheet is null)
+        {
+            PasteGridStatus.Text = "表格中还没有可生成图表的数据，请先粘贴或输入内容。";
+            return;
+        }
+        ApplyEditedSheet(sheet);
+    }
+
+    private SheetTable? ReadSheetFromEditor()
+    {
+        if (_editorTable is null || _editorTable.Columns.Count == 0)
+        {
+            return null;
+        }
+        var headers = _editorTable.Columns
+            .Cast<DataColumn>()
+            .Select(column => column.ColumnName.Trim())
+            .ToList();
+        var rows = _editorTable.Rows
+            .Cast<DataRow>()
+            .Select(row => _editorTable.Columns
+                .Cast<DataColumn>()
+                .Select(column => row[column]?.ToString()?.Trim() ?? "")
+                .ToArray())
+            .ToList();
+
+        var lastRow = -1;
+        var lastColumn = -1;
+        for (var rowIndex = 0; rowIndex < rows.Count; rowIndex++)
+        {
+            for (var columnIndex = 0; columnIndex < headers.Count; columnIndex++)
+            {
+                if (!string.IsNullOrWhiteSpace(rows[rowIndex][columnIndex]))
+                {
+                    lastRow = rowIndex;
+                    lastColumn = Math.Max(lastColumn, columnIndex);
+                }
+            }
+        }
+        if (lastRow < 0 || lastColumn < 0)
+        {
+            return null;
+        }
+
+        var trimmedHeaders = headers.Take(lastColumn + 1).ToArray();
+        var trimmedRows = rows
+            .Take(lastRow + 1)
+            .Select(row => (IReadOnlyList<string>)row.Take(lastColumn + 1).ToArray())
+            .ToList();
+        for (var index = 0; index < trimmedHeaders.Length; index++)
+        {
+            if (string.IsNullOrWhiteSpace(trimmedHeaders[index]))
+            {
+                trimmedHeaders[index] = $"列{index + 1}";
+            }
+        }
+        return new SheetTable
+        {
+            SheetName = "粘贴数据",
+            Headers = trimmedHeaders,
+            Rows = trimmedRows,
+        };
     }
 
     private void BuildColumnOptions()

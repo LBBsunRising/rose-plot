@@ -1,8 +1,19 @@
-# QA 证据（WPF v3.2 / Material 3 通用版）
+# QA 证据（WPF v3.3 / 现代工作台 UI）
 
-> 本版把「固定项目/状态两张图」改为任意列 → 任意数量动态图表，并接入 MaterialDesignThemes 5.3.2（Material 3）。统计方式当前为按行数计数。
+> v3.3 将界面重构为现代工作台：深色品牌顶栏、左侧导航轨、圆角浮层卡片、分段式属性页、专注画布与浮动状态栏。功能仍是任意列 → 任意数量动态图表，并接入 MaterialDesignThemes 5.3.2（Material 3）。统计方式当前为按行数计数。
 
-## 最终截图
+## v3.3 现代 UI
+
+| 文件 | 内容 |
+| --- | --- |
+| `shots/final/20_modern_ui.png` | 现代工作台空白态：深色顶栏 + 导航轨 + 右侧分段属性页 |
+| `shots/final/21_modern_sample.png` | 示例工作簿：图表工作室 + 配色页 |
+| `shots/final/22_modern_focus.png` | 左侧「专注画布」收起数据/属性面板 |
+| `shots/final/23_modern_min.png` | 最小窗口 1440×870 下的现代布局 |
+| `shots/final/24_modern_style.png` | 分段式样式页 |
+| `shots/final/25_modern_export.png` | 分段式导出页 |
+
+## v3.2 及更早功能证据
 
 | 文件 | 内容 |
 | --- | --- |
@@ -21,7 +32,7 @@
 | `shots/final/15_paste_table_edit.png` | 生成后通过顶部“编辑数据”重新打开表格，编辑单元格 |
 | `shots/final/16_row_col_context_menu.png` | 与 Excel 一致：右键行号/列标题/单元格插入或删除行列 |
 
-截图通过 `PrintWindow` 从应用窗口本身捕获，避免桌面其他置顶窗口/广告浮层进入证据；分辨率 1900×1175（1520×940 @125% DPI），最小窗口 1800×1088（1440×870 @125%）。`contact_sheet.png` 为 6 个关键状态并排总览。
+截图通过 `PrintWindow` 从应用窗口本身捕获，避免桌面其他置顶窗口/广告浮层进入证据；分辨率 1900×1175（1520×940 @125% DPI），最小窗口 1800×1088（1440×870 @125%）。`contact_sheet.png` 为 6 个现代 UI 关键状态并排总览。
 
 ## 导出样例
 

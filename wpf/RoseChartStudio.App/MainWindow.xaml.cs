@@ -569,6 +569,8 @@ public partial class MainWindow : Window
         PasteGridOverlay.Visibility = Visibility.Visible;
         EmptyOverlay.Visibility = Visibility.Collapsed;
         TitleEditButton.Visibility = Visibility.Collapsed;
+        DragHintText.Visibility = Visibility.Collapsed;
+        LayoutStateText.Visibility = Visibility.Collapsed;
         if (_editorTable is { Rows.Count: > 0, Columns.Count: > 0 })
         {
             SelectEditorCell(0, 0);
@@ -582,6 +584,8 @@ public partial class MainWindow : Window
     private void HidePasteGrid()
     {
         PasteGridOverlay.Visibility = Visibility.Collapsed;
+        DragHintText.Visibility = Visibility.Visible;
+        LayoutStateText.Visibility = Visibility.Visible;
         if (_sheet is not null)
         {
             RefreshActiveChartUi();
@@ -2183,6 +2187,48 @@ public partial class MainWindow : Window
     // right tabs + export
     // ------------------------------------------------------------------
 
+    private void RailData_Click(object sender, RoutedEventArgs e)
+    {
+        SetSidePanes(dataVisible: true, inspectorVisible: true);
+        DataScrollViewer.ScrollToTop();
+    }
+
+    private void RailChart_Click(object sender, RoutedEventArgs e)
+    {
+        var focused = DataPaneColumn.Width.Value < 1 && InspectorPaneColumn.Width.Value < 1;
+        SetSidePanes(dataVisible: focused, inspectorVisible: focused);
+        RailChartButton.Background = focused
+            ? Brushes.Transparent
+            : (Brush)FindResource("RailActive");
+    }
+
+    private void RailPalette_Click(object sender, RoutedEventArgs e)
+    {
+        SetSidePanes(dataVisible: true, inspectorVisible: true);
+        SelectRightTab("palette");
+    }
+
+    private void RailStyle_Click(object sender, RoutedEventArgs e)
+    {
+        SetSidePanes(dataVisible: true, inspectorVisible: true);
+        SelectRightTab("style");
+    }
+
+    private void RailExport_Click(object sender, RoutedEventArgs e)
+    {
+        SetSidePanes(dataVisible: true, inspectorVisible: true);
+        SelectRightTab("export");
+    }
+
+    private void SetSidePanes(bool dataVisible, bool inspectorVisible)
+    {
+        DataPaneColumn.Width = dataVisible ? new GridLength(336) : new GridLength(0);
+        InspectorPaneColumn.Width = inspectorVisible ? new GridLength(388) : new GridLength(0);
+        if (dataVisible && inspectorVisible)
+        {
+            RailChartButton.Background = Brushes.Transparent;
+        }
+    }
     private void SelectRightTab(string name)
     {
         switch (name.Trim().ToLowerInvariant())

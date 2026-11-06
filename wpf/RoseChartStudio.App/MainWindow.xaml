@@ -148,54 +148,75 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="68" />
+            <RowDefinition Height="80" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="32" />
+            <RowDefinition Height="48" />
         </Grid.RowDefinitions>
 
-        <!-- Material top app bar -->
-        <Border Grid.Row="0" Background="{StaticResource Panel}"
-                materialDesign:ElevationAssist.Elevation="Dp1">
-            <Grid Margin="20,0">
+        <!-- Studio app bar -->
+        <Border Grid.Row="0" Background="{StaticResource AppBarGradient}">
+            <Grid Margin="24,0,18,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                    <Image Source="Assets/icon_256.png" Width="38" Height="38"
-                           RenderOptions.BitmapScalingMode="HighQuality" />
-                    <StackPanel Margin="12,0,0,0" VerticalAlignment="Center">
-                        <TextBlock Text="玫瑰图工坊" FontSize="20" FontWeight="Medium" />
-                        <TextBlock x:Name="FileNameText" Text="未打开文件" FontSize="12"
-                                   Foreground="{StaticResource Muted}" Margin="0,2,0,0" />
+                    <Border Width="44" Height="44" CornerRadius="14"
+                            Background="{StaticResource AppBarSurface}">
+                        <Image Source="Assets/icon_256.png" Width="32" Height="32"
+                               RenderOptions.BitmapScalingMode="HighQuality" />
+                    </Border>
+                    <StackPanel Margin="14,0,0,0" VerticalAlignment="Center">
+                        <TextBlock Text="RoseChart Studio" Style="{StaticResource HeaderTitle}" />
+                        <StackPanel Orientation="Horizontal" Margin="0,3,0,0">
+                            <TextBlock Text="玫瑰图工坊" Style="{StaticResource HeaderSubtitle}" />
+                            <TextBlock Text="  ·  " Style="{StaticResource HeaderSubtitle}" />
+                            <TextBlock x:Name="FileNameText" Text="未打开文件"
+                                       Style="{StaticResource HeaderSubtitle}" />
+                        </StackPanel>
                     </StackPanel>
                 </StackPanel>
+                <Border Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"
+                        Background="{StaticResource AppBarSurface}" CornerRadius="12" Padding="12,7">
+                    <StackPanel Orientation="Horizontal">
+                        <Ellipse Width="6" Height="6" Fill="{StaticResource PrimaryContainer}"
+                                 VerticalAlignment="Center" />
+                        <TextBlock Text="数据可视化工作台" FontSize="11.5"
+                                   Foreground="{StaticResource AppBarMuted}" Margin="7,0,0,0" />
+                    </StackPanel>
+                </Border>
                 <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
-                    <Button x:Name="OpenButton" Style="{StaticResource PrimaryButton}"
+                    <Button x:Name="OpenButton" Style="{StaticResource AppBarPrimaryButton}"
                             Click="OpenFile_Click" Margin="0,0,10,0" ToolTip="打开 Excel 工作簿">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="FileExcel" Width="18" Height="18"
-                                                     VerticalAlignment="Center" Margin="0,0,8,0" />
-                            <TextBlock Text="打开 Excel" VerticalAlignment="Center" />
+                                                     VerticalAlignment="Center" Margin="0,0,8,0"
+                                                     Foreground="{StaticResource PrimaryDark}" />
+                            <TextBlock Text="打开数据" VerticalAlignment="Center"
+                                       Foreground="{StaticResource PrimaryDark}" />
                         </StackPanel>
                     </Button>
-                    <Button x:Name="PasteTableButton" Style="{StaticResource SecondaryButton}"
+                    <Button x:Name="PasteTableButton" Style="{StaticResource AppBarGhostButton}"
                             Click="PasteTable_Click" Margin="0,0,10,0"
                             ToolTip="从剪贴板粘贴表格，直接生成玫瑰图"
                             AutomationProperties.Name="粘贴表格">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="ContentPaste" Width="18" Height="18"
-                                                     VerticalAlignment="Center" Margin="0,0,8,0" />
-                            <TextBlock x:Name="PasteTableButtonText" Text="粘贴表格" VerticalAlignment="Center" />
+                                                     VerticalAlignment="Center" Margin="0,0,8,0"
+                                                     Foreground="{StaticResource AppBarText}" />
+                            <TextBlock x:Name="PasteTableButtonText" Text="粘贴表格" VerticalAlignment="Center"
+                                       Foreground="{StaticResource AppBarText}" />
                         </StackPanel>
                     </Button>
-                    <Button x:Name="ExportNavButton" Style="{StaticResource SecondaryButton}"
+                    <Button x:Name="ExportNavButton" Style="{StaticResource AppBarGhostButton}"
                             Click="ExportNav_Click" ToolTip="导出设置">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="Tune" Width="18" Height="18"
-                                                     VerticalAlignment="Center" Margin="0,0,8,0" />
-                            <TextBlock Text="导出设置" VerticalAlignment="Center" />
+                                                     VerticalAlignment="Center" Margin="0,0,8,0"
+                                                     Foreground="{StaticResource AppBarText}" />
+                            <TextBlock Text="导出设置" VerticalAlignment="Center"
+                                       Foreground="{StaticResource AppBarText}" />
                         </StackPanel>
                     </Button>
                 </StackPanel>
@@ -203,18 +224,68 @@
         </Border>
 
         <!-- body -->
-        <Grid Grid.Row="1" Margin="16,12,16,10">
+        <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="336" />
+                <ColumnDefinition Width="64" />
+                <ColumnDefinition x:Name="DataPaneColumn" Width="336" />
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="404" />
+                <ColumnDefinition x:Name="InspectorPaneColumn" Width="388" />
             </Grid.ColumnDefinitions>
 
+            <!-- slim navigation rail -->
+            <Border Grid.Column="0" Background="{StaticResource RailGradient}">
+                <Grid>
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,0">
+                        <Button x:Name="RailDataButton" Style="{StaticResource RailButton}"
+                                Click="RailData_Click" ToolTip="数据面板" AutomationProperties.Name="数据面板">
+                            <materialDesign:PackIcon Kind="Table" Width="21" Height="21" />
+                        </Button>
+                        <Button x:Name="RailChartButton" Style="{StaticResource RailButton}"
+                                Click="RailChart_Click" ToolTip="专注画布" AutomationProperties.Name="专注画布">
+                            <materialDesign:PackIcon Kind="ChartPie" Width="21" Height="21" />
+                        </Button>
+                        <Border Width="22" Height="1" Background="{StaticResource AppBarBorder}" Margin="0,12" />
+                        <Button x:Name="RailPaletteButton" Style="{StaticResource RailButton}"
+                                Click="RailPalette_Click" ToolTip="配色" AutomationProperties.Name="打开配色">
+                            <materialDesign:PackIcon Kind="Palette" Width="21" Height="21" />
+                        </Button>
+                        <Button x:Name="RailStyleButton" Style="{StaticResource RailButton}"
+                                Click="RailStyle_Click" ToolTip="样式" AutomationProperties.Name="打开样式">
+                            <materialDesign:PackIcon Kind="Tune" Width="21" Height="21" />
+                        </Button>
+                        <Button x:Name="RailExportButton" Style="{StaticResource RailButton}"
+                                Click="RailExport_Click" ToolTip="导出" AutomationProperties.Name="打开导出">
+                            <materialDesign:PackIcon Kind="Download" Width="21" Height="21" />
+                        </Button>
+                    </StackPanel>
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,18">
+                        <Ellipse Width="6" Height="6" Fill="{StaticResource PrimaryContainer}"
+                                 HorizontalAlignment="Center" />
+                        <TextBlock Text="v3.3" FontSize="9" Foreground="{StaticResource AppBarMuted}"
+                                   HorizontalAlignment="Center" Margin="0,7,0,0" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+
             <!-- left inspector: data source / analysis columns / active chart -->
-            <Border Grid.Column="0" Style="{StaticResource PanelCard}">
-                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled"
-                              Padding="20,18,14,18">
+            <Border Grid.Column="1" Margin="0,16,0,16" Style="{StaticResource PanelCard}">
+                <ScrollViewer x:Name="DataScrollViewer" VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Disabled" Padding="22,22,16,22">
                     <StackPanel>
+                        <Border Background="{StaticResource PrimarySoft}" CornerRadius="18"
+                                Padding="14,13" Margin="0,0,0,20">
+                            <Grid>
+                                <StackPanel>
+                                    <TextBlock Text="DATA WORKSPACE" FontSize="10" FontWeight="SemiBold"
+                                               Foreground="{StaticResource PrimaryDark}" Margin="0,0,0,4" />
+                                    <TextBlock Text="数据与图表" FontSize="18" FontWeight="SemiBold"
+                                               Foreground="{StaticResource PrimaryDark}" />
+                                </StackPanel>
+                                <materialDesign:PackIcon Kind="ChartPie" Width="34" Height="34"
+                                                         HorizontalAlignment="Right" VerticalAlignment="Center"
+                                                         Foreground="{StaticResource Primary}" Opacity="0.55" />
+                            </Grid>
+                        </Border>
                         <TextBlock Text="数据源" Style="{StaticResource SectionTitle}" />
                         <TextBlock Text="Excel 文件" Style="{StaticResource FieldLabel}" />
                         <Grid>
@@ -363,45 +434,46 @@
                 </ScrollViewer>
             </Border>
 
-            <!-- center: dynamic chart tabs + canvas -->
-            <Grid Grid.Column="1" Margin="14,0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="56" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="30" />
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled"
-                                  VerticalAlignment="Bottom">
-                        <ItemsControl x:Name="ChartTabs" ItemTemplate="{StaticResource ChartTabTemplate}">
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate><StackPanel Orientation="Horizontal" /></ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                        </ItemsControl>
-                    </ScrollViewer>
-                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center"
-                                Margin="8,0,0,0">
-                        <Button x:Name="AddChartButton" Style="{StaticResource IconButton}" AutomationProperties.Name="添加图表"
-                                Click="AddChart_Click" ToolTip="添加分析列">
-                            <materialDesign:PackIcon Kind="Plus" Width="20" Height="20" />
-                        </Button>
-                        <Button x:Name="AutoArrangeButton" Style="{StaticResource SecondaryButton}"
-                                Content="自动排列" Click="AutoArrange_Click" Height="36" MinHeight="36"
-                                Margin="6,0,0,0" />
-                        <Button x:Name="UndoButton" Style="{StaticResource IconButton}" AutomationProperties.Name="撤销标签调整"
-                                Click="Undo_Click" ToolTip="撤销标签调整 (Ctrl+Z)" Margin="4,0,0,0">
-                            <materialDesign:PackIcon Kind="Undo" Width="20" Height="20" />
-                        </Button>
-                        <Button x:Name="RedoButton" Style="{StaticResource IconButton}" AutomationProperties.Name="重做标签调整"
-                                Click="Redo_Click" ToolTip="重做标签调整 (Ctrl+Y)">
-                            <materialDesign:PackIcon Kind="Redo" Width="20" Height="20" />
-                        </Button>
-                    </StackPanel>
-                </Grid>
+            <!-- center studio -->
+            <Border Grid.Column="2" Margin="10,16,10,16" Style="{StaticResource StudioCard}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="66" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="40" />
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0" Margin="18,0,16,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled"
+                                      VerticalAlignment="Center">
+                            <ItemsControl x:Name="ChartTabs" ItemTemplate="{StaticResource ChartTabTemplate}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate><StackPanel Orientation="Horizontal" /></ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                            </ItemsControl>
+                        </ScrollViewer>
+                        <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center"
+                                    Margin="10,0,0,0">
+                            <Button x:Name="AddChartButton" Style="{StaticResource IconButton}" AutomationProperties.Name="添加图表"
+                                    Click="AddChart_Click" ToolTip="添加分析列">
+                                <materialDesign:PackIcon Kind="Plus" Width="20" Height="20" />
+                            </Button>
+                            <Button x:Name="AutoArrangeButton" Style="{StaticResource SecondaryButton}"
+                                    Content="自动排列" Click="AutoArrange_Click" Height="34" MinHeight="34"
+                                    Margin="8,0,0,0" />
+                            <Button x:Name="UndoButton" Style="{StaticResource IconButton}" AutomationProperties.Name="撤销标签调整"
+                                    Click="Undo_Click" ToolTip="撤销标签调整 (Ctrl+Z)" Margin="4,0,0,0">
+                                <materialDesign:PackIcon Kind="Undo" Width="20" Height="20" />
+                            </Button>
+                            <Button x:Name="RedoButton" Style="{StaticResource IconButton}" AutomationProperties.Name="重做标签调整"
+                                    Click="Redo_Click" ToolTip="重做标签调整 (Ctrl+Y)">
+                                <materialDesign:PackIcon Kind="Redo" Width="20" Height="20" />
+                            </Button>
+                        </StackPanel>
+                    </Grid>
 
                 <Border Grid.Row="1" Style="{StaticResource PanelCard}" Background="{StaticResource PreviewBg}"
                         Padding="0" ClipToBounds="True">
@@ -470,7 +542,7 @@
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 <StackPanel>
-                                    <TextBlock Text="粘贴表格数据" FontSize="22" FontWeight="Medium" />
+                                    <TextBlock Text="粘贴表格数据" FontSize="24" FontWeight="SemiBold" />
                                     <TextBlock Text="从 Excel、Google Sheets 或网页复制表格，点击下方空白表格，然后按 Ctrl+V 粘贴；右键行号、列标题或单元格可插入/删除行列。"
                                                Style="{StaticResource CaptionText}" Margin="0,6,0,0" TextWrapping="Wrap" />
                                 </StackPanel>
@@ -483,7 +555,7 @@
                                 </Grid>
                                 <Border Grid.Row="2" Background="{StaticResource Panel}"
                                         BorderBrush="{StaticResource Hairline}" BorderThickness="1"
-                                        CornerRadius="10" ClipToBounds="True">
+                                        CornerRadius="16" ClipToBounds="True">
                                     <DataGrid x:Name="BlankPasteGrid" AutoGenerateColumns="False"
                                               IsReadOnly="False" HeadersVisibility="All"
                                               RowHeaderWidth="34" RowHeight="30" ColumnHeaderHeight="38"
@@ -526,33 +598,36 @@
                     </Grid>
                 </Border>
 
-                <Grid Grid.Row="2">
-                    <TextBlock x:Name="DragHintText" Text="" Style="{StaticResource CaptionText}"
-                               VerticalAlignment="Center" />
-                    <TextBlock x:Name="LayoutStateText" Text="布局：无数据" Style="{StaticResource CaptionText}"
-                               HorizontalAlignment="Right" VerticalAlignment="Center" />
+                    <Grid Grid.Row="2" Margin="18,0,16,0">
+                        <TextBlock x:Name="DragHintText" Text="" Style="{StaticResource CaptionText}"
+                                   VerticalAlignment="Center" />
+                        <TextBlock x:Name="LayoutStateText" Text="布局：无数据" Style="{StaticResource CaptionText}"
+                                   HorizontalAlignment="Right" VerticalAlignment="Center" />
+                    </Grid>
                 </Grid>
-            </Grid>
+            </Border>
 
             <!-- right inspector: palette / style / export -->
-            <Border Grid.Column="2" Style="{StaticResource PanelCard}">
+            <Border Grid.Column="3" Margin="0,16,16,16" Style="{StaticResource PanelCard}">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="48" />
+                        <RowDefinition Height="64" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Bottom"
-                                Margin="18,0,18,0">
-                        <RadioButton x:Name="PaletteTab" GroupName="RightTabs" Style="{StaticResource UnderlineTab}"
-                                     Content="配色" IsChecked="True" Checked="RightTab_Checked" />
-                        <RadioButton x:Name="StyleTab" GroupName="RightTabs" Style="{StaticResource UnderlineTab}"
-                                     Content="样式" Checked="RightTab_Checked" Margin="2,0,0,0" />
-                        <RadioButton x:Name="ExportTab" GroupName="RightTabs" Style="{StaticResource UnderlineTab}"
-                                     Content="导出" Checked="RightTab_Checked" Margin="2,0,0,0" />
-                    </StackPanel>
+                    <Border Grid.Row="0" Style="{StaticResource SegmentContainer}"
+                            Margin="18,14,18,4" VerticalAlignment="Center">
+                        <UniformGrid Columns="3">
+                            <RadioButton x:Name="PaletteTab" GroupName="RightTabs" Style="{StaticResource SegmentRadio}"
+                                         Content="配色" IsChecked="True" Checked="RightTab_Checked" />
+                            <RadioButton x:Name="StyleTab" GroupName="RightTabs" Style="{StaticResource SegmentRadio}"
+                                         Content="样式" Checked="RightTab_Checked" />
+                            <RadioButton x:Name="ExportTab" GroupName="RightTabs" Style="{StaticResource SegmentRadio}"
+                                         Content="导出" Checked="RightTab_Checked" />
+                        </UniformGrid>
+                    </Border>
 
                     <ScrollViewer x:Name="PalettePage" Grid.Row="1" VerticalScrollBarVisibility="Auto"
-                                  HorizontalScrollBarVisibility="Disabled" Padding="18,10,12,18">
+                                  HorizontalScrollBarVisibility="Disabled" Padding="18,12,14,18">
                         <StackPanel>
                             <Grid Margin="0,2,0,16">
                                 <Grid.ColumnDefinitions>
@@ -851,19 +926,21 @@
             </Border>
         </Grid>
 
-        <!-- status bar -->
-        <Border Grid.Row="2" Background="{StaticResource SurfaceContainer}"
-                BorderBrush="{StaticResource Hairline}" BorderThickness="0,1,0,0">
-            <Grid Margin="18,0">
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                    <Ellipse x:Name="StatusDot" Width="7" Height="7" Fill="{StaticResource Success}"
-                             VerticalAlignment="Center" />
-                    <TextBlock x:Name="StatusText" Text="就绪" FontSize="11.5"
-                               Foreground="{StaticResource Muted}" Margin="8,0,0,0" />
-                </StackPanel>
-                <TextBlock x:Name="StatsText" Text="" FontSize="11.5" Foreground="{StaticResource Muted}"
-                           HorizontalAlignment="Right" VerticalAlignment="Center" />
-            </Grid>
-        </Border>
+        <!-- floating status pill -->
+        <Grid Grid.Row="2" Margin="88,2,24,8">
+            <Border Background="{StaticResource Panel}" CornerRadius="14" Padding="16,0"
+                    materialDesign:ElevationAssist.Elevation="Dp1">
+                <Grid Margin="0,9">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Ellipse x:Name="StatusDot" Width="7" Height="7" Fill="{StaticResource Success}"
+                                 VerticalAlignment="Center" />
+                        <TextBlock x:Name="StatusText" Text="就绪" FontSize="11.5"
+                                   Foreground="{StaticResource Muted}" Margin="8,0,0,0" />
+                    </StackPanel>
+                    <TextBlock x:Name="StatsText" Text="" FontSize="11.5" Foreground="{StaticResource Muted}"
+                               HorizontalAlignment="Right" VerticalAlignment="Center" />
+                </Grid>
+            </Border>
+        </Grid>
     </Grid>
 </Window>

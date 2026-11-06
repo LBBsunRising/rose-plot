@@ -107,4 +107,32 @@
         </DrawingBrush.Drawing>
     </DrawingBrush>
 
+    <!-- Modern studio surfaces (v3.3 redesign) -->
+    <LinearGradientBrush x:Key="AppBackdropBrush" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="#F8FBF9" Offset="0" />
+        <GradientStop Color="#EEF5F1" Offset="0.55" />
+        <GradientStop Color="#E7F0EC" Offset="1" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="AppBarGradient" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="#082A24" Offset="0" />
+        <GradientStop Color="#0B4037" Offset="0.55" />
+        <GradientStop Color="#0E5A49" Offset="1" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="RailGradient" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#082A24" Offset="0" />
+        <GradientStop Color="#0A3A31" Offset="1" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="AccentGradient" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="#0A6B5A" Offset="0" />
+        <GradientStop Color="#10947A" Offset="1" />
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="AppBarText" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="AppBarMuted" Color="#B9E9DC" />
+    <SolidColorBrush x:Key="AppBarBorder" Color="#38FFFFFF" />
+    <SolidColorBrush x:Key="AppBarSurface" Color="#18FFFFFF" />
+    <SolidColorBrush x:Key="RailIcon" Color="#D6F2E8" />
+    <SolidColorBrush x:Key="RailHover" Color="#20FFFFFF" />
+    <SolidColorBrush x:Key="RailActive" Color="#2EFFFFFF" />
+    <SolidColorBrush x:Key="CanvasTint" Color="#F3F8F5" />
+    <FontFamily x:Key="DisplayFont">Microsoft YaHei UI</FontFamily>
 </ResourceDictionary>

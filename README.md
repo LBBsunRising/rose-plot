@@ -6,10 +6,11 @@
 
 > **生成说明**：本项目由 **DeepSeek v4.1flash 1017** 通过 **DSH vibe coding** 生成。
 
-![RoseChart Studio](wpf/_qa/shots/final/01_palette.png)
+![RoseChart Studio](wpf/_qa/shots/final/21_modern_sample.png)
 
-## 当前版本：WPF v3.2 · Material 3
+## 当前版本：WPF v3.3 · 现代工作台 UI
 
+- **全新现代工作台界面**：深色品牌顶栏、左侧图标导航轨、圆角浮层卡片、分段式属性页、浮动状态栏，以及可一键收起的「专注画布」模式；
 - **任意 Excel 列**都可以生成玫瑰图，不再限制“项目/状态”两类统计；
 - **无需 Excel 文件**：启动后中心显示空白表格，从 Excel / Google Sheets / 网页复制表格，点击表格按 Ctrl+V 粘贴；粘贴后单元格仍可编辑，确认后点击“生成图表”。
 - 左侧真实表格预览：显示真实表头、Excel 行号和前 6 行数据，勾选表头列即可生成图表；

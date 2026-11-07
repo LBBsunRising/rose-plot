@@ -6,11 +6,11 @@
 
 > **生成说明**：本项目由 **DeepSeek v4.1flash 1017** 通过 **DSH vibe coding** 生成。
 
-![RoseChart Studio](wpf/_qa/shots/final/21_modern_sample.png)
+![RoseChart Studio](wpf/_qa/shots/final/31_sketch_sample.png)
 
-## 当前版本：WPF v3.3 · 现代工作台 UI
+## 当前版本：WPF v3.4 · 简笔风
 
-- **全新现代工作台界面**：深色品牌顶栏、左侧图标导航轨、圆角浮层卡片、分段式属性页、浮动状态栏，以及可一键收起的「专注画布」模式；
+- **简笔风纸墨界面**：暖白点阵纸背景、墨线卡片、手写体标题、红色小印记、旋转便签卡片和虚线分隔，图表工作室像一页手绘稿纸；
 - **任意 Excel 列**都可以生成玫瑰图，不再限制“项目/状态”两类统计；
 - **无需 Excel 文件**：启动后中心显示空白表格，从 Excel / Google Sheets / 网页复制表格，点击表格按 Ctrl+V 粘贴；粘贴后单元格仍可编辑，确认后点击“生成图表”。
 - 左侧真实表格预览：显示真实表头、Excel 行号和前 6 行数据，勾选表头列即可生成图表；
@@ -22,7 +22,7 @@
 - 配色推荐、按类别改色、标签配色模式；
 - 导出 PNG / SVG / PDF，支持透明背景和自定义文件名模板；
 - 导出后自动打开所在文件夹；
-- Material Design 3：Material AppBar、按钮、outlined 输入框、复选框、滑杆、卡片、图标和 Material 滚动条。
+- Material Design 3 控件 + 简笔风线稿视觉，使用手写感标题与线性按钮。
 
 ## 目录
 

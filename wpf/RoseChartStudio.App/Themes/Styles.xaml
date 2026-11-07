@@ -5,6 +5,7 @@
     <Style TargetType="{x:Type Window}">
         <Setter Property="FontFamily" Value="{DynamicResource MaterialDesignFont}" />
         <Setter Property="FontSize" Value="{StaticResource FontBody}" />
+        <Setter Property="Foreground" Value="{StaticResource Ink}" />
         <Setter Property="Background" Value="{StaticResource AppBg}" />
         <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
         <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
@@ -13,166 +14,130 @@
     <Style TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="{DynamicResource MaterialDesignFont}" />
         <Setter Property="FontSize" Value="{StaticResource FontBody}" />
-        <Setter Property="Foreground" Value="{StaticResource Text}" />
         <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
     </Style>
 
     <Style x:Key="TitleText" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="{StaticResource FontHeader}" />
-        <Setter Property="FontWeight" Value="Medium" />
-        <Setter Property="Foreground" Value="{StaticResource Text}" />
+        <Setter Property="FontFamily" Value="{StaticResource SketchFont}" />
+        <Setter Property="FontSize" Value="25" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Foreground" Value="{StaticResource Ink}" />
     </Style>
 
     <Style x:Key="SectionTitle" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{StaticResource SketchFont}" />
         <Setter Property="FontSize" Value="{StaticResource FontSection}" />
-        <Setter Property="FontWeight" Value="Medium" />
-        <Setter Property="Foreground" Value="{StaticResource Text}" />
-        <Setter Property="Margin" Value="0,0,0,10" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Foreground" Value="{StaticResource Ink}" />
+        <Setter Property="Margin" Value="0,0,0,9" />
     </Style>
 
     <Style x:Key="SubSectionTitle" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="{StaticResource FontBody}" />
-        <Setter Property="FontWeight" Value="Medium" />
-        <Setter Property="Foreground" Value="{StaticResource Text}" />
-        <Setter Property="Margin" Value="0,18,0,8" />
+        <Setter Property="FontFamily" Value="{StaticResource SketchFont}" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Foreground" Value="{StaticResource InkSoft}" />
+        <Setter Property="Margin" Value="0,17,0,8" />
     </Style>
 
     <Style x:Key="FieldLabel" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="{StaticResource FontSmall}" />
-        <Setter Property="Foreground" Value="{StaticResource Muted}" />
+        <Setter Property="FontSize" Value="{StaticResource FontCaption}" />
+        <Setter Property="Foreground" Value="{StaticResource Graphite}" />
         <Setter Property="Margin" Value="0,0,0,4" />
     </Style>
 
     <Style x:Key="CaptionText" TargetType="{x:Type TextBlock}">
         <Setter Property="FontSize" Value="{StaticResource FontCaption}" />
-        <Setter Property="Foreground" Value="{StaticResource Muted}" />
+        <Setter Property="Foreground" Value="{StaticResource Graphite}" />
     </Style>
 
     <Style x:Key="MutedText" TargetType="{x:Type TextBlock}">
         <Setter Property="FontSize" Value="{StaticResource FontSmall}" />
-        <Setter Property="Foreground" Value="{StaticResource Muted}" />
+        <Setter Property="Foreground" Value="{StaticResource Graphite}" />
     </Style>
 
+    <Style x:Key="PanelEyebrow" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{StaticResource MonoSketchFont}" />
+        <Setter Property="FontSize" Value="10" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Foreground" Value="{StaticResource Graphite}" />
+        <Setter Property="Margin" Value="0,0,0,6" />
+    </Style>
+
+    <Style x:Key="HeaderTitle" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{StaticResource DisplayFont}" />
+        <Setter Property="FontSize" Value="21" />
+        <Setter Property="Foreground" Value="{StaticResource Ink}" />
+    </Style>
+
+    <Style x:Key="HeaderSubtitle" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{StaticResource SketchFont}" />
+        <Setter Property="FontSize" Value="12.5" />
+        <Setter Property="Foreground" Value="{StaticResource Graphite}" />
+    </Style>
+
+    <!-- Simple-line cards: paper, ink rule, no elevation. -->
     <Style x:Key="Card" TargetType="{x:Type Border}">
-        <Setter Property="Background" Value="{StaticResource Panel}" />
-        <Setter Property="CornerRadius" Value="12" />
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="materialDesign:ElevationAssist.Elevation" Value="Dp1" />
+        <Setter Property="Background" Value="{StaticResource Paper}" />
+        <Setter Property="BorderBrush" Value="{StaticResource Ink}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="9" />
+        <Setter Property="materialDesign:ElevationAssist.Elevation" Value="Dp0" />
     </Style>
 
     <Style x:Key="PanelCard" TargetType="{x:Type Border}">
-        <Setter Property="Background" Value="{StaticResource Panel}" />
-        <Setter Property="CornerRadius" Value="24" />
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="materialDesign:ElevationAssist.Elevation" Value="Dp2" />
+        <Setter Property="Background" Value="{StaticResource Paper}" />
+        <Setter Property="BorderBrush" Value="{StaticResource Ink}" />
+        <Setter Property="BorderThickness" Value="1.25" />
+        <Setter Property="CornerRadius" Value="14" />
+        <Setter Property="materialDesign:ElevationAssist.Elevation" Value="Dp0" />
     </Style>
 
     <Style x:Key="StudioCard" TargetType="{x:Type Border}">
-        <Setter Property="Background" Value="{StaticResource Panel}" />
-        <Setter Property="CornerRadius" Value="28" />
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="materialDesign:ElevationAssist.Elevation" Value="Dp2" />
+        <Setter Property="Background" Value="{StaticResource Paper}" />
+        <Setter Property="BorderBrush" Value="{StaticResource Ink}" />
+        <Setter Property="BorderThickness" Value="1.4" />
+        <Setter Property="CornerRadius" Value="16" />
+        <Setter Property="materialDesign:ElevationAssist.Elevation" Value="Dp0" />
     </Style>
 
-    <Style x:Key="PrimaryButton" TargetType="{x:Type Button}"
-           BasedOn="{StaticResource MaterialDesignRaisedButton}">
+    <!-- Inked buttons -->
+    <Style x:Key="PrimaryButton" TargetType="{x:Type Button}">
         <Setter Property="Background" Value="{StaticResource AccentGradient}" />
         <Setter Property="Foreground" Value="{StaticResource OnPrimary}" />
-        <Setter Property="BorderBrush" Value="Transparent" />
-        <Setter Property="MinHeight" Value="40" />
-        <Setter Property="MinWidth" Value="72" />
-        <Setter Property="Padding" Value="20,0" />
-        <Setter Property="FontSize" Value="{StaticResource FontBody}" />
-        <Setter Property="FontWeight" Value="Medium" />
-        <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="materialDesign:ButtonAssist.CornerRadius" Value="12" />
-    </Style>
-
-    <Style x:Key="SecondaryButton" TargetType="{x:Type Button}"
-           BasedOn="{StaticResource MaterialDesignOutlinedButton}">
-        <Setter Property="Background" Value="{StaticResource Panel}" />
-        <Setter Property="Foreground" Value="{StaticResource Primary}" />
-        <Setter Property="BorderBrush" Value="{StaticResource Hairline}" />
-        <Setter Property="MinHeight" Value="40" />
+        <Setter Property="BorderBrush" Value="{StaticResource Ink}" />
+        <Setter Property="BorderThickness" Value="1.25" />
+        <Setter Property="MinHeight" Value="38" />
         <Setter Property="MinWidth" Value="72" />
         <Setter Property="Padding" Value="18,0" />
-        <Setter Property="FontSize" Value="{StaticResource FontBody}" />
-        <Setter Property="FontWeight" Value="Medium" />
+        <Setter Property="FontFamily" Value="{StaticResource SketchFont}" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="materialDesign:ButtonAssist.CornerRadius" Value="12" />
-    </Style>
-
-    <Style x:Key="GhostButton" TargetType="{x:Type Button}"
-           BasedOn="{StaticResource MaterialDesignFlatButton}">
-        <Setter Property="MinHeight" Value="36" />
-        <Setter Property="MinWidth" Value="0" />
-        <Setter Property="Padding" Value="12,0" />
-        <Setter Property="FontSize" Value="{StaticResource FontSmall}" />
-        <Setter Property="FontWeight" Value="Medium" />
-        <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-    </Style>
-
-    <Style x:Key="IconButton" TargetType="{x:Type Button}"
-           BasedOn="{StaticResource MaterialDesignFlatButton}">
-        <Setter Property="Width" Value="40" />
-        <Setter Property="Height" Value="40" />
-        <Setter Property="MinWidth" Value="0" />
-        <Setter Property="Padding" Value="0" />
-        <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="Foreground" Value="{StaticResource Muted}" />
-    </Style>
-
-    <Style TargetType="{x:Type TextBox}"
-           BasedOn="{StaticResource MaterialDesignOutlinedTextBox}">
-        <Setter Property="MinHeight" Value="40" />
-        <Setter Property="MinWidth" Value="0" />
-        <Setter Property="FontSize" Value="{StaticResource FontBody}" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="materialDesign:HintAssist.IsFloating" Value="False" />
-    </Style>
-
-    <Style TargetType="{x:Type ComboBox}"
-           BasedOn="{StaticResource MaterialDesignOutlinedComboBox}">
-        <Setter Property="MinHeight" Value="40" />
-        <Setter Property="MinWidth" Value="0" />
-        <Setter Property="FontSize" Value="{StaticResource FontBody}" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="materialDesign:HintAssist.IsFloating" Value="False" />
-    </Style>
-
-    <Style TargetType="{x:Type CheckBox}"
-           BasedOn="{StaticResource MaterialDesignCheckBox}">
-        <Setter Property="FontSize" Value="{StaticResource FontSmall}" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-    </Style>
-
-    <Style x:Key="UnderlineTab" TargetType="{x:Type RadioButton}">
-        <Setter Property="FontFamily" Value="{DynamicResource MaterialDesignFont}" />
-        <Setter Property="FontSize" Value="{StaticResource FontSmall}" />
-        <Setter Property="Foreground" Value="{StaticResource Muted}" />
         <Setter Property="Cursor" Value="Hand" />
-        <Setter Property="Padding" Value="15,0" />
-        <Setter Property="Height" Value="38" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type RadioButton}">
-                    <Border x:Name="Pill" Background="Transparent" CornerRadius="12"
-                            Padding="{TemplateBinding Padding}">
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="Bd" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="9" Padding="{TemplateBinding Padding}"
+                            TextElement.Foreground="{TemplateBinding Foreground}">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Foreground" Value="{StaticResource Text}" />
-                            <Setter TargetName="Pill" Property="Background" Value="{StaticResource SurfaceContainer}" />
+                            <Setter TargetName="Bd" Property="Background" Value="{StaticResource InkSoft}" />
                         </Trigger>
-                        <Trigger Property="IsChecked" Value="True">
-                            <Setter Property="Foreground" Value="{StaticResource PrimaryDark}" />
-                            <Setter Property="FontWeight" Value="Medium" />
-                            <Setter TargetName="Pill" Property="Background" Value="{StaticResource PrimarySoft}" />
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Bd" Property="Opacity" Value="0.82" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Bd" Property="Background" Value="{StaticResource SurfaceContainer}" />
+                            <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource Rule}" />
+                            <Setter Property="Foreground" Value="{StaticResource Graphite}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -180,28 +145,174 @@
         </Setter>
     </Style>
 
-    <Style x:Key="SegmentRadio" TargetType="{x:Type RadioButton}">
-        <Setter Property="FontFamily" Value="{DynamicResource MaterialDesignFont}" />
-        <Setter Property="FontSize" Value="{StaticResource FontSmall}" />
-        <Setter Property="Foreground" Value="{StaticResource Muted}" />
+    <Style x:Key="SecondaryButton" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="{StaticResource Paper}" />
+        <Setter Property="Foreground" Value="{StaticResource Ink}" />
+        <Setter Property="BorderBrush" Value="{StaticResource Ink}" />
+        <Setter Property="BorderThickness" Value="1.1" />
+        <Setter Property="MinHeight" Value="38" />
+        <Setter Property="MinWidth" Value="72" />
+        <Setter Property="Padding" Value="14,0" />
+        <Setter Property="FontFamily" Value="{StaticResource SketchFont}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Cursor" Value="Hand" />
-        <Setter Property="Height" Value="34" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="Bd" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="8" Padding="{TemplateBinding Padding}"
+                            TextElement.Foreground="{TemplateBinding Foreground}">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bd" Property="Background" Value="{StaticResource PaperWarm}" />
+                            <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource Accent}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Bd" Property="Background" Value="{StaticResource SurfaceContainer}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Bd" Property="Opacity" Value="0.38" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="GhostButton" TargetType="{x:Type Button}" BasedOn="{StaticResource SecondaryButton}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="MinHeight" Value="32" />
+        <Setter Property="Padding" Value="8,0" />
+        <Setter Property="FontWeight" Value="Normal" />
+    </Style>
+
+    <Style x:Key="IconButton" TargetType="{x:Type Button}" BasedOn="{StaticResource GhostButton}">
+        <Setter Property="Width" Value="36" />
+        <Setter Property="Height" Value="36" />
+        <Setter Property="MinWidth" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Foreground" Value="{StaticResource InkSoft}" />
+    </Style>
+
+    <Style x:Key="AppBarPrimaryButton" TargetType="{x:Type Button}" BasedOn="{StaticResource PrimaryButton}">
+        <Setter Property="MinHeight" Value="36" />
+        <Setter Property="Padding" Value="14,0" />
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+
+    <Style x:Key="AppBarGhostButton" TargetType="{x:Type Button}" BasedOn="{StaticResource SecondaryButton}">
+        <Setter Property="MinHeight" Value="36" />
+        <Setter Property="Padding" Value="13,0" />
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+
+    <Style x:Key="TextBoxBase" TargetType="{x:Type TextBox}"
+           BasedOn="{StaticResource MaterialDesignOutlinedTextBox}">
+        <Setter Property="MinHeight" Value="38" />
+        <Setter Property="MinWidth" Value="0" />
+        <Setter Property="FontFamily" Value="{DynamicResource MaterialDesignFont}" />
+        <Setter Property="FontSize" Value="{StaticResource FontBody}" />
+        <Setter Property="Foreground" Value="{StaticResource Ink}" />
+        <Setter Property="Background" Value="{StaticResource Paper}" />
+        <Setter Property="BorderBrush" Value="{StaticResource Rule}" />
+        <Setter Property="CaretBrush" Value="{StaticResource Ink}" />
+        <Setter Property="SelectionBrush" Value="{StaticResource AccentSoft}" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="materialDesign:HintAssist.IsFloating" Value="False" />
+    </Style>
+    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBoxBase}" />
+
+    <Style TargetType="{x:Type ComboBox}"
+           BasedOn="{StaticResource MaterialDesignOutlinedComboBox}">
+        <Setter Property="MinHeight" Value="38" />
+        <Setter Property="MinWidth" Value="0" />
+        <Setter Property="FontFamily" Value="{DynamicResource MaterialDesignFont}" />
+        <Setter Property="FontSize" Value="{StaticResource FontBody}" />
+        <Setter Property="Foreground" Value="{StaticResource Ink}" />
+        <Setter Property="Background" Value="{StaticResource Paper}" />
+        <Setter Property="BorderBrush" Value="{StaticResource Rule}" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="materialDesign:HintAssist.IsFloating" Value="False" />
+    </Style>
+
+    <Style TargetType="{x:Type CheckBox}"
+           BasedOn="{StaticResource MaterialDesignCheckBox}">
+        <Setter Property="FontSize" Value="{StaticResource FontSmall}" />
+        <Setter Property="Foreground" Value="{StaticResource InkSoft}" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+
+    <!-- Chart tabs: simple ink underline. -->
+    <Style x:Key="UnderlineTab" TargetType="{x:Type RadioButton}">
+        <Setter Property="FontFamily" Value="{StaticResource SketchFont}" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="Foreground" Value="{StaticResource Graphite}" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Padding" Value="13,0" />
+        <Setter Property="Height" Value="38" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RadioButton}">
+                    <Grid Background="Transparent">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="2" />
+                        </Grid.RowDefinitions>
+                        <ContentPresenter Grid.Row="0" Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <Border x:Name="Mark" Grid.Row="1" Height="2" CornerRadius="1"
+                                Background="Transparent" Margin="9,0" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="{StaticResource Ink}" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Foreground" Value="{StaticResource Ink}" />
+                            <Setter Property="FontWeight" Value="Bold" />
+                            <Setter TargetName="Mark" Property="Background" Value="{StaticResource Accent}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Inspector segmented pencils -->
+    <Style x:Key="SegmentRadio" TargetType="{x:Type RadioButton}">
+        <Setter Property="FontFamily" Value="{StaticResource SketchFont}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Foreground" Value="{StaticResource Graphite}" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Height" Value="32" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type RadioButton}">
                     <Border x:Name="Bd" Background="Transparent" BorderBrush="Transparent"
-                            BorderThickness="1" CornerRadius="10">
-                        <ContentPresenter Margin="12,0" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            BorderThickness="1" CornerRadius="7">
+                        <ContentPresenter Margin="11,0" HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Foreground" Value="{StaticResource Text}" />
+                            <Setter Property="Foreground" Value="{StaticResource Ink}" />
                         </Trigger>
                         <Trigger Property="IsChecked" Value="True">
-                            <Setter Property="Foreground" Value="{StaticResource PrimaryDark}" />
-                            <Setter Property="FontWeight" Value="Medium" />
-                            <Setter TargetName="Bd" Property="Background" Value="{StaticResource Panel}" />
-                            <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource Hairline}" />
+                            <Setter Property="Foreground" Value="{StaticResource Ink}" />
+                            <Setter Property="FontWeight" Value="Bold" />
+                            <Setter TargetName="Bd" Property="Background" Value="{StaticResource Paper}" />
+                            <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource Ink}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -210,94 +321,75 @@
     </Style>
 
     <Style x:Key="SegmentContainer" TargetType="{x:Type Border}">
-        <Setter Property="Background" Value="{StaticResource SurfaceContainer}" />
-        <Setter Property="CornerRadius" Value="14" />
-        <Setter Property="Padding" Value="4" />
-    </Style>
-
-    <Style x:Key="PaletteCardBorder" TargetType="{x:Type Border}">
-        <Setter Property="Background" Value="{StaticResource PanelSoft}" />
-        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Background" Value="{StaticResource PaperWarm}" />
+        <Setter Property="BorderBrush" Value="{StaticResource Ink}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="CornerRadius" Value="16" />
-        <Setter Property="Padding" Value="12" />
-        <Setter Property="Cursor" Value="Hand" />
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="BorderBrush" Value="{StaticResource Primary}" />
-                <Setter Property="Background" Value="{StaticResource SelectedSoft}" />
-            </Trigger>
-        </Style.Triggers>
-    </Style>
-
-    <Style x:Key="HeaderTitle" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontFamily" Value="{StaticResource DisplayFont}" />
-        <Setter Property="FontSize" Value="21" />
-        <Setter Property="FontWeight" Value="SemiBold" />
-        <Setter Property="Foreground" Value="{StaticResource AppBarText}" />
-    </Style>
-
-    <Style x:Key="HeaderSubtitle" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="12" />
-        <Setter Property="Foreground" Value="{StaticResource AppBarMuted}" />
-    </Style>
-
-    <Style x:Key="PanelEyebrow" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="10" />
-        <Setter Property="FontWeight" Value="SemiBold" />
-        <Setter Property="Foreground" Value="{StaticResource Muted}" />
-        <Setter Property="Margin" Value="0,0,0,6" />
-    </Style>
-
-    <Style x:Key="AppBarPrimaryButton" TargetType="{x:Type Button}" BasedOn="{StaticResource PrimaryButton}">
-        <Setter Property="Background" Value="{StaticResource AppBarText}" />
-        <Setter Property="Foreground" Value="{StaticResource PrimaryDark}" />
-        <Setter Property="BorderBrush" Value="{StaticResource AppBarText}" />
-        <Setter Property="MinHeight" Value="38" />
-        <Setter Property="Padding" Value="16,0" />
-        <Setter Property="FontSize" Value="{StaticResource FontSmall}" />
-    </Style>
-
-    <Style x:Key="AppBarGhostButton" TargetType="{x:Type Button}" BasedOn="{StaticResource SecondaryButton}">
-        <Setter Property="Background" Value="{StaticResource AppBarSurface}" />
-        <Setter Property="Foreground" Value="{StaticResource AppBarText}" />
-        <Setter Property="BorderBrush" Value="{StaticResource AppBarBorder}" />
-        <Setter Property="MinHeight" Value="38" />
-        <Setter Property="Padding" Value="15,0" />
-        <Setter Property="FontSize" Value="{StaticResource FontSmall}" />
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="Padding" Value="3" />
     </Style>
 
     <Style x:Key="RailButton" TargetType="{x:Type Button}">
-        <Setter Property="Width" Value="44" />
-        <Setter Property="Height" Value="44" />
+        <Setter Property="Width" Value="42" />
+        <Setter Property="Height" Value="42" />
         <Setter Property="Margin" Value="0,3" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Foreground" Value="{StaticResource RailIcon}" />
+        <Setter Property="Foreground" Value="{StaticResource InkSoft}" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="Bd" Background="{TemplateBinding Background}" CornerRadius="14">
+                    <Border x:Name="Bd" Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1"
+                            CornerRadius="8">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="Bd" Property="Background" Value="{StaticResource RailHover}" />
-                            <Setter Property="Foreground" Value="{StaticResource AppBarText}" />
+                            <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource Rule}" />
+                            <Setter Property="Foreground" Value="{StaticResource Ink}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter TargetName="Bd" Property="Background" Value="{StaticResource RailActive}" />
-                        </Trigger>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Opacity" Value="0.4" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <Style x:Key="PaletteCardBorder" TargetType="{x:Type Border}">
+        <Setter Property="Background" Value="{StaticResource Paper}" />
+        <Setter Property="BorderBrush" Value="{StaticResource Rule}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="9" />
+        <Setter Property="Padding" Value="10" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="BorderBrush" Value="{StaticResource Accent}" />
+                <Setter Property="Background" Value="{StaticResource PaperWarm}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="{x:Type ToolTip}">
+        <Setter Property="Background" Value="{StaticResource Paper}" />
+        <Setter Property="Foreground" Value="{StaticResource Ink}" />
+        <Setter Property="BorderBrush" Value="{StaticResource Ink}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Padding" Value="8,5" />
+    </Style>
+
+    <Style TargetType="{x:Type ContextMenu}">
+        <Setter Property="Background" Value="{StaticResource Paper}" />
+        <Setter Property="Foreground" Value="{StaticResource Ink}" />
+        <Setter Property="BorderBrush" Value="{StaticResource Ink}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Padding" Value="3" />
     </Style>
 
 </ResourceDictionary>

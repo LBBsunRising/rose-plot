@@ -1,7 +1,7 @@
-# RoseChart Studio · Material 3 通用玫瑰图工作台
+# RoseChart Studio · 简笔风通用玫瑰图工作台
 
 Excel → 南丁格尔玫瑰图的桌面工作台，**.NET 10 + WPF**。
-v3.3 起采用现代工作台 UI；v3.2 起支持直接粘贴表格数据；v3.1 起从「固定项目/状态两张图」升级为 **任意 Excel 列 → 任意数量动态图表**，并接入
+v3.4 起采用简笔风纸墨界面；v3.3 起采用现代工作台骨架；v3.2 起支持直接粘贴表格数据；v3.1 起从「固定项目/状态两张图」升级为 **任意 Excel 列 → 任意数量动态图表**，并接入
 **Material Design 3**（`MaterialDesignThemes 5.3.2`，WPF 社区标准实现；不是网页版 React MUI）。
 
 > **生成说明**：本项目由 **DeepSeek v4.1flash 1017** 通过 **DSH vibe coding** 生成。
@@ -18,12 +18,12 @@ v3.3 起采用现代工作台 UI；v3.2 起支持直接粘贴表格数据；v3.1
 - 统计方式目前为**按行数计数**（每个取值出现的行数）；数值求和/平均值等聚合作为后续扩展点。
 - 设置 schema 升级为 v4（`Charts[]`），可迁移读取 v3 的固定 chart1/chart2 设置。
 
-### 2. Material Design 3 / 现代工作台 UI
+### 2. Material Design 3 / 简笔风纸墨 UI
 - 离线引入 NuGet 缓存中的 `MaterialDesignThemes 5.3.2` + `MaterialDesignColors 5.3.2`。
-- 使用 Material 3 light scheme（teal seed）、Roboto 字体（CJK 自动回退微软雅黑）、Material 按钮、outlined 文本框/下拉、复选框、滑杆、卡片阴影、图标（`PackIcon`）、Material 滚动条。
-- v3.3 重新设计为现代工作台：深绿渐变品牌顶栏、左侧窄导航轨、24px 圆角浮层卡片、分段式右侧属性页、圆角图表工作室与浮动状态栏；左侧「专注画布」可收起数据/属性面板。
-- 保留原有「图表是唯一主角」的自绘图表与三栏工作台骨架，控件全部 Material 化，不引入第二套视觉语言。
-- 使用方式：`App.xaml` 合并 `BundledTheme` + `MaterialDesign3.Defaults.xaml`；`Themes/Tokens.xaml` 提供 Material 3 色角色与工作台渐变，`Themes/Styles.xaml` 将原有命名按钮/卡片映射到 Material 控件。
+- v3.4 将整个界面改为「简笔风」：暖白点阵纸背景、墨线卡片、无阴影扁平控件、手写体（Segoe Print / KaiTi）、红色小印记、旋转便签卡片、虚线分隔、线性玫瑰图 Logo 与重绘的纸墨应用图标。
+- 控件行为仍来自 Material 3（outlined 文本框/下拉、复选框、滑杆、滚动条），但视觉 token 已改为纸墨色板；不再使用深色渐变、彩色阴影或大面积色块。
+- 保留「图表是唯一主角」的自绘图表与三栏工作台骨架；右侧属性页为线框分段按钮，图表标签为墨线下划线。
+- 使用方式：`App.xaml` 合并 `BundledTheme` + `MaterialDesign3.Defaults.xaml`；`Themes/Tokens.xaml` 提供纸墨色板与纸张纹理，`Themes/Styles.xaml` 将按钮/卡片/标签重绘为线稿风格。
 
 ## 当前状态
 
@@ -37,6 +37,7 @@ v3.3 起采用现代工作台 UI；v3.2 起支持直接粘贴表格数据；v3.1
 | M6 测试 / 性能 / 截图 | ✅ | `_qa/test_runner.txt`：**172/172 通过**；截图见 `_qa/shots/final` |
 | v3.1 通用化 + Material 3 | ✅ | 本 README 与 `_qa/shots/final/contact_sheet.png` |
 | v3.3 现代工作台 UI | ✅ | `_qa/shots/final/20_modern_ui.png`、`21_modern_sample.png`、`22_modern_focus.png` |
+| v3.4 简笔风 UI | ✅ | `_qa/shots/final/30_sketch_blank.png`、`31_sketch_sample.png`、`33_sketch_focus.png` |
 
 ## 运行
 

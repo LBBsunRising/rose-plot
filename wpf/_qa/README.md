@@ -1,8 +1,20 @@
-# QA 证据（WPF v3.3 / 现代工作台 UI）
+# QA 证据（WPF v3.4 / 简笔风 UI）
 
-> v3.3 将界面重构为现代工作台：深色品牌顶栏、左侧导航轨、圆角浮层卡片、分段式属性页、专注画布与浮动状态栏。功能仍是任意列 → 任意数量动态图表，并接入 MaterialDesignThemes 5.3.2（Material 3）。统计方式当前为按行数计数。
+> v3.4 将整个界面改为简笔风：暖白点阵纸背景、墨线卡片、手写体标题、红色小印记、旋转便签、虚线分隔和线性玫瑰图图标。功能仍是任意列 → 任意数量动态图表，并继续使用 MaterialDesignThemes 5.3.2 的控件行为与灰色主题。统计方式当前为按行数计数。
 
-## v3.3 现代 UI
+## v3.4 简笔风
+
+| 文件 | 内容 |
+| --- | --- |
+| `shots/final/30_sketch_blank.png` | 简笔风空白工作台：点阵纸 + 墨线卡片 + 便签标题 |
+| `shots/final/31_sketch_sample.png` | 示例工作簿：图表工作室与线稿外框 |
+| `shots/final/32_sketch_style.png` | 简笔风样式页：墨线分段 Tab 与手写体标题 |
+| `shots/final/33_sketch_focus.png` | 专注画布：只保留图表与导航轨 |
+| `shots/final/34_sketch_editor.png` | 粘贴/编辑表格：纸墨表格与线框按钮 |
+| `shots/final/35_sketch_min.png` | 最小窗口 1440×870 下的简笔布局 |
+| `shots/final/36_sketch_export.png` | 简笔风导出页 |
+
+## v3.3 现代工作台（历史）
 
 | 文件 | 内容 |
 | --- | --- |
@@ -32,7 +44,7 @@
 | `shots/final/15_paste_table_edit.png` | 生成后通过顶部“编辑数据”重新打开表格，编辑单元格 |
 | `shots/final/16_row_col_context_menu.png` | 与 Excel 一致：右键行号/列标题/单元格插入或删除行列 |
 
-截图通过 `PrintWindow` 从应用窗口本身捕获，避免桌面其他置顶窗口/广告浮层进入证据；分辨率 1900×1175（1520×940 @125% DPI），最小窗口 1800×1088（1440×870 @125%）。`contact_sheet.png` 为 6 个现代 UI 关键状态并排总览。
+截图通过 `PrintWindow` 从应用窗口本身捕获，避免桌面其他置顶窗口/广告浮层进入证据；分辨率 1900×1175（1520×940 @125% DPI），最小窗口 1800×1088（1440×870 @125%）。`contact_sheet.png` 为 6 个简笔风关键状态并排总览。
 
 ## 导出样例
 

@@ -2,30 +2,30 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="clr-namespace:System;assembly=System.Runtime">
 
-    <!-- Material 3 color roles (teal seed, light scheme) -->
-    <Color x:Key="PrimaryColor">#006A60</Color>
-    <Color x:Key="OnPrimaryColor">#FFFFFF</Color>
-    <Color x:Key="PrimaryContainerColor">#A6F2E4</Color>
-    <Color x:Key="OnPrimaryContainerColor">#00201C</Color>
-    <Color x:Key="SecondaryColor">#4A635F</Color>
-    <Color x:Key="SecondaryContainerColor">#CCE8E3</Color>
-    <Color x:Key="AppBgColor">#F7FAF9</Color>
-    <Color x:Key="SurfaceColor">#FBFDFB</Color>
-    <Color x:Key="SurfaceContainerLowColor">#F3F7F5</Color>
-    <Color x:Key="SurfaceContainerColor">#EDF3F0</Color>
-    <Color x:Key="SurfaceContainerHighColor">#E7EEEA</Color>
-    <Color x:Key="TextColor">#191C1B</Color>
-    <Color x:Key="MutedColor">#5C6B67</Color>
-    <Color x:Key="OutlineColor">#6F7977</Color>
-    <Color x:Key="OutlineVariantColor">#D7E0DD</Color>
-    <Color x:Key="PrimaryDarkColor">#004F46</Color>
-    <Color x:Key="PrimarySoftColor">#D9F2EC</Color>
-    <Color x:Key="SuccessColor">#2E7D32</Color>
-    <Color x:Key="WarningColor">#B26A00</Color>
-    <Color x:Key="ErrorColor">#BA1A1A</Color>
-    <Color x:Key="PreviewBgColor">#EEF3F1</Color>
-    <Color x:Key="SelectedSoftColor">#E6F4EF</Color>
-    <Color x:Key="TrackColor">#D5DFDC</Color>
+    <!-- Simple-line (paper + ink) color roles -->
+    <Color x:Key="PrimaryColor">#1F1F1C</Color>
+    <Color x:Key="OnPrimaryColor">#FFFDF7</Color>
+    <Color x:Key="PrimaryContainerColor">#E9E2D4</Color>
+    <Color x:Key="OnPrimaryContainerColor">#1F1F1C</Color>
+    <Color x:Key="SecondaryColor">#55534B</Color>
+    <Color x:Key="SecondaryContainerColor">#E4DED0</Color>
+    <Color x:Key="AppBgColor">#F6F2E8</Color>
+    <Color x:Key="SurfaceColor">#FFFDF7</Color>
+    <Color x:Key="SurfaceContainerLowColor">#F7F3E9</Color>
+    <Color x:Key="SurfaceContainerColor">#EFE9DC</Color>
+    <Color x:Key="SurfaceContainerHighColor">#E4DCCB</Color>
+    <Color x:Key="TextColor">#1E1E1B</Color>
+    <Color x:Key="MutedColor">#67645B</Color>
+    <Color x:Key="OutlineColor">#2B2A26</Color>
+    <Color x:Key="OutlineVariantColor">#BDB6A7</Color>
+    <Color x:Key="PrimaryDarkColor">#141412</Color>
+    <Color x:Key="PrimarySoftColor">#F0E9DB</Color>
+    <Color x:Key="SuccessColor">#4A7353</Color>
+    <Color x:Key="WarningColor">#9A6A2E</Color>
+    <Color x:Key="ErrorColor">#A84131</Color>
+    <Color x:Key="PreviewBgColor">#FAF6EB</Color>
+    <Color x:Key="SelectedSoftColor">#EDE5D6</Color>
+    <Color x:Key="TrackColor">#C9C1B1</Color>
 
     <SolidColorBrush x:Key="AppBg" Color="{StaticResource AppBgColor}" />
     <SolidColorBrush x:Key="Panel" Color="{StaticResource SurfaceColor}" />
@@ -48,32 +48,91 @@
     <SolidColorBrush x:Key="SelectedSoft" Color="{StaticResource SelectedSoftColor}" />
     <SolidColorBrush x:Key="Track" Color="{StaticResource TrackColor}" />
 
+    <!-- Sketch UI roles -->
+    <SolidColorBrush x:Key="Ink" Color="#1E1E1B" />
+    <SolidColorBrush x:Key="InkSoft" Color="#4A4841" />
+    <SolidColorBrush x:Key="Paper" Color="#FFFDF7" />
+    <SolidColorBrush x:Key="PaperWarm" Color="#F8F3E7" />
+    <SolidColorBrush x:Key="Graphite" Color="#6A675E" />
+    <SolidColorBrush x:Key="Rule" Color="#C9C1B1" />
+    <SolidColorBrush x:Key="Accent" Color="#B54A32" />
+    <SolidColorBrush x:Key="AccentSoft" Color="#F2DDD5" />
+    <SolidColorBrush x:Key="Sticky" Color="#FBF2D8" />
+    <SolidColorBrush x:Key="StickyLine" Color="#CBBF9A" />
+
+    <!-- Handwriting / display -->
     <FontFamily x:Key="UiFont">Microsoft YaHei UI</FontFamily>
+    <FontFamily x:Key="SketchFont">KaiTi</FontFamily>
+    <FontFamily x:Key="DisplayFont">Segoe Print</FontFamily>
+    <FontFamily x:Key="MonoSketchFont">Consolas</FontFamily>
 
     <sys:Double x:Key="FontBody">14</sys:Double>
     <sys:Double x:Key="FontSmall">13</sys:Double>
     <sys:Double x:Key="FontCaption">12</sys:Double>
-    <sys:Double x:Key="FontSection">16</sys:Double>
+    <sys:Double x:Key="FontSection">17</sys:Double>
     <sys:Double x:Key="FontHeader">22</sys:Double>
 
-    <!-- Transparent checkerboard used only behind the chart image. -->
+    <!-- Warm dot-paper backdrop. -->
+    <DrawingBrush x:Key="AppBackdropBrush" TileMode="Tile"
+                  Viewport="0,0,28,28" ViewportUnits="Absolute"
+                  Viewbox="0,0,28,28" ViewboxUnits="Absolute"
+                  Stretch="Fill">
+        <DrawingBrush.Drawing>
+            <DrawingGroup>
+                <GeometryDrawing Brush="#F6F2E8">
+                    <GeometryDrawing.Geometry>
+                        <RectangleGeometry Rect="0,0,28,28" />
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+                <GeometryDrawing Brush="#DED6C6">
+                    <GeometryDrawing.Geometry>
+                        <EllipseGeometry Center="5,5" RadiusX="0.9" RadiusY="0.9" />
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+
+    <!-- Light paper bars; names kept for the existing XAML hooks. -->
+    <LinearGradientBrush x:Key="AppBarGradient" StartPoint="0,0" EndPoint="1,0">
+        <GradientStop Color="#FFFDF7" Offset="0" />
+        <GradientStop Color="#F8F3E7" Offset="1" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="RailGradient" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#FBF7ED" Offset="0" />
+        <GradientStop Color="#F3EDE0" Offset="1" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="AccentGradient" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="#2A2A26" Offset="0" />
+        <GradientStop Color="#101010" Offset="1" />
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="AppBarText" Color="#1E1E1B" />
+    <SolidColorBrush x:Key="AppBarMuted" Color="#67645B" />
+    <SolidColorBrush x:Key="AppBarBorder" Color="#BDB6A7" />
+    <SolidColorBrush x:Key="AppBarSurface" Color="#F1EADC" />
+    <SolidColorBrush x:Key="RailIcon" Color="#34322C" />
+    <SolidColorBrush x:Key="RailHover" Color="#E8E1D2" />
+    <SolidColorBrush x:Key="RailActive" Color="#DED4BE" />
+    <SolidColorBrush x:Key="CanvasTint" Color="#FAF6EB" />
+
+    <!-- Chart transparency checkerboard, warmed to paper. -->
     <DrawingBrush x:Key="CheckerboardBrush" TileMode="Tile"
                   Viewport="0,0,75,72.72" ViewportUnits="Absolute"
                   Viewbox="0,0,75,72.72" ViewboxUnits="Absolute"
                   Stretch="Fill">
         <DrawingBrush.Drawing>
             <DrawingGroup>
-                <GeometryDrawing Brush="#FFFFFF">
+                <GeometryDrawing Brush="#FFFDF7">
                     <GeometryDrawing.Geometry>
                         <RectangleGeometry Rect="0,0,75,72.72" />
                     </GeometryDrawing.Geometry>
                 </GeometryDrawing>
-                <GeometryDrawing Brush="#F4F8F6">
+                <GeometryDrawing Brush="#F7F1E3">
                     <GeometryDrawing.Geometry>
                         <RectangleGeometry Rect="37.5,0,37.5,36.36" />
                     </GeometryDrawing.Geometry>
                 </GeometryDrawing>
-                <GeometryDrawing Brush="#F4F8F6">
+                <GeometryDrawing Brush="#F7F1E3">
                     <GeometryDrawing.Geometry>
                         <RectangleGeometry Rect="0,36.36,37.5,36.36" />
                     </GeometryDrawing.Geometry>
@@ -88,17 +147,17 @@
                   Stretch="Fill">
         <DrawingBrush.Drawing>
             <DrawingGroup>
-                <GeometryDrawing Brush="#FFFFFF">
+                <GeometryDrawing Brush="#FFFDF7">
                     <GeometryDrawing.Geometry>
                         <RectangleGeometry Rect="0,0,32,30" />
                     </GeometryDrawing.Geometry>
                 </GeometryDrawing>
-                <GeometryDrawing Brush="#F4F8F6">
+                <GeometryDrawing Brush="#F7F1E3">
                     <GeometryDrawing.Geometry>
                         <RectangleGeometry Rect="16,0,16,15" />
                     </GeometryDrawing.Geometry>
                 </GeometryDrawing>
-                <GeometryDrawing Brush="#F4F8F6">
+                <GeometryDrawing Brush="#F7F1E3">
                     <GeometryDrawing.Geometry>
                         <RectangleGeometry Rect="0,15,16,15" />
                     </GeometryDrawing.Geometry>
@@ -107,32 +166,17 @@
         </DrawingBrush.Drawing>
     </DrawingBrush>
 
-    <!-- Modern studio surfaces (v3.3 redesign) -->
-    <LinearGradientBrush x:Key="AppBackdropBrush" StartPoint="0,0" EndPoint="1,1">
-        <GradientStop Color="#F8FBF9" Offset="0" />
-        <GradientStop Color="#EEF5F1" Offset="0.55" />
-        <GradientStop Color="#E7F0EC" Offset="1" />
-    </LinearGradientBrush>
-    <LinearGradientBrush x:Key="AppBarGradient" StartPoint="0,0" EndPoint="1,1">
-        <GradientStop Color="#082A24" Offset="0" />
-        <GradientStop Color="#0B4037" Offset="0.55" />
-        <GradientStop Color="#0E5A49" Offset="1" />
-    </LinearGradientBrush>
-    <LinearGradientBrush x:Key="RailGradient" StartPoint="0,0" EndPoint="0,1">
-        <GradientStop Color="#082A24" Offset="0" />
-        <GradientStop Color="#0A3A31" Offset="1" />
-    </LinearGradientBrush>
-    <LinearGradientBrush x:Key="AccentGradient" StartPoint="0,0" EndPoint="1,1">
-        <GradientStop Color="#0A6B5A" Offset="0" />
-        <GradientStop Color="#10947A" Offset="1" />
-    </LinearGradientBrush>
-    <SolidColorBrush x:Key="AppBarText" Color="#FFFFFF" />
-    <SolidColorBrush x:Key="AppBarMuted" Color="#B9E9DC" />
-    <SolidColorBrush x:Key="AppBarBorder" Color="#38FFFFFF" />
-    <SolidColorBrush x:Key="AppBarSurface" Color="#18FFFFFF" />
-    <SolidColorBrush x:Key="RailIcon" Color="#D6F2E8" />
-    <SolidColorBrush x:Key="RailHover" Color="#20FFFFFF" />
-    <SolidColorBrush x:Key="RailActive" Color="#2EFFFFFF" />
-    <SolidColorBrush x:Key="CanvasTint" Color="#F3F8F5" />
-    <FontFamily x:Key="DisplayFont">Microsoft YaHei UI</FontFamily>
+    <!-- Dotted rule for sketch section separators. -->
+    <DrawingBrush x:Key="DottedRuleBrush" TileMode="Tile"
+                  Viewport="0,0,8,2" ViewportUnits="Absolute"
+                  Viewbox="0,0,8,2" ViewboxUnits="Absolute" Stretch="Fill">
+        <DrawingBrush.Drawing>
+            <GeometryDrawing Brush="#8D8779">
+                <GeometryDrawing.Geometry>
+                    <RectangleGeometry Rect="0,0,3,1" />
+                </GeometryDrawing.Geometry>
+            </GeometryDrawing>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+
 </ResourceDictionary>

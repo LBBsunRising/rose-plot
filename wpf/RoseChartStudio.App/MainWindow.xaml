@@ -6,7 +6,7 @@
         Title="玫瑰图工坊 · RoseChart Studio"
         Width="1520" Height="940" MinWidth="1440" MinHeight="870"
         WindowStartupLocation="CenterScreen"
-        Background="{StaticResource AppBg}"
+        Background="{StaticResource AppBackdropBrush}"
         Icon="Assets/icon.ico"
         UseLayoutRounding="True"
         SnapsToDevicePixels="True">
@@ -153,8 +153,9 @@
             <RowDefinition Height="48" />
         </Grid.RowDefinitions>
 
-        <!-- Studio app bar -->
-        <Border Grid.Row="0" Background="{StaticResource AppBarGradient}">
+        <!-- Sketch app bar -->
+        <Border Grid.Row="0" Background="{StaticResource AppBarGradient}"
+                BorderBrush="{StaticResource Ink}" BorderThickness="0,0,0,1.5">
             <Grid Margin="24,0,18,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -162,28 +163,44 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                    <Border Width="44" Height="44" CornerRadius="14"
-                            Background="{StaticResource AppBarSurface}">
-                        <Image Source="Assets/icon_256.png" Width="32" Height="32"
-                               RenderOptions.BitmapScalingMode="HighQuality" />
+                    <Border Width="46" Height="46" CornerRadius="6"
+                            Background="{StaticResource Paper}" BorderBrush="{StaticResource Ink}"
+                            BorderThickness="1">
+                        <Viewbox Width="34" Height="34">
+                            <Canvas Width="40" Height="40">
+                                <Ellipse Canvas.Left="4" Canvas.Top="4" Width="32" Height="32"
+                                         Stroke="{StaticResource Ink}" StrokeThickness="1.6" />
+                                <Line X1="20" Y1="20" X2="20" Y2="4.5"
+                                      Stroke="{StaticResource Ink}" StrokeThickness="1.4" />
+                                <Line X1="20" Y1="20" X2="34" Y2="28"
+                                      Stroke="{StaticResource Ink}" StrokeThickness="1.4" />
+                                <Line X1="20" Y1="20" X2="6" Y2="28.5"
+                                      Stroke="{StaticResource Ink}" StrokeThickness="1.4" />
+                                <Path Data="M20,20 L20,4.5 A15.5,15.5 0 0 1 34,28 Z"
+                                      Stroke="{StaticResource Ink}" StrokeThickness="1.1" Fill="Transparent" />
+                                <Ellipse Canvas.Left="18" Canvas.Top="18" Width="4" Height="4"
+                                         Fill="{StaticResource Accent}" />
+                            </Canvas>
+                        </Viewbox>
                     </Border>
                     <StackPanel Margin="14,0,0,0" VerticalAlignment="Center">
                         <TextBlock Text="RoseChart Studio" Style="{StaticResource HeaderTitle}" />
-                        <StackPanel Orientation="Horizontal" Margin="0,3,0,0">
+                        <StackPanel Orientation="Horizontal" Margin="0,1,0,0">
                             <TextBlock Text="玫瑰图工坊" Style="{StaticResource HeaderSubtitle}" />
-                            <TextBlock Text="  ·  " Style="{StaticResource HeaderSubtitle}" />
+                            <TextBlock Text="  /  " Style="{StaticResource HeaderSubtitle}" />
                             <TextBlock x:Name="FileNameText" Text="未打开文件"
                                        Style="{StaticResource HeaderSubtitle}" />
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>
                 <Border Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"
-                        Background="{StaticResource AppBarSurface}" CornerRadius="12" Padding="12,7">
+                        Background="{StaticResource PaperWarm}" BorderBrush="{StaticResource Ink}"
+                        BorderThickness="1" CornerRadius="4" Padding="12,6">
                     <StackPanel Orientation="Horizontal">
-                        <Ellipse Width="6" Height="6" Fill="{StaticResource PrimaryContainer}"
+                        <Ellipse Width="5" Height="5" Fill="{StaticResource Accent}"
                                  VerticalAlignment="Center" />
-                        <TextBlock Text="数据可视化工作台" FontSize="11.5"
-                                   Foreground="{StaticResource AppBarMuted}" Margin="7,0,0,0" />
+                        <TextBlock Text="数据可视化工作台" FontFamily="{StaticResource SketchFont}"
+                                   FontSize="12" Foreground="{StaticResource InkSoft}" Margin="7,0,0,0" />
                     </StackPanel>
                 </Border>
                 <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
@@ -192,9 +209,9 @@
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="FileExcel" Width="18" Height="18"
                                                      VerticalAlignment="Center" Margin="0,0,8,0"
-                                                     Foreground="{StaticResource PrimaryDark}" />
+                                                     Foreground="{StaticResource OnPrimary}" />
                             <TextBlock Text="打开数据" VerticalAlignment="Center"
-                                       Foreground="{StaticResource PrimaryDark}" />
+                                       Foreground="{StaticResource OnPrimary}" />
                         </StackPanel>
                     </Button>
                     <Button x:Name="PasteTableButton" Style="{StaticResource AppBarGhostButton}"
@@ -204,9 +221,9 @@
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="ContentPaste" Width="18" Height="18"
                                                      VerticalAlignment="Center" Margin="0,0,8,0"
-                                                     Foreground="{StaticResource AppBarText}" />
+                                                     Foreground="{StaticResource Ink}" />
                             <TextBlock x:Name="PasteTableButtonText" Text="粘贴表格" VerticalAlignment="Center"
-                                       Foreground="{StaticResource AppBarText}" />
+                                       Foreground="{StaticResource Ink}" />
                         </StackPanel>
                     </Button>
                     <Button x:Name="ExportNavButton" Style="{StaticResource AppBarGhostButton}"
@@ -214,9 +231,9 @@
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="Tune" Width="18" Height="18"
                                                      VerticalAlignment="Center" Margin="0,0,8,0"
-                                                     Foreground="{StaticResource AppBarText}" />
+                                                     Foreground="{StaticResource Ink}" />
                             <TextBlock Text="导出设置" VerticalAlignment="Center"
-                                       Foreground="{StaticResource AppBarText}" />
+                                       Foreground="{StaticResource Ink}" />
                         </StackPanel>
                     </Button>
                 </StackPanel>
@@ -232,37 +249,39 @@
                 <ColumnDefinition x:Name="InspectorPaneColumn" Width="388" />
             </Grid.ColumnDefinitions>
 
-            <!-- slim navigation rail -->
-            <Border Grid.Column="0" Background="{StaticResource RailGradient}">
+            <!-- simple-line navigation rail -->
+            <Border Grid.Column="0" Background="{StaticResource RailGradient}"
+                    BorderBrush="{StaticResource Ink}" BorderThickness="0,0,1.2,0">
                 <Grid>
                     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,0">
                         <Button x:Name="RailDataButton" Style="{StaticResource RailButton}"
                                 Click="RailData_Click" ToolTip="数据面板" AutomationProperties.Name="数据面板">
-                            <materialDesign:PackIcon Kind="Table" Width="21" Height="21" />
+                            <materialDesign:PackIcon Kind="Table" Width="20" Height="20" />
                         </Button>
                         <Button x:Name="RailChartButton" Style="{StaticResource RailButton}"
                                 Click="RailChart_Click" ToolTip="专注画布" AutomationProperties.Name="专注画布">
-                            <materialDesign:PackIcon Kind="ChartPie" Width="21" Height="21" />
+                            <materialDesign:PackIcon Kind="ChartPie" Width="20" Height="20" />
                         </Button>
-                        <Border Width="22" Height="1" Background="{StaticResource AppBarBorder}" Margin="0,12" />
+                        <Border Height="2" Background="{StaticResource DottedRuleBrush}" Margin="0,12" />
                         <Button x:Name="RailPaletteButton" Style="{StaticResource RailButton}"
                                 Click="RailPalette_Click" ToolTip="配色" AutomationProperties.Name="打开配色">
-                            <materialDesign:PackIcon Kind="Palette" Width="21" Height="21" />
+                            <materialDesign:PackIcon Kind="Palette" Width="20" Height="20" />
                         </Button>
                         <Button x:Name="RailStyleButton" Style="{StaticResource RailButton}"
                                 Click="RailStyle_Click" ToolTip="样式" AutomationProperties.Name="打开样式">
-                            <materialDesign:PackIcon Kind="Tune" Width="21" Height="21" />
+                            <materialDesign:PackIcon Kind="Tune" Width="20" Height="20" />
                         </Button>
                         <Button x:Name="RailExportButton" Style="{StaticResource RailButton}"
                                 Click="RailExport_Click" ToolTip="导出" AutomationProperties.Name="打开导出">
-                            <materialDesign:PackIcon Kind="Download" Width="21" Height="21" />
+                            <materialDesign:PackIcon Kind="Download" Width="20" Height="20" />
                         </Button>
                     </StackPanel>
                     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,18">
-                        <Ellipse Width="6" Height="6" Fill="{StaticResource PrimaryContainer}"
+                        <Ellipse Width="6" Height="6" Fill="{StaticResource Accent}"
                                  HorizontalAlignment="Center" />
-                        <TextBlock Text="v3.3" FontSize="9" Foreground="{StaticResource AppBarMuted}"
-                                   HorizontalAlignment="Center" Margin="0,7,0,0" />
+                        <TextBlock Text="v3.4" FontFamily="{StaticResource SketchFont}" FontSize="10"
+                                   Foreground="{StaticResource InkSoft}"
+                                   HorizontalAlignment="Center" Margin="0,6,0,0" />
                     </StackPanel>
                 </Grid>
             </Border>
@@ -272,18 +291,23 @@
                 <ScrollViewer x:Name="DataScrollViewer" VerticalScrollBarVisibility="Auto"
                               HorizontalScrollBarVisibility="Disabled" Padding="22,22,16,22">
                     <StackPanel>
-                        <Border Background="{StaticResource PrimarySoft}" CornerRadius="18"
-                                Padding="14,13" Margin="0,0,0,20">
+                        <Border Background="{StaticResource Sticky}" BorderBrush="{StaticResource StickyLine}"
+                                BorderThickness="1" CornerRadius="4" Padding="14,13" Margin="0,0,0,20"
+                                RenderTransformOrigin="0.5,0.5">
+                            <Border.RenderTransform>
+                                <RotateTransform Angle="-0.55" />
+                            </Border.RenderTransform>
                             <Grid>
                                 <StackPanel>
-                                    <TextBlock Text="DATA WORKSPACE" FontSize="10" FontWeight="SemiBold"
-                                               Foreground="{StaticResource PrimaryDark}" Margin="0,0,0,4" />
-                                    <TextBlock Text="数据与图表" FontSize="18" FontWeight="SemiBold"
-                                               Foreground="{StaticResource PrimaryDark}" />
+                                    <TextBlock Text="DATA WORKSPACE" Style="{StaticResource PanelEyebrow}"
+                                               Foreground="{StaticResource InkSoft}" />
+                                    <TextBlock Text="数据与图表" FontFamily="{StaticResource SketchFont}"
+                                               FontSize="21" FontWeight="Bold"
+                                               Foreground="{StaticResource Ink}" />
                                 </StackPanel>
                                 <materialDesign:PackIcon Kind="ChartPie" Width="34" Height="34"
                                                          HorizontalAlignment="Right" VerticalAlignment="Center"
-                                                         Foreground="{StaticResource Primary}" Opacity="0.55" />
+                                                         Foreground="{StaticResource Ink}" Opacity="0.6" />
                             </Grid>
                         </Border>
                         <TextBlock Text="数据源" Style="{StaticResource SectionTitle}" />
@@ -302,7 +326,7 @@
                         <TextBlock Text="工作表" Style="{StaticResource FieldLabel}" Margin="0,10,0,4" />
                         <ComboBox x:Name="SheetCombo" SelectionChanged="SheetCombo_SelectionChanged" AutomationProperties.Name="工作表" />
 
-                        <Border Height="1" Background="{StaticResource Hairline}" Margin="0,20,0,16" />
+                        <Border Height="2" Background="{StaticResource DottedRuleBrush}" Margin="0,20,0,16" />
                         <Grid>
                             <TextBlock Text="数据预览" Style="{StaticResource SectionTitle}" Margin="0" />
                             <TextBlock x:Name="ColumnOptionsSummary" Text="未打开文件" FontSize="12"
@@ -311,7 +335,7 @@
                         </Grid>
                         <TextBlock Text="勾选表头列生成图 · 预览前 6 行，左右滚动看全部列" Style="{StaticResource CaptionText}" TextWrapping="Wrap"
                                    Margin="0,4,0,8" />
-                        <Border BorderBrush="{StaticResource Hairline}" BorderThickness="1" CornerRadius="10"
+                        <Border BorderBrush="{StaticResource Ink}" BorderThickness="1" CornerRadius="6"
                                 ClipToBounds="True" Background="{StaticResource Panel}">
                             <Grid>
                                 <DataGrid x:Name="SheetPreviewGrid" Visibility="Collapsed" ToolTip="行号为 Excel 真实行号；左右滚动查看全部列"
@@ -370,7 +394,7 @@
                             </Grid>
                         </Border>
 
-                        <Border Height="1" Background="{StaticResource Hairline}" Margin="0,18,0,14" />
+                        <Border Height="2" Background="{StaticResource DottedRuleBrush}" Margin="0,18,0,14" />
                         <Grid>
                             <TextBlock Text="当前图表" Style="{StaticResource SectionTitle}" Margin="0" />
                             <Button x:Name="DeleteChartButton" Style="{StaticResource GhostButton}"
@@ -405,7 +429,7 @@
                         <TextBlock Text="统计方式：按行数计数" Style="{StaticResource CaptionText}"
                                    Margin="0,8,0,0" />
 
-                        <Border Height="1" Background="{StaticResource Hairline}" Margin="0,18,0,14" />
+                        <Border Height="2" Background="{StaticResource DottedRuleBrush}" Margin="0,18,0,14" />
                         <Grid>
                             <TextBlock Text="数据概览" Style="{StaticResource SectionTitle}" Margin="0" />
                             <TextBlock x:Name="ActiveChartCaption" Text="未选择列" FontSize="11.5"
@@ -525,7 +549,9 @@
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
                                             Margin="0,16,0,0">
                                     <Button x:Name="EmptyOpenButton" Style="{StaticResource PrimaryButton}"
-                                            Click="OpenFile_Click" Content="打开 Excel" />
+                                            Click="OpenFile_Click">
+                                        <TextBlock Text="打开 Excel" />
+                                    </Button>
                                     <Button x:Name="EmptyPasteButton" Style="{StaticResource SecondaryButton}"
                                             Click="PasteTable_Click" Content="粘贴表格" Margin="8,0,0,0" />
                                 </StackPanel>
@@ -542,7 +568,8 @@
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 <StackPanel>
-                                    <TextBlock Text="粘贴表格数据" FontSize="24" FontWeight="SemiBold" />
+                                    <TextBlock Text="粘贴表格数据" FontFamily="{StaticResource SketchFont}"
+                                               FontSize="25" FontWeight="Bold" />
                                     <TextBlock Text="从 Excel、Google Sheets 或网页复制表格，点击下方空白表格，然后按 Ctrl+V 粘贴；右键行号、列标题或单元格可插入/删除行列。"
                                                Style="{StaticResource CaptionText}" Margin="0,6,0,0" TextWrapping="Wrap" />
                                 </StackPanel>
@@ -554,8 +581,8 @@
                                                VerticalAlignment="Center" />
                                 </Grid>
                                 <Border Grid.Row="2" Background="{StaticResource Panel}"
-                                        BorderBrush="{StaticResource Hairline}" BorderThickness="1"
-                                        CornerRadius="16" ClipToBounds="True">
+                                        BorderBrush="{StaticResource Ink}" BorderThickness="1"
+                                        CornerRadius="8" ClipToBounds="True">
                                     <DataGrid x:Name="BlankPasteGrid" AutoGenerateColumns="False"
                                               IsReadOnly="False" HeadersVisibility="All"
                                               RowHeaderWidth="34" RowHeight="30" ColumnHeaderHeight="38"
@@ -589,8 +616,11 @@
                                                 Height="38" MinHeight="38" Padding="16,0" Margin="0,0,10,0"
                                                 Visibility="Collapsed" />
                                         <Button x:Name="GenerateChartButton" Style="{StaticResource PrimaryButton}"
-                                                Content="生成图表" Click="GenerateChart_Click"
-                                                IsEnabled="False" Height="38" MinHeight="38" Padding="22,0" />
+                                                Click="GenerateChart_Click"
+                                                IsEnabled="False" Height="38" MinHeight="38" Padding="22,0">
+                                            <TextBlock Text="生成图表"
+                                                       Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" />
+                                        </Button>
                                     </StackPanel>
                                 </Grid>
                             </Grid>
@@ -911,7 +941,9 @@
 
                             <TextBlock Text="生成文件" Style="{StaticResource SectionTitle}" Margin="0,20,0,8" />
                             <Button x:Name="ExportCurrentButton" Style="{StaticResource PrimaryButton}"
-                                    Content="导出当前图" Height="40" Click="ExportCurrent_Click" />
+                                    Height="40" Click="ExportCurrent_Click">
+                                <TextBlock Text="导出当前图" />
+                            </Button>
                             <Button x:Name="ExportAllButton" Style="{StaticResource SecondaryButton}"
                                     Content="导出全部图表" Height="40" Margin="0,8,0,0" Click="ExportAll_Click" />
                             <Button x:Name="CopyImageButton" Style="{StaticResource SecondaryButton}"
@@ -926,18 +958,19 @@
             </Border>
         </Grid>
 
-        <!-- floating status pill -->
+        <!-- floating status strip -->
         <Grid Grid.Row="2" Margin="88,2,24,8">
-            <Border Background="{StaticResource Panel}" CornerRadius="14" Padding="16,0"
-                    materialDesign:ElevationAssist.Elevation="Dp1">
+            <Border Background="{StaticResource Paper}" CornerRadius="4" Padding="14,0"
+                    BorderBrush="{StaticResource Ink}" BorderThickness="1">
                 <Grid Margin="0,9">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <Ellipse x:Name="StatusDot" Width="7" Height="7" Fill="{StaticResource Success}"
+                        <Ellipse x:Name="StatusDot" Width="6" Height="6" Fill="{StaticResource Accent}"
                                  VerticalAlignment="Center" />
-                        <TextBlock x:Name="StatusText" Text="就绪" FontSize="11.5"
-                                   Foreground="{StaticResource Muted}" Margin="8,0,0,0" />
+                        <TextBlock x:Name="StatusText" Text="就绪" FontFamily="{StaticResource SketchFont}"
+                                   FontSize="12" Foreground="{StaticResource InkSoft}" Margin="8,0,0,0" />
                     </StackPanel>
-                    <TextBlock x:Name="StatsText" Text="" FontSize="11.5" Foreground="{StaticResource Muted}"
+                    <TextBlock x:Name="StatsText" Text="" FontFamily="{StaticResource SketchFont}"
+                               FontSize="12" Foreground="{StaticResource Graphite}"
                                HorizontalAlignment="Right" VerticalAlignment="Center" />
                 </Grid>
             </Border>

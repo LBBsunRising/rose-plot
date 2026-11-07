@@ -15,6 +15,7 @@
 | `shots/final/36_sketch_export.png` | 简笔风导出页 |
 | `shots/final/37_default_proportions.png` | 默认 1520×940 的 22 / 56 / 26 三栏比例 |
 | `shots/final/38_compact.png` | 1080×640 最小窗口：三栏仍可用、内部滚动 |
+| `shots/final/39_spacing_default.png` | 三栏卡片内部留白（26 / 22 / 22px 内边距） |
 
 ## v3.3 现代工作台（历史）
 

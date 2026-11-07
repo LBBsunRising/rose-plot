@@ -11,8 +11,10 @@
 | `shots/final/32_sketch_style.png` | 简笔风样式页：墨线分段 Tab 与手写体标题 |
 | `shots/final/33_sketch_focus.png` | 专注画布：只保留图表与导航轨 |
 | `shots/final/34_sketch_editor.png` | 粘贴/编辑表格：纸墨表格与线框按钮 |
-| `shots/final/35_sketch_min.png` | 最小窗口 1440×870 下的简笔布局 |
+| `shots/final/35_sketch_min.png` | 最小窗口 1080×640（物理 1350×800）下的简笔布局 |
 | `shots/final/36_sketch_export.png` | 简笔风导出页 |
+| `shots/final/37_default_proportions.png` | 默认 1520×940 的 22 / 56 / 26 三栏比例 |
+| `shots/final/38_compact.png` | 1080×640 最小窗口：三栏仍可用、内部滚动 |
 
 ## v3.3 现代工作台（历史）
 
@@ -44,7 +46,7 @@
 | `shots/final/15_paste_table_edit.png` | 生成后通过顶部“编辑数据”重新打开表格，编辑单元格 |
 | `shots/final/16_row_col_context_menu.png` | 与 Excel 一致：右键行号/列标题/单元格插入或删除行列 |
 
-截图通过 `PrintWindow` 从应用窗口本身捕获，避免桌面其他置顶窗口/广告浮层进入证据；分辨率 1900×1175（1520×940 @125% DPI），最小窗口 1800×1088（1440×870 @125%）。`contact_sheet.png` 为 6 个简笔风关键状态并排总览。
+截图通过 `PrintWindow` 从应用窗口本身捕获，避免桌面其他置顶窗口/广告浮层进入证据；默认窗口 1900×1175（1520×940 @125% DPI），最小窗口 1350×800（1080×640 @125%）。`contact_sheet.png` 为 8 个简笔风关键状态并排总览。
 
 ## 导出样例
 

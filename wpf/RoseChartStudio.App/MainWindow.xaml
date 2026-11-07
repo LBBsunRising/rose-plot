@@ -4,8 +4,10 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:rendering="clr-namespace:RoseChartStudio.Rendering;assembly=RoseChartStudio.Rendering"
         Title="玫瑰图工坊 · RoseChart Studio"
-        Width="1520" Height="940" MinWidth="1440" MinHeight="870"
+        Width="1520" Height="940" MinWidth="1080" MinHeight="640"
         WindowStartupLocation="CenterScreen"
+        ResizeMode="CanResizeWithGrip"
+        SizeToContent="Manual"
         Background="{StaticResource AppBackdropBrush}"
         Icon="Assets/icon.ico"
         UseLayoutRounding="True"
@@ -244,9 +246,9 @@
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="64" />
-                <ColumnDefinition x:Name="DataPaneColumn" Width="336" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition x:Name="InspectorPaneColumn" Width="388" />
+                <ColumnDefinition x:Name="DataPaneColumn" Width="22*" MinWidth="260" MaxWidth="360" />
+                <ColumnDefinition Width="56*" MinWidth="380" />
+                <ColumnDefinition x:Name="InspectorPaneColumn" Width="26*" MinWidth="310" MaxWidth="420" />
             </Grid.ColumnDefinitions>
 
             <!-- simple-line navigation rail -->
@@ -574,10 +576,16 @@
                                                Style="{StaticResource CaptionText}" Margin="0,6,0,0" TextWrapping="Wrap" />
                                 </StackPanel>
                                 <Grid Grid.Row="1" Margin="0,14,0,10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
                                     <CheckBox x:Name="PasteGridHeaderCheck" Content="首行作为表头"
                                               IsChecked="True" VerticalAlignment="Center" />
                                     <TextBlock x:Name="PasteGridStatus" Text="支持 Tab、CSV、分号、竖线分隔"
-                                               Style="{StaticResource CaptionText}" HorizontalAlignment="Right"
+                                               Style="{StaticResource CaptionText}" Grid.Column="1"
+                                               HorizontalAlignment="Right" TextAlignment="Right"
+                                               TextWrapping="Wrap" Margin="12,0,0,0"
                                                VerticalAlignment="Center" />
                                 </Grid>
                                 <Border Grid.Row="2" Background="{StaticResource Panel}"

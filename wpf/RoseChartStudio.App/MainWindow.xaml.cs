@@ -87,6 +87,20 @@ public partial class MainWindow : Window
         Closing += OnWindowClosing;
     }
 
+    private void ApplyAdaptiveWindowBounds()
+    {
+        // WPF window units are DIPs, matching SystemParameters.WorkArea units.
+        // Keep the designed 1520×940 on roomy displays, but always fit the
+        // current work area so the window is fully visible on first launch.
+        var work = SystemParameters.WorkArea;
+        var availableWidth = work.Width > 200 ? work.Width : 1520;
+        var availableHeight = work.Height > 200 ? work.Height : 940;
+        var maxWidth = Math.Max(MinWidth, availableWidth * 0.96);
+        var maxHeight = Math.Max(MinHeight, availableHeight * 0.92);
+        Width = Math.Clamp(_settings.Window.Width, MinWidth, maxWidth);
+        Height = Math.Clamp(_settings.Window.Height, MinHeight, maxHeight);
+    }
+
     private void ApplyPersistedSettings()
     {
         try
@@ -103,8 +117,7 @@ public partial class MainWindow : Window
             {
                 _export.OutputDirectory = _settings.Export.OutputDirectory;
             }
-            Width = Math.Max(MinWidth, _settings.Window.Width);
-            Height = Math.Max(MinHeight, _settings.Window.Height);
+            ApplyAdaptiveWindowBounds();
             if (_settings.Window.Maximized)
             {
                 WindowState = WindowState.Maximized;
@@ -2222,8 +2235,10 @@ public partial class MainWindow : Window
 
     private void SetSidePanes(bool dataVisible, bool inspectorVisible)
     {
-        DataPaneColumn.Width = dataVisible ? new GridLength(336) : new GridLength(0);
-        InspectorPaneColumn.Width = inspectorVisible ? new GridLength(388) : new GridLength(0);
+        DataPaneColumn.MinWidth = dataVisible ? 260 : 0;
+        DataPaneColumn.Width = dataVisible ? new GridLength(22, GridUnitType.Star) : new GridLength(0);
+        InspectorPaneColumn.MinWidth = inspectorVisible ? 310 : 0;
+        InspectorPaneColumn.Width = inspectorVisible ? new GridLength(26, GridUnitType.Star) : new GridLength(0);
         if (dataVisible && inspectorVisible)
         {
             RailChartButton.Background = Brushes.Transparent;
